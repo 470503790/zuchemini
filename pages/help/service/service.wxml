@@ -1,0 +1,9 @@
+
+<view class="container">
+  <view class="zan-panel">
+    <navigator  wx:for="{{ services }}" wx:key="index"  url="/pages/help/service/main/main?id={{ item.id }}" class="zan-cell zan-cell--access">
+        <view class="zan-cell__bd">{{ item.title }}</view>
+        <view class="zan-cell__ft"></view>
+    </navigator>
+  </view>
+</view>

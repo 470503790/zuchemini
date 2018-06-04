@@ -1,0 +1,65 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.9",
+	"appid": "wx3c5dd147adcc9de8",
+	"projectname": "%E6%B1%95%E5%B0%BE%E7%A7%9F%E8%BD%A6",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "demo",
+					"service": {
+						"box_type": 10000,
+						"wording": "Demo",
+						"query_item": [
+							{
+								"query": "00700",
+								"box_qi": "{\"type\":10000,\"slot_list\":[{\"key\":\"stock_code\",\"value\":\"00700\"},{\"key\":\"stock_market\",\"value\":\"hk\"}]}"
+							},
+							{
+								"query": "腾讯股价",
+								"box_qi": "{\"type\":10000,\"slot_list\":[{\"key\":\"stock_code\",\"value\":\"00700\"},{\"key\":\"stock_market\",\"value\":\"hk\"}]}"
+							},
+							{
+								"query": "Goog",
+								"box_qi": "{\"type\":10000,\"slot_list\":[{\"key\":\"stock_code\",\"value\":\"GOOG\"},{\"key\":\"stock_market\",\"value\":\"us.OQ\"}]}"
+							}
+						]
+					},
+					"query": "00700",
+					"boxQI": "{\"type\":10000,\"slot_list\":[{\"key\":\"stock_code\",\"value\":\"00700\"},{\"key\":\"stock_market\",\"value\":\"hk\"}]}"
+				}
+			]
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
+}

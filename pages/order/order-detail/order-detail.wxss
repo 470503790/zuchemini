@@ -1,0 +1,4 @@
+/* pages/order/order-detail/order-detail.wxss */
+.hide{
+  display: none;
+}

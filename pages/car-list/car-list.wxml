@@ -1,0 +1,38 @@
+
+<import src="car-item/car-item.wxml" />
+<view class="container">
+  <block wx:for="{{cars}}" wx:key="index">
+    <template is="carItem" data="{{...item}}" />
+  </block>
+  <view class="zan-cell " style="display:{{cars.length==0?'flex':'none'}};justify-content:center;">
+    <view class="zan-c-gray-darker">一车辆都没有</view>
+  </view>
+</view>
+<view class="zan-popup {{ showPopup ? 'zan-popup--show' : ''}}">
+  <view class="zan-popup__mask" bindtap="hideCarInfo"></view>
+  <view class="zan-popup__container popup-example--center">
+    <view class="zan-panel">
+      <view class="zan-cell">
+        <image src="{{car.picture}}"></image>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-cell__bd">
+          <view class="zan-font-16 zan-font-bold">{{car.name}}</view>
+          <view class="zan-c-black zan-font-14">{{car.bodyStructure}}|{{car.displacement}}{{car.stalls}}|乘坐{{car.numberOfPeople}}人</view>
+          <view class="zan-c-black zan-font-14">租期
+            <label class="zan-font-16" style="color:#F4B900">{{options.day}}</label>天</view>
+        </view>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-16">
+          <view>日租价格
+            <label class="zan-font-22" style="color:#F4B900">￥</label>
+            <label class="zan-font-22" style="color:#F4B900">{{car.averageAmount}}</label>/日均</view>
+        </view>
+        <view class="zan-col zan-col-8">
+          <button bindtap="click_go" data-id="{{car.id}}" data-totalAmount="{{car.totalAmount}}" class="theme-background-color" style="width:100%;color:white">预约</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

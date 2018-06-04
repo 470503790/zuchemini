@@ -1,0 +1,45 @@
+{
+  "pages": [
+    
+    "pages/index/index",
+    "pages/order/order-detail/order-detail",
+    "pages/order/order-list/order-list",
+    "pages/me/me",
+    "pages/car-list/car-list",
+    "pages/reservation/reservation",
+    "pages/help/novice/novice",
+    "pages/help/service/service",
+    "pages/help/service/main/main",
+    "pages/help/commonProblem/commonProblem",
+    "pages/help/opinion/opinion",
+    "pages/login/login",
+    "pages/logs/logs"
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#333333",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/nav/home-off.png",
+        "selectedIconPath": "images/nav/home-on.png",
+        "text": "租车"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "iconPath": "images/nav/my-off.png",
+        "selectedIconPath": "images/nav/my-on.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

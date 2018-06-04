@@ -1,0 +1,11 @@
+
+<view class="container">
+  <view class="zan-panel" style="background:#F9F9F9">
+    <view class="zan-cell">
+      <form report-submit='true' bindsubmit="formSubmit" bindreset="formReset" style="width:100%">
+        <textarea style="background:white;width:100%;margin-bottom:100rpx;" name="content" placeholder="请写下对我们的意见或建议，我们会努力为您提供更好的服务" />
+        <button form-type="submit" class="theme-background-color" style="width:100%;color:white"> 提交 </button>
+      </form>
+    </view>
+  </view>
+</view>

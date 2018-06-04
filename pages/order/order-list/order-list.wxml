@@ -1,0 +1,10 @@
+
+<import src="order-item/order-item.wxml" />
+<view class="container">
+  <block wx:for="{{orders}}" wx:key="index">
+    <template is="orderItem" data="{{...item}}" />
+  </block>
+  <view class="zan-cell " style="display:{{orders.length==0?'flex':'none'}};justify-content:center;">
+      <view class="zan-c-gray-darker">还没有订单！</view>
+    </view>
+</view>

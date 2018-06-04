@@ -1,0 +1,32 @@
+@import "dist/index.wxss";
+.container {
+  background: #F9F9F9;
+  min-height: 100vh;
+  padding: 0 0;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  box-sizing:border-box;
+} 
+.container::before {
+  position: fixed;
+  top: 0;
+  left: 0;
+  content: ' ';
+  width: 100%;
+  height: 1rpx;
+  background-color: #e2e2e2;
+  z-index: 5;
+}
+.zan-row{
+  width:100%;
+}
+.theme-background-color{
+  background-color:#FABE00
+}
+.theme-color{
+  color:#FABE00
+}
+.padding-20{
+  padding:20rpx;
+}

@@ -1,0 +1,104 @@
+
+<!--index.wxml-->
+<import src="/dist/tab/index.wxml" />
+<import src="/dist/field/index.wxml" />
+<view class="container">
+  <view class="zan-panel">
+    <view class="zan-cell">
+      <!-- tab -->
+      <view style="">
+        <template is="zan-tab" data="{{ ...tab, componentId: 'tab' }}"></template>
+      </view>
+      
+    </view>
+    <!-- 时间选择 -->
+    <view class="zan-cell" style="text-align: center">
+      <view class="zan-col zan-col-8" bindtap="handleDateFieldClick">
+        <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
+        <view class="zan-font-24">{{ pickerViewConfig1.year[pickerViewConfig1.value[0]].Date }}</view>
+        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig1.year[pickerViewConfig1.value[0]].Week}} {{ pickerViewConfig1.time[pickerViewConfig1.value[1]] }}</view>
+      </view>
+      <view class="zan-col zan-col-8" style="color:#D7B205">
+      <image src="../../images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
+      <view style="position:relative;top:-50rpx;">{{day}}天</view>
+      </view>
+      <view class="zan-col zan-col-8" bindtap="handleDateFieldClick2">
+        <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
+        <view class="zan-font-24">{{ pickerViewConfig2.year[pickerViewConfig2.value[0]].Date }}</view>
+        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig2.year[pickerViewConfig2.value[0]].Week}} {{ pickerViewConfig2.time[pickerViewConfig2.value[1]] }}</view>
+      </view>
+    </view>
+    <!-- 取车时间选择 -->
+    <view
+      class="zan-popup zan-popup--bottom {{ pickerViewConfig1.show ? 'zan-popup--show' : ''}}"
+    >
+      <view class="zan-popup__mask" bindtap="hideDatePopup"></view>
+      <view class="zan-popup__container popup-field-example--bottom">
+        <view class="zan-cell">
+            <view class="zan-col zan-col-8" style="color:#D8D8D8;" bindtap="cancel1">取消</view>
+            <view class="zan-col zan-col-8" style="text-align: center;">取车时间</view>
+            <view class="zan-col zan-col-8" style="text-align: right;color:#FF9966;" bindtap="ok1">确定</view>
+        </view>
+        
+        <picker-view
+          value="{{ pickerViewConfig1.value }}"
+          indicator-style="height: 50px;"
+          class="picker-view-example"
+          bindchange="handlePopupDateChange"
+        >
+          <picker-view-column>
+            <view
+              class="picker-view-column-example"
+              wx:for="{{ pickerViewConfig1.year }}" wx:key="{{index}}"
+            >{{item.DateStr}}</view>
+          </picker-view-column>
+          <picker-view-column>
+            <view
+              class="picker-view-column-example"
+              wx:for="{{ pickerViewConfig1.time }}" wx:key="{{index}}"
+            >{{item}}</view>
+          </picker-view-column>
+        </picker-view>
+      </view>
+    </view>
+    <!-- 还车时间选择 -->
+    <view
+      class="zan-popup zan-popup--bottom {{ pickerViewConfig2.show ? 'zan-popup--show' : ''}}"
+    >
+      <view class="zan-popup__mask" bindtap="hideDatePopup2"></view>
+      <view class="zan-popup__container popup-field-example--bottom">
+          <view class="zan-cell">
+              <view class="zan-col zan-col-8" style="color:#D8D8D8;" bindtap="cancel2">取消</view>
+              <view class="zan-col zan-col-8" style="text-align: center;">还车时间</view>
+              <view class="zan-col zan-col-8" style="text-align: right;color:#FF9966;" bindtap="ok2">确定</view>
+          </view>
+        <picker-view
+          value="{{ pickerViewConfig2.value }}"
+          indicator-style="height: 50px"
+          class="picker-view-example"
+          bindchange="handlePopupDateChange2"
+        >
+          <picker-view-column>
+            <view
+              class="picker-view-column-example"
+              wx:for="{{ pickerViewConfig2.year }}" wx:key="{{index}}"
+            >{{item.DateStr}}</view>
+          </picker-view-column>
+          <picker-view-column>
+            <view
+              class="picker-view-column-example"
+              wx:for="{{ pickerViewConfig2.time }}" wx:key="{{index}}"
+            >{{item}}</view>
+          </picker-view-column>
+        </picker-view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel">
+    <view class="zan-cell">
+      <button bindtap="click_go" class="theme-background-color" style="width:100%;color:white">立即去选车</button>
+    </view>
+  </view>
+  <button style="margin:20rpx auto;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover" open-type="share" >邀请有礼</button>
+  <view class="zan-font-14" bindtap="call" style="text-align:center;color:#606060;position:absolute;bottom:50rpx;width:100%">服务热线：13692950061</view>
+</view>

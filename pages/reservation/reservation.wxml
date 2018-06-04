@@ -1,0 +1,21 @@
+
+<import src="/dist/field/index.wxml" />
+<view class="container">
+    <view class="zan-panel">
+            <form report-submit='true' bindsubmit="formSubmit" bindreset="formReset">
+                    <view class="zan-panel">
+                      <template
+                        is="zan-field"
+                        data="{{ ...config.form.name }}"></template>
+                      <template
+                        is="zan-field"
+                        data="{{ ...config.form.tel }}"></template>
+                      <view class="zan-btns">
+                        <button
+                          class="zan-btn zan-btn--primary"
+                          formType="submit">提交数据</button>
+                      </view>
+                    </view>
+                  </form>
+    </view>
+</view>
