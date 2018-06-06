@@ -99,6 +99,6 @@
       <button bindtap="click_go" class="theme-background-color" style="width:100%;color:white">立即去选车</button>
     </view>
   </view>
-  <button style="margin:20rpx auto;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover" open-type="share" >邀请有礼</button>
+  <button style="margin:20rpx auto;width:150rpx;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover" open-type="share" >邀请有礼</button>
   <view class="zan-font-14" bindtap="call" style="text-align:center;color:#606060;position:absolute;bottom:50rpx;width:100%">服务热线：13692950061</view>
 </view>

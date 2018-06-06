@@ -67,7 +67,11 @@ Page(extend({}, Tab, Zan.Field,{
     wx.setStorageSync("getDate", dates[0].FullDate);
   },
   onShow: function () {
-    
+    wx.showLoading({
+      title: "加载中..."
+    })
+    this.loadData();
+    wx.hideLoading();
   },
   
   //tab事件
@@ -200,6 +204,11 @@ Page(extend({}, Tab, Zan.Field,{
     })
   },
   onPullDownRefresh: function () {
+    wx.showLoading({
+      title: "加载中..."
+    })
+    this.loadData();
+    wx.hideLoading();
     wx.stopPullDownRefresh()
   },
 }))

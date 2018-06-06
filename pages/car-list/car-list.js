@@ -179,9 +179,6 @@ Page({
   click_go: function (e) {
     var that=this;
     console.log(e);
-    app.aldstat.sendEvent('点击预约',{
-      "名称":that.data.car.name
-    });
     //判断是否登陆
     if (app.globalData.userInfo == null) {
       var url = "/pages/car-list/car-list----startDate---"+that.data.options.startDate+">endDate---"+that.data.options.endDate+">day---"+that.data.options.day;
@@ -191,12 +188,47 @@ Page({
         url: '/pages/login/login?url=' + url+'&jumpType='+jumpType,
       });
     } else {
-      var carId = e.currentTarget.dataset.id;
-      var totalAmount = e.currentTarget.dataset.totalamount;
-      console.log("carId=>" + carId);
-      wx.navigateTo({
-        url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
+      
+      //点击预约前，检查是否能下单
+      var url = app.globalData.siteRoot + '/api/services/app/Reservation/IsCanOrder';
+      wx.request({
+        url: url,
+        method:"POST",
+        data: {
+          userId: app.globalData.userInfo.id
+        },
+        success: function (res) {
+          console.log(res);
+          if (res.statusCode != 200) {
+            console.log("请求出错");
+            app.aldstat.sendEvent('请求出错', {
+              "url": url,
+              "message": res
+            });
+            return;
+          }
+          //弹出提示框
+          if(res.data.result==false){
+            wx.showModal({
+              title:"提示",
+              content:"您有一个订单在进行中,无法再次下单！",
+              showCancel:false
+            })
+          }else{
+            app.aldstat.sendEvent('点击预约', {
+              "名称": that.data.car.name,
+              "userId": app.globalData.userInfo.id
+            });
+            var carId = e.currentTarget.dataset.id;
+            var totalAmount = e.currentTarget.dataset.totalamount;
+            console.log("carId=>" + carId);
+            wx.navigateTo({
+              url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
+            })
+          }
+        }
       })
+      
     }
 
 

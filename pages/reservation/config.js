@@ -9,7 +9,7 @@ module.exports = {
     },
     tel: {
       name: 'tel',
-      inputType: 'tel',
+      inputType: 'number',
       placeholder: '请输入手机号码',
       componentId: 'form:test:tel'
     }
