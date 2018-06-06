@@ -115,28 +115,30 @@ return;
     wx.showLoading({
       title: "正在提交...",
       mask: true
-    })
+    });
+    var url = app.globalData.siteRoot + "/api/services/app/reservation/CreateReservationToMiniAsync";
+    var ops={
+      "pickUpDate": app.globalData.pickerDateObj.FullDate,
+      "pickUpTime": app.globalData.pickerTimeObj,
+      "day": app.globalData.day,
+      "returnDate": app.globalData.returnDateObj.FullDate,
+      "returnTime": app.globalData.returnTimeObj,
+      "pickUpStore": app.globalData.pickUpStore,
+      "returnStore": app.globalData.returnStore,
+      "fullName": fullName,
+      "mobilePhone": mobile,
+      "rentalFees": 0,
+      "basicServiceFee": 0,
+      "otherFee": 0,
+      "totalAmount": that.data.totalAmount,
+      "carId": that.data.carId,
+      "weixinUserId": app.globalData.userInfo.id,
+      "formId": event.detail.formId
+    };
     wx.request({
-      url: app.globalData.siteRoot +"/api/services/app/reservation/CreateReservationToMiniAsync",
+      url: url,
       method: "POST",
-      data: {
-        "pickUpDate": app.globalData.pickerDateObj.FullDate,
-        "pickUpTime": app.globalData.pickerTimeObj,
-        "day": app.globalData.day,
-        "returnDate": app.globalData.returnDateObj.FullDate,
-        "returnTime": app.globalData.returnTimeObj,
-        "pickUpStore": app.globalData.pickUpStore,
-        "returnStore": app.globalData.returnStore,
-        "fullName": fullName,
-        "mobilePhone": mobile,
-        "rentalFees": 0,
-        "basicServiceFee": 0,
-        "otherFee": 0,
-        "totalAmount": that.data.totalAmount,
-        "carId": that.data.carId,
-        "weixinUserId":app.globalData.userInfo.id,
-        "formId": event.detail.formId
-      },
+      data:ops,
       header: {
         'content-type': 'application/json' // 默认值
       },
@@ -145,12 +147,16 @@ return;
         wx.hideLoading();
         if(res.statusCode!=200){
           console.log("请求出错");
-          that.aldstat.sendEvent('请求出错',{
-            "message":json
+          app.aldstat.sendEvent('请求出错',{
+            "url":url,
+            "message": res
           });
           return;
         }
-        
+        app.aldstat.sendEvent('预约成功', {
+          "url": url,
+          "options": ops
+        });
         wx.showToast({
           title: '预约成功',
           icon: 'success',

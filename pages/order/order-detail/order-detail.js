@@ -45,8 +45,9 @@ Page({
       mask: true
     })
     //获取订单详情
+    var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationByIdToMiniAsync";
     wx.request({
-      url: app.globalData.siteRoot + "/api/services/app/reservation/GetReservationByIdToMiniAsync",
+      url: url,
       method: "POST",
       data: {
         "id": id
@@ -59,6 +60,7 @@ Page({
         if(res.statusCode!=200){
           console.log("请求出错");
           app.aldstat.sendEvent('请求出错',{
+            "url":url,
             "message":res
           });
           return;
@@ -124,9 +126,13 @@ Page({
           wx.showLoading({
             title: "正在取消...",
             mask: true
-          })
+          });
+          app.aldstat.sendEvent('用户取消预约', {
+            "订单号": id
+          });
+          var url = app.globalData.siteRoot + "/api/services/app/reservation/CancelReservationToMini";
           wx.request({
-            url: app.globalData.siteRoot + "/api/services/app/reservation/CancelReservationToMini",
+            url: url,
             method: "POST",
             data: {
               "id": id,
@@ -139,6 +145,7 @@ Page({
               if(res.statusCode!=200){
                 console.log("请求出错");
                 app.aldstat.sendEvent('请求出错',{
+                  "url":url,
                   "message":res
                 });
                 return;

@@ -23,8 +23,9 @@ loadData:function(){
     title: "加载中...",
     mask: true
   })
+  var url = app.globalData.siteRoot + "/api/services/app/commonProblem/GetCommonProblemToMini";
   wx.request({
-    url: app.globalData.siteRoot + "/api/services/app/commonProblem/GetCommonProblemToMini",
+    url: url,
     method: "POST",
     header: {
       'content-type': 'application/json' // 默认值
@@ -35,6 +36,7 @@ loadData:function(){
       if(res.statusCode!=200){
         console.log("请求出错");
         app.aldstat.sendEvent('请求出错',{
+          "url":url,
           "message":res
         });
         return;

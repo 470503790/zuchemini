@@ -1,10 +1,20 @@
-
 <import src="order-item/order-item.wxml" />
 <view class="container">
   <block wx:for="{{orders}}" wx:key="index">
     <template is="orderItem" data="{{...item}}" />
   </block>
-  <view class="zan-cell " style="display:{{orders.length==0?'flex':'none'}};justify-content:center;">
-      <view class="zan-c-gray-darker">还没有订单！</view>
+  
+  <view class="zan-panel"  style="display:{{orders.length==0?'':'none'}};">
+    <view class="zan-row">
+        <view class="zan-cell ">
+            <view class="zan-c-gray-darker" style="width:100%;text-align: center;">还没有订单！</view>
+          </view>
     </view>
+      <view class="zan-row">
+          <view class="zan-cell">
+              <button bindtap="click_go" class="theme-background-color" style="width:100%;color:white">我要去选车</button>
+            </view>
+      </view>
+    
+  </view>
 </view>

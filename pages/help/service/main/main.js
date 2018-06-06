@@ -26,8 +26,9 @@ Page({
       title: "加载中...",
       mask: true
     })
+    var url = app.globalData.siteRoot + "/api/services/app/service/GetServiceByIdToMiniAsync";
     wx.request({
-      url: app.globalData.siteRoot + "/api/services/app/service/GetServiceByIdToMiniAsync",
+      url: url,
       method: "POST",
       data: {
         id: that.data.id
@@ -41,6 +42,7 @@ Page({
         if(res.statusCode!=200){
           console.log("请求出错");
           app.aldstat.sendEvent('请求出错',{
+            "url":url,
             "message":res
           });
           return;

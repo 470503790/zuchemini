@@ -76,8 +76,9 @@ Page({
         url: '/pages/login/login?url=' + url + '&jumpType=' + jumpType,
       });
     } else {
+      var url = app.globalData.siteRoot + "/api/services/app/opinion/CreateOpinionToMiniAsync";
       wx.request({
-        url: app.globalData.siteRoot + "/api/services/app/opinion/CreateOpinionToMiniAsync",
+        url: url,
         data: {
           content: e.detail.value.content,
           weixinUserId: app.globalData.userInfo.id,
@@ -91,6 +92,7 @@ Page({
           if(res.statusCode!=200){
             console.log("请求出错");
             app.aldstat.sendEvent('请求出错',{
+              "url":url,
               "message":res
             });
             return;

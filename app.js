@@ -6,9 +6,11 @@ App({
     wx.login({
       success: function (res) {
         if (res.code) {
+          var url = that.globalData.siteRoot + "/Mpa/Weixinopen/OnLogin";
+                    //发起网络请求;
           //发起网络请求
           wx.request({
-            url: that.globalData.siteRoot + "/Mpa/Weixinopen/OnLogin",
+            url: url,
             method:"POST",
             data: {
               code: res.code
@@ -18,6 +20,7 @@ App({
               if(json.statusCode!=200){
                 console.log("请求出错");
                 that.aldstat.sendEvent('请求出错',{
+                  "url":url,
                   "message":json
                 });
                 return;
@@ -29,14 +32,23 @@ App({
                 console.log('userId=>',result.userId);
                 //有userId，就可以获取用户信息
                 if(result.userId){
+                  url = that.globalData.siteRoot + "/api/services/app/weixinUser/GetWeixinUserByIdToMiniAsync";
                   wx.request({
-                    url:that.globalData.siteRoot+"/api/services/app/weixinUser/GetWeixinUserByIdToMiniAsync",
+                    url:url,
                     method:"POST",
                     data:{
                       id:result.userId
                     },
                     success:function(json){
                         console.log("用户信息=>",json);
+                        if (json.statusCode != 200) {
+                          console.log("请求出错");
+                          that.aldstat.sendEvent('请求出错', {
+                            "url": url,
+                            "message": json
+                          });
+                          return;
+                        }
                         that.globalData.userInfo=json.data.result;
                     }
                   })

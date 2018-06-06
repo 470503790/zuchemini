@@ -33,8 +33,9 @@ Page({
       title: "加载中...",
       mask: true
     })
+    var url = app.globalData.siteRoot + "/api/services/app/car/GetCarsToMiniAsync";
     wx.request({
-      url: app.globalData.siteRoot + "/api/services/app/car/GetCarsToMiniAsync",
+      url: url,
       method: "POST",
       data: {
         startDate: options.startDate,
@@ -45,11 +46,16 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-
+        app.aldstat.sendEvent('刷新车列表', {
+          url: url,
+          options: options,
+          result:res
+        });
         console.log(res.data);
         if(res.statusCode!=200){
           console.log("请求出错");
           app.aldstat.sendEvent('请求出错',{
+            "url":url,
             "message":res
           });
           return;
@@ -102,7 +108,7 @@ Page({
     var options = that.data.options;
     this.loadData(options);
     
-    app.aldstat.sendEvent('刷新车列表');
+    
   },
 
   /**
@@ -126,8 +132,9 @@ Page({
     wx.showLoading({
       title: "加载中..."
     })
+    var url = app.globalData.siteRoot + "/api/services/app/car/GetCarToMiniAsync";
     wx.request({
-      url: app.globalData.siteRoot + "/api/services/app/car/GetCarToMiniAsync",
+      url: url,
       method: "POST",
       data: {
         id: id,
@@ -142,6 +149,7 @@ Page({
         if(res.statusCode!=200){
           console.log("请求出错");
           app.aldstat.sendEvent('请求出错',{
+            "url":url,
             "message":res
           });
           return;
@@ -151,7 +159,9 @@ Page({
           showPopup: !that.data.showPopup
         });
         app.aldstat.sendEvent('查看汽车信息',{
-          "名称":res.data.result.name
+          "名称":res.data.result.name,
+          "options":that.options,
+          "result":res
         });
       },
       complete: function () {
@@ -190,5 +200,10 @@ Page({
     }
 
 
+  },
+  click_goOpinion:function(){
+    wx.navigateTo({
+      url: '/pages/help/opinion/opinion',
+    })
   }
 })

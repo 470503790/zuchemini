@@ -26,8 +26,9 @@ Page({
     wx.showLoading({
       title: "加载中..."
     })
+    var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationCountToMiniAsync";
     wx.request({
-      url: app.globalData.siteRoot + "/api/services/app/reservation/GetReservationCountToMiniAsync",
+      url: url,
       data: {
         userId: app.globalData.userInfo.id
       },
@@ -38,6 +39,7 @@ Page({
         if(res.statusCode!=200){
           console.log("请求出错");
           app.aldstat.sendEvent('请求出错',{
+            "url":url,
             "message":res
           });
           return;

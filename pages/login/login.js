@@ -77,8 +77,9 @@ Page({
     wx.login({
       success: function (res) {
         console.log(res);
+        var url = app.globalData.siteRoot + "/Mpa/Weixinopen/OnLogin";
         wx.request({
-          url: app.globalData.siteRoot + "/Mpa/Weixinopen/OnLogin",
+          url: url,
           method: 'POST',
           data: {
             code: res.code
@@ -88,6 +89,7 @@ Page({
             if(json.statusCode!=200){
               console.log("请求出错");
               app.aldstat.sendEvent('请求出错',{
+                "url":url,
                 "message":json
               });
               return;
@@ -103,8 +105,9 @@ Page({
                   app.globalData.userInfo=userInfoRes.userInfo
                   typeof cb == "function" && cb(app.globalData.userInfo)
                   //校验
+                  url = app.globalData.siteRoot + '/Mpa/Weixinopen/CheckWxOpenSignature';
                   wx.request({
-                    url: app.globalData.siteRoot +'/Mpa/Weixinopen/CheckWxOpenSignature',
+                    url: url,
                     method:'POST',
                     data:{
                       sessionId:wx.getStorageSync('sessionId'),
@@ -115,14 +118,16 @@ Page({
                       if(json.statusCode!=200){
                         console.log("请求出错");
                         app.aldstat.sendEvent('请求出错',{
+                          "url":url,
                           "message":json
                         });
                         return;
                       }
                       var checkSuccess=json.data.success;
                       console.log(json.data);
+                      url = app.globalData.siteRoot + '/Mpa/Weixinopen/DecodeEncryptedData';
                       wx.request({
-                        url: app.globalData.siteRoot +'/Mpa/Weixinopen/DecodeEncryptedData',
+                        url: url,
                         method:'POST',
                         data:{
                           'type':"userInfo",
@@ -136,6 +141,7 @@ Page({
                           if(json.statusCode!=200){
                             console.log("请求出错");
                             app.aldstat.sendEvent('请求出错',{
+                              "url":url,
                               "message":json
                             });
                             return;

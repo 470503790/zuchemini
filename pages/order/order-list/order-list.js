@@ -32,14 +32,25 @@ Page({
   },
   loadData: function () {
     var that = this;
+    //判断是否登陆
+    if (app.globalData.userInfo == null) {
+      var url = "/pages/order/order-list/order-list";
+      var jumpType = "navigateTo";
+      console.log("url", url);
+      wx.navigateTo({
+        url: '/pages/login/login?url=' + url + '&jumpType=' + jumpType,
+      });
+      return;
+    }
     var userId = app.globalData.userInfo.id;
     //获取订单列表
     wx.showLoading({
       title: "加载中...",
       mask: true
     })
+    var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationsToMiniAsync";
     wx.request({
-      url: app.globalData.siteRoot + "/api/services/app/reservation/GetReservationsToMiniAsync",
+      url: url,
       method: "POST",
       data: {
         "weixinUserId": userId
@@ -52,6 +63,7 @@ Page({
         if(res.statusCode!=200){
           console.log("请求出错");
           app.aldstat.sendEvent('请求出错',{
+            "url":url,
             "message":res
           });
           return;
@@ -106,6 +118,11 @@ Page({
     console.log(id);
     wx.navigateTo({
       url: '/pages/order/order-detail/order-detail?id=' + id,
+    })
+  },
+  click_go:function(){
+    wx.switchTab({
+      url: '/pages/index/index',
     })
   }
 })
