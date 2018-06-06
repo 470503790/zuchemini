@@ -4,6 +4,7 @@ const app = getApp()
 //引入扩展文件
 const { Tab, extend } = require('../../dist/index');
 const Zan = require('../../dist/index');
+var ext = require('indexExt.js')
 Page(extend({}, Tab, Zan.Field,{
   data: {
     tab: {//选项卡
@@ -51,8 +52,8 @@ Page(extend({}, Tab, Zan.Field,{
     var myDate = new Date();
     //取车日期，(当前日期+1)+60天
 
-    var dates = this.getDateAndWeek(myDate);
-    var times = this.getTimes();
+    var dates = ext.getDateAndWeek(myDate);
+    var times = ext.getTimes();
 
     this.setData({
       "pickerViewConfig1.year": dates,
@@ -64,99 +65,11 @@ Page(extend({}, Tab, Zan.Field,{
     });
     //取车时间 缓存
     wx.setStorageSync("getDate", dates[0].FullDate);
-    //还车日期，取车日期+60天
   },
   onShow: function () {
     
   },
-  //日期与星期
-  getDateAndWeek:function(date){
-    var d_w_list=[];
-    
-    for(var i=0;i<60;i++){
-      
-      var newDate=this.addDate(date);
-      var date = this.getDate(newDate);
-      var week = this.getWeek(newDate);
-      var obj={};
-      var d_w = date + " " + week;
-      obj.DateStr=d_w;
-      obj.Date=date;
-      obj.Week=week;
-      obj.FullDate=newDate;
-      d_w_list.push(obj);
-      date = newDate;
-    }
-    return d_w_list;
-  },
-  //获取日期
-  getDate:function(date){
-    var date = new Date(date);
-    //var year=myDate.getFullYear(); //获取完整的年份(4位,1970)
-    var month = date.getMonth()+1; //获取当前月份(0-11,0代表1月)
-    var day = date.getDate(); //获取当前日(1-31)
-    return month + "月" + this.getFormatDate(day)+"日";
-  },
-  //获取星期
-  getWeek:function(date){
-    var date = new Date(date);
-    var w=date.getDay(); 
-    if(w==0){
-      return "星期日";
-    }else if(w==1){
-      return "星期一";
-    }else if(w==2){
-      return "星期二";
-    }else if(w==3){
-      return "星期三";
-    }else if(w==4){
-      return "星期四";
-    }else if(w==5){
-      return "星期五";
-    }else if(w==6){
-      return "星期六";
-    }
-  },
-  //日期+1天
-  addDate:function (date, days) {
-    if(days == undefined || days == '') {
-      days = 1;
-    }
-            var date = new Date(date);
-    date.setDate(date.getDate() + days);
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    return date.getFullYear() + '-' + this.getFormatDate(month) + '-' + this.getFormatDate(day);
-  },
-  // 日期月份/天的显示，如果是1位数，则在前面加上'0'
-  getFormatDate:function (arg) {
-    if(arg == undefined || arg == '') {
-      return '';
-    }
-
-            var re = arg + '';
-    if(re.length < 2) {
-      re = '0' + re;
-    }
-
-            return re;
-  },
-  //获取固定时间列表
-  getTimes:function(){
-    var time = new Date("2018-5-20 9:00:00");
-    var times=[];
-    var b=30;
-    for(var i=0;i<22;i++){
-      time.setMinutes(time.getMinutes() + b);
-      var hour=time.getHours();
-      var minutes = time.getMinutes();
-      minutes=minutes==0?"00":minutes+"";
-      var t=hour + ":" + minutes;
-      console.log(t);
-      times.push(t);
-    }
-    return times;
-  },
+  
   //tab事件
   handleZanTabChange(e) {
     console.log(e);
@@ -189,7 +102,7 @@ Page(extend({}, Tab, Zan.Field,{
     //取车时间 缓存
     wx.setStorageSync("getDate",date)
     //还车时间列表重新生成
-    var dates=this.getDateAndWeek(date);
+    var dates=ext.getDateAndWeek(date);
     this.setData({
       'pickerViewConfig1.value': e.detail.value,
       'pickerViewConfig2.year':dates,

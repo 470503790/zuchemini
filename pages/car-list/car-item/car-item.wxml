@@ -2,7 +2,7 @@
     <view class="zan-panel">
         <view class="zan-cell">
             <view class="zan-col zan-col-10" bindtap="showCarInfo"  data-id="{{id}}">
-                <image src="{{picture}}" style="width:95%;height:180rpx;padding-right:10rpx;"></image>
+                <image src="{{picture}}" style="width:95%;height:188rpx;padding-right:10rpx;"></image>
             </view>
             <view class="zan-col zan-col-14">
                 <view class="zan-row" style="padding-bottom:10px;border-bottom:1rpx solid #c8c8c8;" bindtap="showCarInfo" data-id="{{id}}">

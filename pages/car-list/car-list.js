@@ -47,6 +47,13 @@ Page({
       success: function (res) {
 
         console.log(res.data);
+        if(res.statusCode!=200){
+          console.log("请求出错");
+          app.aldstat.sendEvent('请求出错',{
+            "message":res
+          });
+          return;
+        }
         that.setData({
           cars: res.data.result
         })
@@ -132,6 +139,13 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
+        if(res.statusCode!=200){
+          console.log("请求出错");
+          app.aldstat.sendEvent('请求出错',{
+            "message":res
+          });
+          return;
+        }
         that.setData({
           car: res.data.result,
           showPopup: !that.data.showPopup
@@ -158,6 +172,7 @@ Page({
     app.aldstat.sendEvent('点击预约',{
       "名称":that.data.car.name
     });
+    //判断是否登陆
     if (app.globalData.userInfo == null) {
       var url = "/pages/car-list/car-list----startDate---"+that.data.options.startDate+">endDate---"+that.data.options.endDate+">day---"+that.data.options.day;
       var jumpType="redirectTo";

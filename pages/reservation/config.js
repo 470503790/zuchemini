@@ -3,6 +3,7 @@ module.exports = {
   // Form 中使用输入框
   form: {
     name: {
+      name: 'name',
       placeholder: '请输入姓名',
       componentId: 'form:test:name'
     },

@@ -76,7 +76,7 @@ Page({
     app.aldstat.sendEvent('提交预约单');
     var that=this;
     console.log('[zan:field:submit]', event.detail.value);
-    var fullName = event.detail.value["form:test:name"];
+    var fullName = event.detail.value.name;
     var mobile = event.detail.value.tel;
     //验证
     if(fullName==""){
@@ -97,7 +97,7 @@ return;
     }
     if (mobile.length != 11) {
       wx.showToast({
-        title: '手机号长度有误！',
+        title: '手机号必须11位！',
         icon: 'success',
         duration: 1500
       })
@@ -143,6 +143,14 @@ return;
       success: function (res) {
         console.log(res.data);
         wx.hideLoading();
+        if(res.statusCode!=200){
+          console.log("请求出错");
+          that.aldstat.sendEvent('请求出错',{
+            "message":json
+          });
+          return;
+        }
+        
         wx.showToast({
           title: '预约成功',
           icon: 'success',

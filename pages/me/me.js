@@ -19,9 +19,12 @@ Page({
   },
   loadData: function () {
     var that = this;
+    if (app.globalData.userInfo==null) {
+      return;
+    }
+
     wx.showLoading({
-      title: "加载中...",
-      mask: true
+      title: "加载中..."
     })
     wx.request({
       url: app.globalData.siteRoot + "/api/services/app/reservation/GetReservationCountToMiniAsync",
@@ -32,6 +35,13 @@ Page({
       // header: {}, // 设置请求的 header
       success: function (res) {
         console.log("订单数=>", res);
+        if(res.statusCode!=200){
+          console.log("请求出错");
+          app.aldstat.sendEvent('请求出错',{
+            "message":res
+          });
+          return;
+        }
         that.setData({
           orderCount : res.data.result.count
         })

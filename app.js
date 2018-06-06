@@ -15,6 +15,13 @@ App({
             },
             success: function (json) {
               console.log(json);
+              if(json.statusCode!=200){
+                console.log("请求出错");
+                that.aldstat.sendEvent('请求出错',{
+                  "message":json
+                });
+                return;
+              }
               var result = json.data.result;
               if (result.success) {
                 wx.setStorageSync('sessionId', result.sessionId);
@@ -64,7 +71,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    siteRoot:"https://das.mynatapp.cc",
+    //siteRoot:"https://das.mynatapp.cc",
+    siteRoot: "https://zuche.shensigzs.com",
     pickerDateObj: null,//取车信息
     returnDateObj: null,//还车信息
     pickerTimeObj: null,//取车信息

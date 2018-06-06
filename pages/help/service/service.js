@@ -32,6 +32,13 @@ Page({
       success: function (res) {
 
         console.log(res.data);
+        if(res.statusCode!=200){
+          console.log("请求出错");
+          app.aldstat.sendEvent('请求出错',{
+            "message":res
+          });
+          return;
+        }
         that.setData({
           services: res.data.result
         })

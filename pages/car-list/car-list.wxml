@@ -13,7 +13,7 @@
   <view class="zan-popup__container popup-example--center">
     <view class="zan-panel">
       <view class="zan-cell">
-        <image src="{{car.picture}}"></image>
+        <image src="{{car.picture}}" style="height:213px;"></image>
       </view>
       <view class="zan-cell">
         <view class="zan-cell__bd">

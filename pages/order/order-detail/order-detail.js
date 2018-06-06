@@ -56,6 +56,13 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
+        if(res.statusCode!=200){
+          console.log("请求出错");
+          app.aldstat.sendEvent('请求出错',{
+            "message":res
+          });
+          return;
+        }
         that.setData({
           orderDetail: res.data.result
         })
@@ -129,6 +136,13 @@ Page({
               'content-type': 'application/json' // 默认值
             },
             success: function (res) {
+              if(res.statusCode!=200){
+                console.log("请求出错");
+                app.aldstat.sendEvent('请求出错',{
+                  "message":res
+                });
+                return;
+              }
               if(res.data.success){
                 wx.showToast({
                   title: "已经取消",

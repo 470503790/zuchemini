@@ -85,6 +85,13 @@ Page({
           },
           success: function (json) {
             console.log(json);
+            if(json.statusCode!=200){
+              console.log("请求出错");
+              app.aldstat.sendEvent('请求出错',{
+                "message":json
+              });
+              return;
+            }
             var result = json.data.result;
             if (result.success) {
               wx.setStorageSync('sessionId', result.sessionId);
@@ -105,6 +112,13 @@ Page({
                       signature:userInfoRes.signature
                     },
                     success:function(json){
+                      if(json.statusCode!=200){
+                        console.log("请求出错");
+                        app.aldstat.sendEvent('请求出错',{
+                          "message":json
+                        });
+                        return;
+                      }
                       var checkSuccess=json.data.success;
                       console.log(json.data);
                       wx.request({
@@ -119,6 +133,13 @@ Page({
                         success:function(json){
                           console.log(json.data);
                           wx.hideLoading();
+                          if(json.statusCode!=200){
+                            console.log("请求出错");
+                            app.aldstat.sendEvent('请求出错',{
+                              "message":json
+                            });
+                            return;
+                          }
                           app.globalData.userInfo = json.data.result.weixinUser;
                           //跳转
                           if(that.data.url!=null){
