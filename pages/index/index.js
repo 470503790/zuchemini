@@ -8,13 +8,7 @@ var ext = require('indexExt.js')
 Page(extend({}, Tab, Zan.Field,{
   data: {
     tab: {//选项卡
-      list: [{
-        id: '1',
-        title: '汕尾店'
-      }, {
-        id: '2',
-        title: '海丰店'
-      }],
+      list: [],
       selectedId: '1',
       scroll: false,
       height: 45
@@ -38,7 +32,8 @@ Page(extend({}, Tab, Zan.Field,{
     //天数
     day:1,
     //预约默认最少多少天
-    defaultDay:2
+    defaultDay:2,
+    phoneNumber:13692950061
   },
   
   onLoad: function () {
@@ -46,9 +41,15 @@ Page(extend({}, Tab, Zan.Field,{
       title: "加载中..."
     })
     this.loadData();
-    wx.hideLoading();
+    
   },
   loadData:function(){
+    this.loadDateAndWeek();
+    this.loadSetting();
+    this.loadStore();
+  },
+  loadDateAndWeek:function(){
+    var that = this;
     var myDate = new Date();
     //取车日期，(当前日期+1)+60天
 
@@ -66,12 +67,68 @@ Page(extend({}, Tab, Zan.Field,{
     //取车时间 缓存
     wx.setStorageSync("getDate", dates[0].FullDate);
   },
-  onShow: function () {
-    wx.showLoading({
-      title: "加载中..."
+  loadStore:function(){
+    var that = this;
+    var url = app.globalData.siteRoot + "/api/services/app/Store/GetStoreDropDownList";
+    wx.request({
+      url: url,
+      method:"POST",
+      success:function(res){
+        wx.hideLoading();
+        console.log("门店列表=>", res);
+        if (res.statusCode != 200) {
+          console.log("请求出错");
+          that.aldstat.sendEvent('请求出错', {
+            "url": url,
+            "message": res
+          });
+          return;
+        }
+        //写入缓存
+        //wx.setStorageSync('tab.list', res.data.result);
+        var tabList = "tab.list";
+        var tabSelectId ="tab.selectedId";
+        var storeId = res.data.result[0].id;
+        that.setData({
+          [tabList]: res.data.result,
+          [tabSelectId]: storeId,
+          pickUpStore: storeId,
+          returnStore: storeId
+        })
+      }
     })
-    this.loadData();
-    wx.hideLoading();
+  },
+  //获取配置项
+  loadSetting:function(){
+    var that=this;
+    var url = app.globalData.siteRoot + "/api/services/app/SystemSettings/GetPhoneNumberAsync";
+    wx.request({
+      url: url,
+      method:"POST",
+      success:function(res){
+        console.log(res);
+        if (res.statusCode != 200) {
+          console.log("请求出错");
+          that.aldstat.sendEvent('请求出错', {
+            "url": url,
+            "message": res
+          });
+          return;
+        }
+        that.setData({
+          phoneNumber: res.data.result
+        })
+      }
+    })
+    
+    
+  },
+  onShow: function () {
+    //wx.showLoading({
+    //  title: "加载中..."
+    //})
+    //this.loadData();
+    //wx.hideLoading();
   },
   
   //tab事件
@@ -162,6 +219,7 @@ Page(extend({}, Tab, Zan.Field,{
   ok2:function(){
     this.hideDatePopup2();
   },
+  //去选车
   click_go:function(){
     var that=this;
     //取车对象
@@ -172,35 +230,55 @@ Page(extend({}, Tab, Zan.Field,{
     var returDateObj = that.data.pickerViewConfig2.year[that.data.pickerViewConfig2.value[0]];
     var returTimeObj = that.data.pickerViewConfig2.time[that.data.pickerViewConfig2.value[1]];
 
-    app.globalData.pickerDateObj = pickerDateObj;
-    app.globalData.pickerTimeObj = pickerTimeObj;
-    app.globalData.returnDateObj = returDateObj;
-    app.globalData.returnTimeObj = returTimeObj;
-    app.globalData.day=that.data.day;
-    app.globalData.pickUpStore = that.data.pickUpStore;
-    app.globalData.returnStore = that.data.returnStore;
-    var pickerDate = pickerDateObj.FullDate;
-    var returnDate = returDateObj.FullDate;
+    // app.globalData.pickerDateObj = pickerDateObj;
+    // app.globalData.pickerTimeObj = pickerTimeObj;
+    // app.globalData.returnDateObj = returDateObj;
+    // app.globalData.returnTimeObj = returTimeObj;
+     app.globalData.day=that.data.day;
+    // app.globalData.pickUpStore = that.data.pickUpStore;
+    // app.globalData.returnStore = that.data.returnStore;
+    //以后用这个存取值
+    app.globalData.pickUpCar={
+      Date:pickerDateObj,
+      Time:pickerTimeObj,
+      StoreId:that.data.pickUpStore
+    };
+    app.globalData.returnCar={
+      Date:returDateObj,
+      Time:returTimeObj,
+      StoreId:that.data.returnStore
+    }
+    
+    //var pickerDate = pickerDateObj.FullDate;
+    //var returnDate = returDateObj.FullDate;
 
-    console.log("取车对象");
-    console.log(pickerDateObj);
-    console.log(pickerTimeObj);
-    console.log("还车对象");
-    console.log(returDateObj);
-    console.log(returTimeObj);
-    console.log("取车日期=》"+pickerDate);
-    console.log("还车日期=》" + returnDate);
-    console.log("天数=》" + that.data.day);
+    
+     console.log("取车对象=>",app.globalData.pickUpCar);
+    // console.log(pickerTimeObj);
+    
+     console.log("还车对象=>",app.globalData.returnCar);
+    // console.log(returTimeObj);
+    // console.log("取车日期=>"+pickerDate);
+    // console.log("还车日期=>" + returnDate);
+    // console.log("天数=>" + that.data.day);
     app.aldstat.sendEvent('去选车按钮');
     wx.navigateTo({
-      url: '../car-list/car-list?startDate=' + pickerDate + '&endDate=' + returnDate + '&day=' + that.data.day,
+      //url: '../car-list/car-list?startDate=' + pickerDate + '&endDate=' + returnDate + '&day=' + that.data.day + '&pickUpStoreId=' + that.data.pickUpStore+'&returnStoreId='+that.data.returnStore,
+      url:'../car-list/car-list'
     })
   },
   //打电话
   call:function(){
+    var that=this;
     app.aldstat.sendEvent('打电话');
     wx.makePhoneCall({
-      phoneNumber: '13692950061' //仅为示例，并非真实的电话号码
+      phoneNumber: that.data.phoneNumber
+    })
+  },
+  copyRight:function(){
+    app.aldstat.sendEvent('技术支持');
+    wx.makePhoneCall({
+      phoneNumber: '13692950061'
     })
   },
   onPullDownRefresh: function () {

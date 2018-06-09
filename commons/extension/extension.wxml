@@ -1,5 +1,0 @@
-<view id="_toast" wx:if="{{_toast}}">
-    <view class="{{_toast.hide?'hide':''}}" id="_toast_title">
-        <text>{{_toast.title}}</text>
-    </view>
-</view>

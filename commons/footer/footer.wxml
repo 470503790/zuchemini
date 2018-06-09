@@ -1,0 +1,2 @@
+<view class="zan-font-14" bindtap="call" style="text-align:center;color:#606060;position:absolute;bottom:100rpx;width:100%">服务热线：{{phoneNumber}}</view>
+<view class="zan-font-14" bindtap="copyRight" style="text-align:center;color:#4093c6;position:absolute;bottom:30rpx;width:100%">技术支持@大树科技</view>

@@ -24,7 +24,7 @@
                   </view>
                   <!-- 时间选择 -->
                   <view class="zan-cell" style="text-align: center">
-                    <view class="zan-col zan-col-8" bindtap="handleDateFieldClick">
+                    <view class="zan-col zan-col-8" >
                       <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
                       <view class="zan-font-24">{{pickUpTime}}</view>
                       <view class="zan-font-14" style="color:#C0C0C0">{{pickUpDate}} {{pickUpWeek}}</view>
@@ -33,7 +33,7 @@
                     <image src="../../../images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
       <view style="position:relative;top:-50rpx;">{{day}}天</view>
                     </view>
-                    <view class="zan-col zan-col-8" bindtap="handleDateFieldClick2">
+                    <view class="zan-col zan-col-8" >
                       <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
                       <view class="zan-font-24">{{returnTime}}</view>
                       <view class="zan-font-14" style="color:#C0C0C0">{{returnDate}} {{returnWeek}}</view>
@@ -42,12 +42,16 @@
                   <!-- 取车门店 -->
                   <view class="zan-cell">
                       <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">取车门店</view>
-                      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{pickUpStore}}</view>
+                      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;" catchtap="openLocation" data-latitude="{{pickUpStore.latitude}}" data-longitude="{{pickUpStore.longitude}}" data-name="{{pickUpStore.name}}" data-address="{{pickUpStore.address}}">{{pickUpStore.name}}
+                      <view class="box" ><image class="img" src="/images/position.png"></image></view>
+                      </view>
                   </view>
                   <!-- 还车门店 -->
                   <view class="zan-cell">
                       <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">还车门店</view>
-                      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{returnStore}}</view>
+                      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;" catchtap="openLocation"  data-latitude="{{returnStore.latitude}}" data-longitude="{{returnStore.longitude}}" data-name="{{returnStore.name}}" data-address="{{returnStore.address}}">{{returnStore.name}}
+                      <view class="box" ><image class="img" src="/images/position.png"></image></view>
+                      </view>
                   </view>
                 </view>
               </view>

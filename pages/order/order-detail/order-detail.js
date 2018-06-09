@@ -176,5 +176,21 @@ Page({
       }
     })
     
-  }
+  },
+  //打开地图查看位置  取车门店
+  openLocation:function(e){
+    var latitude=parseFloat(e.currentTarget.dataset.latitude);
+    var longitude=parseFloat(e.currentTarget.dataset.longitude);
+    var name=e.currentTarget.dataset.name;
+    var address=e.currentTarget.dataset.address;
+    console.log("纬度:"+latitude);
+    console.log("经度:"+longitude);
+    wx.openLocation({
+      latitude:latitude,
+      longitude:longitude,
+      name:name,
+      address:address,
+      scale: 28
+    })
+  },
 })

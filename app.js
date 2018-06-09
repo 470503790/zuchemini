@@ -85,12 +85,15 @@ App({
     userInfo: null,
     //siteRoot:"https://das.mynatapp.cc",
     siteRoot: "https://zuche.shensigzs.com",
-    pickerDateObj: null,//取车信息
-    returnDateObj: null,//还车信息
-    pickerTimeObj: null,//取车信息
-    returnTimeObj: null,//还车信息
+    //pickerDateObj: null,//取车信息
+    //returnDateObj: null,//还车信息
+    //pickerTimeObj: null,//取车信息
+    //returnTimeObj: null,//还车信息
     day: null,
-    pickUpStore: null,
-    returnStore: null
+    //pickUpStore: null,
+    //returnStore: null,
+    phoneNumber:null,
+    pickUpCar:null,//以后都使用这个
+    returnCar:null//以后都使用这个
   }
 })

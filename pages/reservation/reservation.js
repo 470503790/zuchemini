@@ -8,8 +8,8 @@ Page({
    */
   data: {
     config,
-    carId:0,
-    totalAmount:0
+    carId: 0,
+    totalAmount: 0
   },
 
   /**
@@ -28,66 +28,66 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   },
   formSubmit(event) {
     app.aldstat.sendEvent('提交预约单');
-    var that=this;
+    var that = this;
     console.log('[zan:field:submit]', event.detail.value);
     var fullName = event.detail.value.name;
     var mobile = event.detail.value.tel;
     //验证
-    if(fullName==""){
+    if (fullName == "") {
       wx.showToast({
         title: '请填写姓名！',
         icon: 'success',
         duration: 1500
       })
-return;
+      return;
     }
-    if (mobile==""){
+    if (mobile == "") {
       wx.showToast({
         title: '请填写手机号码！',
         icon: 'success',
@@ -101,7 +101,7 @@ return;
         icon: 'success',
         duration: 1500
       })
-      return ;
+      return;
     }
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
     if (!myreg.test(mobile)) {
@@ -110,21 +110,23 @@ return;
         icon: 'success',
         duration: 1500
       })
-      return ;
+      return;
     }
     wx.showLoading({
       title: "正在提交...",
       mask: true
     });
     var url = app.globalData.siteRoot + "/api/services/app/reservation/CreateReservationToMiniAsync";
-    var ops={
-      "pickUpDate": app.globalData.pickerDateObj.FullDate,
-      "pickUpTime": app.globalData.pickerTimeObj,
+    console.log("取车对象=>", app.globalData.pickUpCar);
+    console.log("还车对象=>", app.globalData.returnCar);
+    var ops = {
+      "pickUpDate": app.globalData.pickUpCar.Date.FullDate,
+      "pickUpTime": app.globalData.pickUpCar.Time,
+      "pickUpStoreId": app.globalData.pickUpCar.StoreId,
       "day": app.globalData.day,
-      "returnDate": app.globalData.returnDateObj.FullDate,
-      "returnTime": app.globalData.returnTimeObj,
-      "pickUpStore": app.globalData.pickUpStore,
-      "returnStore": app.globalData.returnStore,
+      "returnDate": app.globalData.returnCar.Date.FullDate,
+      "returnTime": app.globalData.returnCar.Time,
+      "returnStoreId": app.globalData.returnCar.StoreId,
       "fullName": fullName,
       "mobilePhone": mobile,
       "rentalFees": 0,
@@ -138,17 +140,17 @@ return;
     wx.request({
       url: url,
       method: "POST",
-      data:ops,
+      data: ops,
       header: {
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
         console.log(res.data);
         wx.hideLoading();
-        if(res.statusCode!=200){
+        if (res.statusCode != 200) {
           console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
+          app.aldstat.sendEvent('请求出错', {
+            "url": url,
             "message": res
           });
           return;
@@ -161,9 +163,9 @@ return;
           title: '预约成功',
           icon: 'success',
           duration: 2000,
-          success:function(){
+          success: function () {
             //跳转到订单详情页
-            wx.navigateTo({
+            wx.redirectTo({
               url: '../order/order-detail/order-detail?id=' + res.data.result.id,
             })
           }
@@ -173,7 +175,7 @@ return;
         wx.hideLoading();
       }
     })
-    
+
   },
   formReset(event) {
     console.log('[zan:field:reset]', event);
