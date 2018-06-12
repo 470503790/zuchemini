@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/index/index",
     "pages/order/order-detail/order-detail",
     "pages/order/order-list/order-list",

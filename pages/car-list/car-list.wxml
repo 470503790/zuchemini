@@ -30,7 +30,7 @@
           <view class="zan-font-16 zan-font-bold">{{car.name}}</view>
           <view class="zan-c-black zan-font-14">{{car.bodyStructure}}|{{car.displacement}}{{car.stalls}}|乘坐{{car.numberOfPeople}}人</view>
           <view class="zan-c-black zan-font-14">租期
-            <label class="zan-font-16" style="color:#F4B900">{{options.day}}</label>天</view>
+            <label class="zan-font-16" style="color:#F4B900">{{day}}</label>天</view>
         </view>
       </view>
       <view class="zan-cell">

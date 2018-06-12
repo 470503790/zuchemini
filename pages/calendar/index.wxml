@@ -1,0 +1,42 @@
+
+<!--index.wxml-->
+<view class="calendar">
+  <view class="time">
+    <view>
+      <text class="t_blue">{{year}}</text>年
+      <text class="t_blue">{{month}}</text>月
+    </view>
+    <view style="text-align: right;">
+      本月已签到
+      <text class="t_red">{{calendarSignDay}}</text>天
+    </view>
+  </view>
+  <view class="weekName">
+    <view class="sunday">日</view>
+    <view class="monday">一</view>
+    <view class="tuesday">二</view>
+    <view class="wednesday">三</view>
+    <view class="thursday">四</view>
+    <view class="friday">五</view>
+    <view class="saturday">六</view>
+  </view>
+  <view class="week">
+
+    <!--填补空格-->
+    <view wx:for="{{week}}">\n</view>
+
+    <!--开心循环日期-->
+    
+    <view style="border: 1px solid blue; padding-bottom:8rpx;">
+      <text style="color:blue;font-size:30rpx;">{{date}}</text>
+    </view>
+    <view wx:for="{{monthDaySize}}" wx:key="{{index}}" style="font-size:30rpx;">
+
+    {{item+date+1}}
+    </view>
+  </view>
+  <view class="calendarSign">
+    <button wx:if="{{date!=calendarSignData[date]}}" style="color:white;background-color:blue;" bindtap="calendarSign">签到</button>
+    <button wx:else="">今日已签到</button>
+  </view>
+</view>

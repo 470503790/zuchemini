@@ -13,7 +13,7 @@ Page({
     //   pickUpStoreId:0,
     //   returnStoreId:0
     // },
-
+    day:0,
     cars: [],
     car: {},
     showPopup: false,
@@ -23,11 +23,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var that = this;
+     var that = this;
     // console.log(options);
-    // that.setData({
-    //   options: options
-    // });
+     that.setData({
+       day: app.globalData.day
+     });
   },
   loadData: function () {
     var that = this;

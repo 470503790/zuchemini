@@ -230,13 +230,7 @@ Page(extend({}, Tab, Zan.Field,{
     var returDateObj = that.data.pickerViewConfig2.year[that.data.pickerViewConfig2.value[0]];
     var returTimeObj = that.data.pickerViewConfig2.time[that.data.pickerViewConfig2.value[1]];
 
-    // app.globalData.pickerDateObj = pickerDateObj;
-    // app.globalData.pickerTimeObj = pickerTimeObj;
-    // app.globalData.returnDateObj = returDateObj;
-    // app.globalData.returnTimeObj = returTimeObj;
      app.globalData.day=that.data.day;
-    // app.globalData.pickUpStore = that.data.pickUpStore;
-    // app.globalData.returnStore = that.data.returnStore;
     //以后用这个存取值
     app.globalData.pickUpCar={
       Date:pickerDateObj,
@@ -249,21 +243,13 @@ Page(extend({}, Tab, Zan.Field,{
       StoreId:that.data.returnStore
     }
     
-    //var pickerDate = pickerDateObj.FullDate;
-    //var returnDate = returDateObj.FullDate;
 
     
      console.log("取车对象=>",app.globalData.pickUpCar);
-    // console.log(pickerTimeObj);
-    
+     console.log("天数=>", app.globalData.day);
      console.log("还车对象=>",app.globalData.returnCar);
-    // console.log(returTimeObj);
-    // console.log("取车日期=>"+pickerDate);
-    // console.log("还车日期=>" + returnDate);
-    // console.log("天数=>" + that.data.day);
     app.aldstat.sendEvent('去选车按钮');
     wx.navigateTo({
-      //url: '../car-list/car-list?startDate=' + pickerDate + '&endDate=' + returnDate + '&day=' + that.data.day + '&pickUpStoreId=' + that.data.pickUpStore+'&returnStoreId='+that.data.returnStore,
       url:'../car-list/car-list'
     })
   },

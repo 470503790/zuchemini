@@ -1,75 +1,82 @@
-
 <view class="container">
-    <view class="zan-panel" style="margin:0;">
-        <view class="zan-row">
-            <image src="/images/banner/1.jpg" style="width:100%;height:350rpx;"></image>
-            <view class="user {{userInfo==null?'hide':''}}" style="position: absolute;left:45%;top:20%;width:120rpx;text-align:center;">
-                <image src="{{userInfo.avatarUrl}}" style="width:100rpx;height:100rpx;border-radius:50px"></image>
-                <view style="color:white;font-size:24rpx;">{{userInfo.nickName}} ></view>
-                <view class="zan-icon zan-icon-member-day-privilege" style="color:rgb(12, 157, 214);float:left;margin-right:10rpx;font-size:32rpx">
+  <view class="zan-panel" style="margin:0;">
+    <view class="zan-row">
+      <image src="/images/banner/1.jpg" style="width:100%;height:350rpx;"></image>
+      <view class="user {{userInfo==null?'hide':''}}" style="position: absolute;left:45%;top:20%;width:120rpx;text-align:center;">
+        <image src="{{userInfo.avatarUrl}}" style="width:100rpx;height:100rpx;border-radius:50px"></image>
+        <view style="color:white;font-size:24rpx;">{{userInfo.nickName}} ></view>
+        <view class="zan-icon zan-icon-member-day-privilege" style="color:rgb(12, 157, 214);float:left;margin-right:10rpx;font-size:32rpx">
 
-                </view>
-                <view style="color:white;font-size:24rpx;line-height:50rpx;">{{userInfo.levelName}}</view>
+        </view>
+        <view style="color:white;font-size:24rpx;line-height:50rpx;">{{userInfo.levelName}}</view>
 
-            </view>
-            <view class="user {{userInfo==null?'':'hide'}}" style="position: absolute;left:41%;top:30%;text-align:center;">
-                <button bindtap="goLogin" class="zan-btn zan-btn--big zan-btn--danger button-hover">去登录</button>
+      </view>
+      <view class="user {{userInfo==null?'':'hide'}}" style="position: absolute;left:41%;top:30%;text-align:center;">
+        <button bindtap="goLogin" class="zan-btn zan-btn--big zan-btn--danger button-hover">去登录</button>
 
-            </view>
+      </view>
+    </view>
+    <view class="zan-row">
+      <view class="zan-col-offset-1 zan-font-14">我的钱包</view>
+      <view class="zan-cell" style="text-align: center;">
+        <view class="zan-col zan-col-8" bindtap="accountBalance">
+          <view>
+            <label class="theme-color" style="font-size:40rpx;">0</label>元</view>
+          <view>帐户余额</view>
         </view>
-        <view class="zan-row">
-            <view class="zan-col-offset-1 zan-font-14">我的钱包</view>
-            <view class="zan-cell" style="text-align: center;">
-                <view class="zan-col zan-col-8" bindtap="accountBalance">
-                    <view>
-                        <label class="theme-color" style="font-size:40rpx;">0</label>元</view>
-                    <view>帐户余额</view>
-                </view>
-                <view class="zan-col zan-col-8" bindtap="coupon">
-                    <view>
-                        <label class="theme-color" style="font-size:40rpx;">0</label>张</view>
-                    <view>优惠券</view>
-                </view>
-                <view class="zan-col zan-col-8" bindtap="score">
-                    <view>
-                        <label class="theme-color" style="font-size:40rpx;">0</label>分</view>
-                    <view>可用积分</view>
-                </view>
-            </view>
+        <view class="zan-col zan-col-8" bindtap="coupon">
+          <view>
+            <label class="theme-color" style="font-size:40rpx;">0</label>张</view>
+          <view>优惠券</view>
         </view>
-    </view>
-    <view class="zan-panel">
-        <view class="zan-col-offset-1 zan-font-14">帮助反馈</view>
-        <view class="zan-cell" style="text-align: center;">
-            <view class="zan-col zan-col-6" bindtap="novice">
-                <view class="zan-icon zan-icon-records" style="color:#67C6C2"></view>
-                <view class="icon-classname">新手引导</view>
-            </view>
-            <view class="zan-col zan-col-6" bindtap="service">
-                <view class="zan-icon zan-icon-pending-orders" style="color:#7CB5DA"></view>
-                <view class="icon-classname">服务规则</view>
-            </view>
-            <view class="zan-col zan-col-6" bindtap="commonProblem">
-                <view class="zan-icon zan-icon-question" style="color:#67C6C2"></view>
-                <view class="icon-classname">常见问题</view>
-            </view>
-            <view class="zan-col zan-col-6" bindtap="opinion">
-                <view class="zan-icon zan-icon-pending-evaluate" style="color:#7CB5DA"></view>
-                <view class="icon-classname">意见反馈</view>
-            </view>
+        <view class="zan-col zan-col-8" bindtap="score">
+          <view>
+            <label class="theme-color" style="font-size:40rpx;">0</label>分</view>
+          <view>可用积分</view>
         </view>
+      </view>
     </view>
+  </view>
+  <view class="zan-panel">
+    <view class="zan-col-offset-1 zan-font-14">帮助反馈</view>
+    <view class="zan-cell" style="text-align: center;">
+      <view class="zan-col zan-col-6" bindtap="novice">
+        <view class="zan-icon zan-icon-records" style="color:#67C6C2"></view>
+        <view class="icon-classname">新手引导</view>
+      </view>
+      <view class="zan-col zan-col-6" bindtap="service">
+        <view class="zan-icon zan-icon-pending-orders" style="color:#7CB5DA"></view>
+        <view class="icon-classname">服务规则</view>
+      </view>
+      <view class="zan-col zan-col-6" bindtap="commonProblem">
+        <view class="zan-icon zan-icon-question" style="color:#67C6C2"></view>
+        <view class="icon-classname">常见问题</view>
+      </view>
+      <view class="zan-col zan-col-6" bindtap="opinion">
+        <view class="zan-icon zan-icon-pending-evaluate" style="color:#7CB5DA"></view>
+        <view class="icon-classname">意见反馈</view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel">
+    <navigator class="zan-cell zan-cell--access" url="/pages/order/order-list/order-list">
+      <view class="zan-cell__bd">自驾订单({{orderCount}})</view>
+      <view class="zan-cell__ft"></view>
+    </navigator>
+  </view>
+  <view class="zan-panel">
+    <navigator class="zan-cell zan-cell--access" url="">
+      <view class="zan-cell__bd">待支付款项(0)</view>
+      <view class="zan-cell__ft"></view>
+    </navigator>
+  </view>
+  <block wx:if="{{userInfo.isCheckSales}}">
     <view class="zan-panel">
-        <navigator class="zan-cell zan-cell--access" url="/pages/order/order-list/order-list">
-            <view class="zan-cell__bd">自驾订单({{orderCount}})</view>
-            <view class="zan-cell__ft"></view>
-        </navigator>
+      <navigator class="zan-cell zan-cell--access" url="">
+        <view class="zan-cell__bd">管理入口</view>
+        <view class="zan-cell__ft"></view>
+      </navigator>
     </view>
-    <view class="zan-panel">
-        <navigator class="zan-cell zan-cell--access" url="">
-            <view class="zan-cell__bd">待支付款项(0)</view>
-            <view class="zan-cell__ft"></view>
-        </navigator>
-    </view>
+  </block>
 
 </view>
