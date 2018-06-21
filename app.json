@@ -12,8 +12,9 @@
     "pages/help/commonProblem/commonProblem",
     "pages/help/opinion/opinion",
     "pages/login/login",
-    "pages/logs/logs"
-    
+    "pages/order/order-manager/order-manager",
+    "pages/logs/logs",
+    "pages/bg-management/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

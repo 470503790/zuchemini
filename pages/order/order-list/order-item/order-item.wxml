@@ -1,5 +1,5 @@
 <template name="orderItem">
-        <view class="zan-panel" data-id="{{id}}"  bindtap="orderDetail">
+        <view class="zan-panel" data-id="{{id}}" data-status="{{status}}" bindtap="orderDetail">
                 <view class="zan-row">
                     <!-- 订单号、状态 -->
                   <view class="zan-cell">

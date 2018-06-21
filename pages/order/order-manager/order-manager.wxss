@@ -1,0 +1,26 @@
+.img {
+    width: 50rpx;
+    height: 50rpx;
+  }
+  
+  .box {
+    float: left;
+  }
+  
+  .box image {
+    animation: myfirst 2s infinite;
+  }
+  
+  @keyframes myfirst {
+    0% {
+      transform: translate(0px, 0px);
+    }
+  
+    50% {
+      transform: translate(0px, -10px);
+    }
+  
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }

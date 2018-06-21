@@ -72,7 +72,7 @@
   </view>
   <block wx:if="{{userInfo.isCheckSales}}">
     <view class="zan-panel">
-      <navigator class="zan-cell zan-cell--access" url="">
+      <navigator class="zan-cell zan-cell--access" url="/pages/bg-management/index">
         <view class="zan-cell__bd">管理入口</view>
         <view class="zan-cell__ft"></view>
       </navigator>

@@ -1,0 +1,35 @@
+<import src="/dist/tab/index.wxml" />
+<import src="/dist/dialog/index.wxml" />
+<import src="/dist/actionsheet/index.wxml" />
+<import src="../order-list/order-item/order-item.wxml" />
+<view class="container">
+    <view style="">
+        <template is="zan-tab" data="{{ ...tab1, componentId: 'tab1' }}"></template>
+    </view>
+    <!-- 搜索 -->
+    <form bindsubmit="formSubmit" bindreset="formReset">
+            <view class="zan-panel">
+                <view class="zan-cell zan-field">
+                    <input type="text" name="filterText" value="{{filterText}}" placeholder="输入订单号/姓名/手机" class="zan-field__input zan-cell__bd" />
+                    <view class="zan-cell__ft">
+                        <button  formType="submit" class="zan-icon zan-icon-search"></button>
+                    </view>
+                </view>
+            </view>
+        </form>
+    <block wx:if="{{orders.length>=1}}">
+        <!-- 列表 -->
+        <view wx:for="{{orders}}" wx:key="index">
+            <template is="orderItem" data="{{...item}}" />
+        </view>
+    </block>
+    <block wx:else>
+        <view class="zan-col zan-col-12 zan-col-offset-6">
+            <view>您还没有相关的订单</view>
+            <label class="zan-font-12 zan-c-gray-darker">试试选择其它订单状态</label>
+        </view>
+    </block>
+
+</view>
+<template is="zan-dialog" data="{{ zanDialog }}"></template>
+<template is="zan-actionsheet" data="{{ ...baseActionsheet }}"></template>

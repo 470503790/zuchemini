@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="zan-panel">
+    <navigator class="zan-cell zan-cell--access" url="/pages/order/order-manager/order-manager">
+      <view class="zan-cell__bd">预约单管理</view>
+      <view class="zan-cell__ft"></view>
+    </navigator>
+  </view>
+</view>
