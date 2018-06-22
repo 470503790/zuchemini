@@ -182,4 +182,11 @@ Page({
       scale: 28
     })
   },
+  //打电话
+  call:function(e){
+    var phone=e.currentTarget.dataset.phone;
+    wx.makePhoneCall({
+      phoneNumber:phone
+    })
+  }
 })

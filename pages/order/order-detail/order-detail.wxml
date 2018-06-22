@@ -51,5 +51,17 @@
       </view>
     </view>
   </view>
+  <view class="zan-panel">
+    <view class="zan-row">
+        <view class="zan-cell">
+            <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">姓名</view>
+            <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{orderDetail.fullName}}</view>
+          </view>
+          <view class="zan-cell">
+            <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">手机</view>
+            <view bindtap="call" data-phone="{{orderDetail.mobilePhone}}" class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{orderDetail.mobilePhone}}</view>
+          </view>
+    </view>
+  </view>
   <button style="margin-top:40rpx;margin-bottom:100rpx;background:white;" bindtap="goIndex">返回首页</button>
 </view>
