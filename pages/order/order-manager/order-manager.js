@@ -1,6 +1,7 @@
 
 const app = getApp()
 const Zan = require('../../../dist/index');
+var network = require("../../../utils/network.js")
 Page(Object.assign({}, Zan, Zan.Dialog, {
 
   /**
@@ -57,43 +58,22 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
     },
     orderId: 0,//订单id
     isClickOrderStatus: false,//是否点击订单状态
-    filterText:""//搜索字
+    filterText: ""//搜索字
   },
   loadData: function (skipCount, status, filterText) {
     var that = this;
     var url = app.globalData.siteRoot + "/api/services/app/reservation/GetPagedReservationsToMiniAsync";
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
-    wx.request({
-      url: url,
-      data: {
-        filterText: filterText,
-        status: status,
-        maxResultCount: 100,
-        skipCount: skipCount
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        console.log(res);
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
-        }
-        that.setData({
-          orders: res.data.result.items
-        })
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
-    })
+    var params={
+      filterText: filterText,
+      status: status,
+      maxResultCount: 100,
+      skipCount: skipCount
+    };
+    network.requestLoading(url, params, "加载中...", function (res) {
+      that.setData({
+        orders: res.result.items
+      })
+    });
   },
   //点击tab
   _handleZanTabChange: function (e) {
@@ -103,7 +83,7 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
     var skipCount = 0;//当前第一页
     this.setData({
       [`${componentId}.selectedId`]: selectedId,
-      filterText:""
+      filterText: ""
     });
     this.loadData(skipCount, selectedId, "");
   },
@@ -113,15 +93,15 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
     var selectedId = that.data.tab1.selectedId;
     var filterText = event.detail.value.filterText;
     that.setData({
-      filterText:filterText
+      filterText: filterText
     });
     this.loadData(0, selectedId, filterText);
   },
   orderDetail: function (e) {
     var that = this;
     var orderId = e.currentTarget.dataset.id;
-    var orderStatus=e.currentTarget.dataset.status;
-    var buttons=[{
+    var orderStatus = e.currentTarget.dataset.status;
+    var buttons = [{
       text: '查看订单详情',
       color: 'red',
       type: 'detail'
@@ -138,8 +118,8 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
       orderId: orderId
     });
     //判断订单状态
-    if(orderStatus=="已完成"){
-      buttons=[{
+    if (orderStatus == "已完成") {
+      buttons = [{
         text: '查看订单详情',
         color: 'red',
         type: 'detail'
@@ -204,56 +184,36 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
       isClickOrderStatus: true
     });
     var url = app.globalData.siteRoot + "/api/services/app/reservation/ChangeStatusReservationToMiniAsync";
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
-    wx.request({
-      url: url,
-      data: {
-        id: that.data.orderId,
-        status: status,
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        console.log(res);
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
-        }
-        wx.redirectTo({
-          url: "/pages/order/order-manager/order-manager?selectedId="+that.data.tab1.selectedId+"&filterText="+that.data.filterText
-        });
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
-    })
+    var params={
+      id: that.data.orderId,
+      status: status,
+    };
+    network.requestLoading(url, params, "加载中...", function (res) {
+      wx.redirectTo({
+        url: "/pages/order/order-manager/order-manager?selectedId=" + that.data.tab1.selectedId + "&filterText=" + that.data.filterText
+      });
+    });
+    
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("参数：",options);
+    console.log("参数：", options);
     var selectedId = this.data.tab1.selectedId;
-    var filterText="";
+    var filterText = "";
     //如果有参数
-    if(JSON.stringify(options) != "{}"){
-      selectedId=options.selectedId;
-      filterText=options.filterText;
+    if (JSON.stringify(options) != "{}") {
+      selectedId = options.selectedId;
+      filterText = options.filterText;
       this.setData({
         [`tab1.selectedId`]: selectedId,
-        filterText:filterText
+        filterText: filterText
       })
     }
-    
+
     var skipCount = 0;
-    this.loadData(skipCount, selectedId,filterText);
+    this.loadData(skipCount, selectedId, filterText);
   },
 
   /**

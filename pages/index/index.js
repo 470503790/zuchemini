@@ -5,6 +5,7 @@ const app = getApp()
 const { Tab, extend } = require('../../dist/index');
 const Zan = require('../../dist/index');
 var ext = require('indexExt.js')
+var network = require("../../utils/network.js")
 Page(extend({}, Tab, Zan.Field,{
   data: {
     tab: {//选项卡
@@ -70,65 +71,32 @@ Page(extend({}, Tab, Zan.Field,{
   loadStore:function(){
     var that = this;
     var url = app.globalData.siteRoot + "/api/services/app/Store/GetStoreDropDownList";
-    wx.request({
-      url: url,
-      method:"POST",
-      success:function(res){
-        wx.hideLoading();
-        console.log("门店列表=>", res);
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          that.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
-        }
-        //写入缓存
-        //wx.setStorageSync('tab.list', res.data.result);
-        var tabList = "tab.list";
+    network.requestLoading(url,{},"加载中",function(res){
+      var tabList = "tab.list";
         var tabSelectId ="tab.selectedId";
-        var storeId = res.data.result[0].id;
+        var storeId = res.result[0].id;
         that.setData({
-          [tabList]: res.data.result,
+          [tabList]: res.result,
           [tabSelectId]: storeId,
           pickUpStore: storeId,
           returnStore: storeId
         })
-      }
     })
+    
   },
   //获取配置项
   loadSetting:function(){
     var that=this;
     var url = app.globalData.siteRoot + "/api/services/app/SystemSettings/GetPhoneNumberAsync";
-    wx.request({
-      url: url,
-      method:"POST",
-      success:function(res){
-        console.log(res);
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          that.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
-        }
-        that.setData({
-          phoneNumber: res.data.result
-        })
-      }
-    })
+    network.requestLoading(url,{},"加载中",function(res){
+      that.setData({
+        phoneNumber: res.result
+      })
+    });
     
     
   },
   onShow: function () {
-    //wx.showLoading({
-    //  title: "加载中..."
-    //})
-    //this.loadData();
-    //wx.hideLoading();
   },
   
   //tab事件
@@ -143,9 +111,9 @@ Page(extend({}, Tab, Zan.Field,{
       "returnStore":selectedId
     });
     
-    app.aldstat.sendEvent('tab',{
-      'selectedId': selectedId
-    });
+    // app.aldstat.sendEvent('tab',{
+    //   'selectedId': selectedId
+    // });
   },
   //左边时间选择
   handleDateFieldClick:function(e){
@@ -153,7 +121,7 @@ Page(extend({}, Tab, Zan.Field,{
     this.setData({
       'pickerViewConfig1.show': true
     });
-    app.aldstat.sendEvent('取车时间点击');
+    //app.aldstat.sendEvent('取车时间点击');
   },
   //把值存到缓存
   handlePopupDateChange(e) {
@@ -190,7 +158,6 @@ Page(extend({}, Tab, Zan.Field,{
     this.setData({
       'pickerViewConfig2.show': true
     });
-    app.aldstat.sendEvent('还车时间点击');
   },
   handlePopupDateChange2(e) {
     console.log(e.detail);
@@ -248,7 +215,7 @@ Page(extend({}, Tab, Zan.Field,{
      console.log("取车对象=>",app.globalData.pickUpCar);
      console.log("天数=>", app.globalData.day);
      console.log("还车对象=>",app.globalData.returnCar);
-    app.aldstat.sendEvent('去选车按钮');
+    //.sendEvent('去选车按钮');
     wx.navigateTo({
       url:'../car-list/car-list'
     })
@@ -256,13 +223,13 @@ Page(extend({}, Tab, Zan.Field,{
   //打电话
   call:function(){
     var that=this;
-    app.aldstat.sendEvent('打电话');
+    //app.aldstat.sendEvent('打电话');
     wx.makePhoneCall({
       phoneNumber: that.data.phoneNumber
     })
   },
   copyRight:function(){
-    app.aldstat.sendEvent('技术支持');
+    //app.aldstat.sendEvent('技术支持');
     wx.makePhoneCall({
       phoneNumber: '13692950061'
     })

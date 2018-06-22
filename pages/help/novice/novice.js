@@ -1,12 +1,14 @@
-var WxParse = require('../../../wxParse/wxParse.js');
+
 // pages/help/novice/novice.js
 var app = getApp();
+var network = require("../../../utils/network.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    content: ""
   },
 
   /**
@@ -18,36 +20,14 @@ Page({
 
   },
   loadData: function () {
-    var that=this;
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
+    var that = this;
     var url = app.globalData.siteRoot + "/api/services/app/novice/GetNoviceToMini";
-    wx.request({
-      url: url,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-
-        console.log(res.data);
-        if(res.statusCode!=200){
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
-            "message":res
-          });
-          return;
-        }
-        WxParse.wxParse('content', 'html', res.data.result.content, that, 5);
-      },
-      complete: function () {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
+    network.requestLoading(url, {}, "加载中...", function (res) {
+      that.setData({
+        content: res.result.content
+      })
+    });
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

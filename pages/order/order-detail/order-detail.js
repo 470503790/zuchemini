@@ -1,5 +1,6 @@
 // pages/order/order-detail/order-detail.js
 const app = getApp()
+var network = require("../../../utils/network.js")
 Page({
 
   /**
@@ -33,47 +34,54 @@ Page({
    */
   onShow: function () {
     this.loadData();
-    app.aldstat.sendEvent('订单详情',{
-      "订单号":this.data.orderDetail.orderNo
-    });
+    // app.aldstat.sendEvent('订单详情',{
+    //   "订单号":this.data.orderDetail.orderNo
+    // });
   },
   loadData:function(){
     var that = this;
     var id = that.data.id;
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // })
     //获取订单详情
     var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationByIdToMiniAsync";
-    wx.request({
-      url: url,
-      method: "POST",
-      data: {
-        "id": id
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        if(res.statusCode!=200){
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
-            "message":res
-          });
-          return;
-        }
-        that.setData({
-          orderDetail: res.data.result
-        })
-      },
-      complete: function () {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
+    network.requestLoading(url,{
+      "id": id
+    },"加载中...",function(res){
+      that.setData({
+        orderDetail: res.result
+      })
+    });
+    // wx.request({
+    //   url: url,
+    //   method: "POST",
+    //   data: {
+    //     "id": id
+    //   },
+    //   header: {
+    //     'content-type': 'application/json' // 默认值
+    //   },
+    //   success: function (res) {
+    //     console.log(res.data);
+    //     if(res.statusCode!=200){
+    //       console.log("请求出错");
+    //       app.aldstat.sendEvent('请求出错',{
+    //         "url":url,
+    //         "message":res
+    //       });
+    //       return;
+    //     }
+    //     that.setData({
+    //       orderDetail: res.data.result
+    //     })
+    //   },
+    //   complete: function () {
+    //     wx.hideLoading();
+    //     wx.stopPullDownRefresh();
+    //   }
+    // })
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -123,55 +131,36 @@ Page({
       content:"确认取消预约吗？",
       success:function(res){
         if(res.confirm){
-          wx.showLoading({
-            title: "正在取消...",
-            mask: true
-          });
-          app.aldstat.sendEvent('用户取消预约', {
-            "订单号": id
-          });
+          // wx.showLoading({
+          //   title: "正在取消...",
+          //   mask: true
+          // });
+          // app.aldstat.sendEvent('用户取消预约', {
+          //   "订单号": id
+          // });
           var url = app.globalData.siteRoot + "/api/services/app/reservation/CancelReservationToMini";
-          wx.request({
-            url: url,
-            method: "POST",
-            data: {
-              "id": id,
-              "formId":e.detail.formId
-            },
-            header: {
-              'content-type': 'application/json' // 默认值
-            },
-            success: function (res) {
-              if(res.statusCode!=200){
-                console.log("请求出错");
-                app.aldstat.sendEvent('请求出错',{
-                  "url":url,
-                  "message":res
-                });
-                return;
-              }
-              if(res.data.success){
-                wx.showToast({
-                  title: "已经取消",
-                  icon: 'success',
-                  duration: 2000,
-                  success: function () {
-                    that.loadData();
-                  }
-                })
-              }else{
-                wx.showToast({
-                  title: "操作出错",
-                  icon: 'error',
-                  duration: 2000,
-                })
-              }
-              
-            },
-            complete: function () {
-              wx.hideLoading();
+          var params={
+            "id": id,
+            "formId":e.detail.formId
+          };
+          network.requestLoading(url,params,"正在取消...",function(res){
+            if(res.success){
+              wx.showToast({
+                title: "已经取消",
+                icon: 'success',
+                duration: 2000,
+                success: function () {
+                  that.loadData();
+                }
+              })
+            }else{
+              wx.showToast({
+                title: "操作出错",
+                icon: 'error',
+                duration: 2000,
+              })
             }
-          })
+          });
         }
       }
     })

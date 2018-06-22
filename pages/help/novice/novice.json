@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "新手引导",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "wxparser": "plugin://wxparserPlugin/wxparser"
+  }
 }

@@ -1,5 +1,6 @@
-var WxParse = require('../../../../wxParse/wxParse.js');
+
 var app = getApp();
+var network = require("../../../../utils/network.js")
 // pages/help/service/main/main.js
 Page({
 
@@ -7,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: null
+    id: null,
+    content:""
   },
 
   /**
@@ -22,40 +24,19 @@ Page({
   },
   loadData: function () {
     var that = this;
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
     var url = app.globalData.siteRoot + "/api/services/app/service/GetServiceByIdToMiniAsync";
-    wx.request({
-      url: url,
-      method: "POST",
-      data: {
-        id: that.data.id
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-
-        console.log(res.data);
-        if(res.statusCode!=200){
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
-            "message":res
-          });
-          return;
-        }
-        wx.setNavigationBarTitle({
-          title: res.data.result.title
-        })
-        WxParse.wxParse('content', 'html', res.data.result.content, that, 5);
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
+    var params={
+      id: that.data.id
+    };
+    network.requestLoading(url, params, "加载中...", function (res) {
+      wx.setNavigationBarTitle({
+        title: res.result.title
+      })
+      that.setData({
+        content: res.result.content
+      })
     })
+   
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

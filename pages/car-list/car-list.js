@@ -1,4 +1,5 @@
 var app = getApp();
+var network = require("../../utils/network.js")
 // pages/cat-list/cat-list.js
 Page({
 
@@ -6,14 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // options: {
-    //   startDate: null,
-    //   endDate: null,
-    //   day: 0,
-    //   pickUpStoreId:0,
-    //   returnStoreId:0
-    // },
-    day:0,
+    day: 0,
     cars: [],
     car: {},
     showPopup: false,
@@ -23,57 +17,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-     var that = this;
+    var that = this;
     // console.log(options);
-     that.setData({
-       day: app.globalData.day
-     });
+    that.setData({
+      day: app.globalData.day
+    });
   },
   loadData: function () {
     var that = this;
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // })
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarsToMiniAsync";
-    var options = {
+    var params = {
       startDate: app.globalData.pickUpCar.Date.FullDate,
       endDate: app.globalData.returnCar.Date.FullDate,
       day: app.globalData.day,
       pickUpStoreId: app.globalData.pickUpCar.StoreId,
       returnStoreId: app.globalData.returnCar.StoreId
     };
-    wx.request({
-      url: url,
-      method: "POST",
-      data: options,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        app.aldstat.sendEvent('刷新车列表', {
-          url: url,
-          options: options,
-          result: res
-        });
-        console.log(res.data);
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
-        }
-        that.setData({
-          cars: res.data.result
-        })
-      },
-      complete: function () {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
+    network.requestLoading(url, params, "加载中...", function (res) {
+      that.setData({
+        cars: res.result
+      })
+    });
+
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -132,46 +102,20 @@ Page({
     console.info("显示车信息");
     var id = e.currentTarget.dataset.id;
     console.log("id=>" + id);
-    wx.showLoading({
-      title: "加载中..."
-    })
+
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarToMiniAsync";
-    var options = {
+    var params = {
       id: id,
       startDate: app.globalData.pickUpCar.Date.FullDate,
       endDate: app.globalData.returnCar.Date.FullDate,
     };
-    wx.request({
-      url: url,
-      method: "POST",
-      data: options,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
-        }
-        that.setData({
-          car: res.data.result,
-          showPopup: !that.data.showPopup
-        });
-        app.aldstat.sendEvent('查看汽车信息', {
-          "名称": res.data.result.name,
-          "options": options,
-          "result": res
-        });
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
+    network.requestLoading(url, params, "加载中...", function (res) {
+      that.setData({
+        car: res.result,
+        showPopup: !that.showPopup
+      });
     });
+
   },
   hideCarInfo: function () {
     var that = this;
@@ -196,43 +140,28 @@ Page({
 
       //点击预约前，检查是否能下单
       var url = app.globalData.siteRoot + '/api/services/app/Reservation/IsCanOrder';
-      wx.request({
-        url: url,
-        method: "POST",
-        data: {
-          userId: app.globalData.userInfo.id
-        },
-        success: function (res) {
-          console.log(res);
-          if (res.statusCode != 200) {
-            console.log("请求出错");
-            app.aldstat.sendEvent('请求出错', {
-              "url": url,
-              "message": res
-            });
-            return;
-          }
-          //弹出提示框
-          if (res.data.result == false) {
-            wx.showModal({
-              title: "提示",
-              content: "您有一个订单在进行中,无法再次下单！",
-              showCancel: false
-            })
-          } else {
-            app.aldstat.sendEvent('点击预约', {
-              "名称": that.data.car.name,
-              "userId": app.globalData.userInfo.id
-            });
-            var carId = e.currentTarget.dataset.id;
-            var totalAmount = e.currentTarget.dataset.totalamount;
-            console.log("carId=>" + carId);
-            wx.navigateTo({
-              url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
-            })
-          }
+      var params = {
+        userId: app.globalData.userInfo.id
+      }
+      network.requestLoading(url, params, "加载中...", function (res) {
+        //弹出提示框
+        if (res.result == false) {
+          wx.showModal({
+            title: "提示",
+            content: "您有一个订单在进行中,无法再次下单！",
+            showCancel: false
+          })
+        } else {
+          var carId = e.currentTarget.dataset.id;
+          var totalAmount = e.currentTarget.dataset.totalamount;
+          console.log("carId=>" + carId);
+          wx.navigateTo({
+            url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
+          })
         }
-      })
+      });
+
+
 
     }
 

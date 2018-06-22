@@ -1,5 +1,6 @@
 // pages/me/me.js
 const app = getApp()
+var network = require("../../utils/network.js")
 Page({
 
   /**
@@ -19,41 +20,19 @@ Page({
   },
   loadData: function () {
     var that = this;
-    if (app.globalData.userInfo==null) {
+    if (app.globalData.userInfo == null) {
       return;
     }
 
-    wx.showLoading({
-      title: "加载中..."
-    })
     var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationCountToMiniAsync";
-    wx.request({
-      url: url,
-      data: {
-        userId: app.globalData.userInfo.id
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        console.log("订单数=>", res);
-        if(res.statusCode!=200){
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
-            "message":res
-          });
-          return;
-        }
-        that.setData({
-          orderCount : res.data.result.count
-        })
-        
-      },
-      complete: function () {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
+    var params={
+      userId: app.globalData.userInfo.id
+    };
+    network.requestLoading(url, params, "加载中...", function (res) {
+      that.setData({
+        orderCount: res.result.count
+      })
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -69,7 +48,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
@@ -108,7 +87,7 @@ Page({
   },
   //帐户余额
   accountBalance: function () {
-    app.aldstat.sendEvent('查看余额');
+    //app.aldstat.sendEvent('查看余额');
     wx.showToast({
       title: '暂无余额',
       icon: 'success',
@@ -117,7 +96,7 @@ Page({
   },
   //优惠券
   coupon: function () {
-    app.aldstat.sendEvent('查看优惠券');
+    //app.aldstat.sendEvent('查看优惠券');
     wx.showToast({
       title: '暂无优惠券',
       icon: 'success',
@@ -126,7 +105,7 @@ Page({
   },
   //积分
   score: function () {
-    app.aldstat.sendEvent('查看积分');
+    //app.aldstat.sendEvent('查看积分');
     wx.showToast({
       title: '积分为 0',
       icon: 'success',
@@ -135,35 +114,35 @@ Page({
   },
   //新手指引
   novice: function () {
-    app.aldstat.sendEvent('点击新手指引');
+    //app.aldstat.sendEvent('点击新手指引');
     wx.navigateTo({
       url: '/pages/help/novice/novice'
     })
   },
   //服务规则
   service: function () {
-    app.aldstat.sendEvent('点击服务规则');
+    //app.aldstat.sendEvent('点击服务规则');
     wx.navigateTo({
       url: '/pages/help/service/service'
     })
   },
   //常见问题
   commonProblem: function () {
-    app.aldstat.sendEvent('点击常见问题');
+    //app.aldstat.sendEvent('点击常见问题');
     wx.navigateTo({
       url: '/pages/help/commonProblem/commonProblem'
     })
   },
   //意见反馈
   opinion: function () {
-    app.aldstat.sendEvent('点击意见反馈');
+    //app.aldstat.sendEvent('点击意见反馈');
     wx.navigateTo({
       url: '/pages/help/opinion/opinion'
     })
   },
   //登录
   goLogin: function () {
-    app.aldstat.sendEvent('点击登录');
+    //app.aldstat.sendEvent('点击登录');
     var url = "/pages/me/me";
     var jumpType = "switchTab";
     wx.navigateTo({

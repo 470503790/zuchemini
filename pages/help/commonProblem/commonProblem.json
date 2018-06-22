@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "常见问题",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "wxparser": "plugin://wxparserPlugin/wxparser"
+  }
 }

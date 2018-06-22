@@ -1,5 +1,7 @@
 // pages/help/novice/novice.js
 const app = getApp()
+var network = require("../../../utils/network.js")
+
 Page({
 
   /**
@@ -14,7 +16,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    app.aldstat.sendEvent('订单列表');
+    //app.aldstat.sendEvent('订单列表');
   },
 
   /**
@@ -28,7 +30,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  this.loadData();
+    this.loadData();
   },
   loadData: function () {
     var that = this;
@@ -44,39 +46,15 @@ Page({
     }
     var userId = app.globalData.userInfo.id;
     //获取订单列表
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
     var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationsToMiniAsync";
-    wx.request({
-      url: url,
-      method: "POST",
-      data: {
-        "weixinUserId": userId
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        if(res.statusCode!=200){
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
-            "message":res
-          });
-          return;
-        }
-        that.setData({
-          orders: res.data.result
-        })
-      },
-      complete: function () {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
+    var params={
+      "weixinUserId": userId
+    };
+    network.requestLoading(url, params, "加载中...", function (res) {
+      that.setData({
+        orders: res.result
+      })
+    });
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -120,24 +98,24 @@ Page({
       url: '/pages/order/order-detail/order-detail?id=' + id,
     })
   },
-  click_go:function(){
+  click_go: function () {
     wx.switchTab({
       url: '/pages/index/index',
     })
   },
   //打开地图查看位置  取车门店
-  openLocation:function(e){
-    var latitude=parseFloat(e.currentTarget.dataset.latitude);
-    var longitude=parseFloat(e.currentTarget.dataset.longitude);
-    var name=e.currentTarget.dataset.name;
-    var address=e.currentTarget.dataset.address;
-    console.log("纬度:"+latitude);
-    console.log("经度:"+longitude);
+  openLocation: function (e) {
+    var latitude = parseFloat(e.currentTarget.dataset.latitude);
+    var longitude = parseFloat(e.currentTarget.dataset.longitude);
+    var name = e.currentTarget.dataset.name;
+    var address = e.currentTarget.dataset.address;
+    console.log("纬度:" + latitude);
+    console.log("经度:" + longitude);
     wx.openLocation({
-      latitude:latitude,
-      longitude:longitude,
-      name:name,
-      address:address,
+      latitude: latitude,
+      longitude: longitude,
+      name: name,
+      address: address,
       scale: 28
     })
   },

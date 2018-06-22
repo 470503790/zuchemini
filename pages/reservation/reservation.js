@@ -1,6 +1,7 @@
 // pages/reservation/reservation.js
 const app = getApp()
 const config = require('./config');
+var network = require("../../utils/network.js")
 Page({
 
   /**
@@ -73,7 +74,7 @@ Page({
 
   },
   formSubmit(event) {
-    app.aldstat.sendEvent('提交预约单');
+    //ldstat.sendEvent('提交预约单');
     var that = this;
     console.log('[zan:field:submit]', event.detail.value);
     var fullName = event.detail.value.name;
@@ -112,10 +113,6 @@ Page({
       })
       return;
     }
-    wx.showLoading({
-      title: "正在提交...",
-      mask: true
-    });
     var url = app.globalData.siteRoot + "/api/services/app/reservation/CreateReservationToMiniAsync";
     console.log("取车对象=>", app.globalData.pickUpCar);
     console.log("还车对象=>", app.globalData.returnCar);
@@ -137,44 +134,21 @@ Page({
       "weixinUserId": app.globalData.userInfo.id,
       "formId": event.detail.formId
     };
-    wx.request({
-      url: url,
-      method: "POST",
-      data: ops,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.statusCode != 200) {
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错', {
-            "url": url,
-            "message": res
-          });
-          return;
+    network.requestLoading(url, ops, "正在提交...", function (res) {
+      var id=res.result.id;
+      wx.showToast({
+        title: '预约成功',
+        icon: 'success',
+        duration: 2000,
+        success: function () {
+          //跳转到订单详情页
+          wx.redirectTo({
+            url: '../order/order-detail/order-detail?id=' + id,
+          })
         }
-        app.aldstat.sendEvent('预约成功', {
-          "url": url,
-          "options": ops
-        });
-        wx.showToast({
-          title: '预约成功',
-          icon: 'success',
-          duration: 2000,
-          success: function () {
-            //跳转到订单详情页
-            wx.redirectTo({
-              url: '../order/order-detail/order-detail?id=' + res.data.result.id,
-            })
-          }
-        })
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
-    })
+      })
+    });
+   
 
   },
   formReset(event) {

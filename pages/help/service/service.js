@@ -1,5 +1,6 @@
 // pages/help/service/service.js
 var app = getApp();
+var network = require("../../../utils/network.js")
 Page({
 
   /**
@@ -17,39 +18,14 @@ Page({
     //获取服务列表
     that.loadData();
   },
-  loadData:function(){
+  loadData: function () {
     var that = this;
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    })
     var url = app.globalData.siteRoot + "/api/services/app/service/GetServiceTitleToMini";
-    wx.request({
-      url: url,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-
-        console.log(res.data);
-        if(res.statusCode!=200){
-          console.log("请求出错");
-          app.aldstat.sendEvent('请求出错',{
-            "url":url,
-            "message":res
-          });
-          return;
-        }
-        that.setData({
-          services: res.data.result
-        })
-      },
-      complete: function () {
-        wx.hideLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
+    network.requestLoading(url, {}, "加载中...", function (res) {
+      that.setData({
+        services: res.result
+      })
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -83,7 +59,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  this.loadData();
+    this.loadData();
   },
 
   /**

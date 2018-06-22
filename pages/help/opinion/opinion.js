@@ -1,5 +1,6 @@
 // pages/help/opinion/opinion.js
 var app = getApp();
+var network = require("../../../utils/network.js")
 Page({
 
   /**
@@ -67,6 +68,14 @@ Page({
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var that = this;
+    //验证
+    var content = e.detail.value.content;
+    if (content == "") {
+      wx.showToast({
+        title: "请填写意见！"
+      });
+      return;
+    }
     //判断是否登陆
     if (app.globalData.userInfo == null) {
       var url = "/pages/help/opinion/opinion";
@@ -77,43 +86,29 @@ Page({
       });
     } else {
       var url = app.globalData.siteRoot + "/api/services/app/opinion/CreateOpinionToMiniAsync";
-      wx.request({
-        url: url,
-        data: {
-          content: e.detail.value.content,
-          weixinUserId: app.globalData.userInfo.id,
-          formId: e.detail.formId
-        },
-        method: "POST",
-        header: {
-          'content-type': 'application/json' // 默认值
-        },
-        success: function (res) {
-          if(res.statusCode!=200){
-            console.log("请求出错");
-            app.aldstat.sendEvent('请求出错',{
-              "url":url,
-              "message":res
-            });
-            return;
-          }
-          wx.showModal({
-            title: '提示',
-            content: '感谢您的反馈！',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-                console.log("跳转到个人中心");
-                wx.switchTab({
-                  url: '/pages/me/me'
-                });
-              }
-
-
+      var params = {
+        content: content,
+        weixinUserId: app.globalData.userInfo.id,
+        formId: e.detail.formId
+      };
+      network.requestLoading(url, params, "正在提交...", function (res) {
+        wx.showModal({
+          title: '提示',
+          content: '感谢您的反馈！',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              console.log("跳转到个人中心");
+              wx.switchTab({
+                url: '/pages/me/me'
+              });
             }
-          })
-        }
-      })
+
+
+          }
+        })
+      });
+
     }
 
 
