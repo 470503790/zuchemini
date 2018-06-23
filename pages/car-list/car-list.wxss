@@ -1,4 +1,4 @@
-
+@import "car-calendar/car-calendar.wxss";
 .zan-arrow{
   position:absolute;
 right:15px;

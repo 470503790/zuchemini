@@ -1,0 +1,32 @@
+/* pages/calendar/calendar.wxss */
+.head{
+  text-align:center;
+  width:14.2%;
+  background-color: #F0F8FE;
+  font-size:28rpx;
+  padding:10rpx 0;
+}
+.tr{
+  text-align:center;
+  width:14.2%;
+  border:2rpx solid #EEE9E4;
+  padding:10rpx 0;
+}
+.day{
+  font-size: 28rpx;
+}
+.money{
+  font-size: 32rpx;
+  color:#A1949C;
+}
+.selected{
+  background-color: #FCE6D9;
+}
+.day-white{
+  font-size: 28rpx;
+  color:white;
+}
+.money-white{
+  font-size: 32rpx;
+  color:white;
+}

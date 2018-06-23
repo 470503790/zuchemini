@@ -25,17 +25,15 @@ Page({
   },
   loadData: function () {
     var that = this;
-    // wx.showLoading({
-    //   title: "加载中...",
-    //   mask: true
-    // })
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarsToMiniAsync";
     var params = {
       startDate: app.globalData.pickUpCar.Date.FullDate,
       endDate: app.globalData.returnCar.Date.FullDate,
       day: app.globalData.day,
       pickUpStoreId: app.globalData.pickUpCar.StoreId,
-      returnStoreId: app.globalData.returnCar.StoreId
+      returnStoreId: app.globalData.returnCar.StoreId,
+      startTime:app.globalData.pickUpCar.Time,
+      endTime:app.globalData.returnCar.Time
     };
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
@@ -167,9 +165,24 @@ Page({
 
 
   },
+  //去反馈
   click_goOpinion: function () {
     wx.navigateTo({
       url: '/pages/help/opinion/opinion',
+    })
+  },
+  calendar:function(e){
+    var carId=e.currentTarget.dataset.id;
+    console.log("汽车id",carId);
+    var cars=this.data.cars;
+    for(var i=0;i<cars.length;i++){
+      if(cars[i].id==carId){
+        cars[i].isShowCalendar=!cars[i].isShowCalendar;
+        break;
+      }
+    }
+    this.setData({
+      cars:cars
     })
   }
 })

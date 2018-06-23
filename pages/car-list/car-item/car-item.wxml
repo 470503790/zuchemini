@@ -1,3 +1,4 @@
+<import src="../car-calendar/car-calendar.wxml" />
 <template name="carItem">
     <view class="zan-panel">
         <view class="zan-cell">
@@ -19,12 +20,15 @@
                         <label class="theme-color">￥{{averageAmount}}</label>
                         <label  style="font-size:18rpx;">/日均</label>
                     </view>
-                    <view style="font-size:18rpx;padding-top:10rpx;" class="zan-col zan-col-6">
-                        每日租金
+                    <view bindtap='calendar' data-id="{{id}}" style="font-size:18rpx;padding-top:10rpx;" class="zan-col zan-col-6">
+                        每日租金 ↓
                     </view>
                 </view>
-                <calendar />
+                
             </view>
+        </view>
+        <view style="display:{{isShowCalendar==true?'block':'none'}}">
+        <template is="carCalendar" data="{{calendar}}" />
         </view>
     </view>
 </template>

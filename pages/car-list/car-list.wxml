@@ -7,7 +7,7 @@
   <view class="zan-panel "  style="display:{{cars.length==0?'block':'none'}};">
       <view class="zan-row">
           <view class="zan-cell ">
-              <view class="zan-c-gray-darker" style="width:100%;text-align: center;">一车辆都没有！</view>
+              <view class="zan-c-gray-darker" style="width:100%;text-align: center;">一辆车都没有！</view>
             </view>
       </view>
         <view class="zan-row">

@@ -1,0 +1,50 @@
+<template name="carCalendar">
+<view class="zan-panel" style="margin:0;">
+  <view class="zan-row">
+    <view class="zan-col head">
+      周一
+    </view>
+    <view class="zan-col head">
+      周二
+    </view>
+    <view class="zan-col head">
+      周三
+    </view>
+    <view class="zan-col head">
+      周四
+    </view>
+    <view class="zan-col head">
+      周五
+    </view>
+    <view class="zan-col head">
+      周六
+    </view>
+    <view class="zan-col head">
+      周日
+    </view>
+  </view>
+  <view class="zan-row">
+    <!-- 循环空白 -->
+    <block wx:for="{{calendar.header}}" wx:key="index">
+      <view class="zan-col tr">
+        <view class="day-white">a</view>
+        <view class="money-white">a</view>
+      </view>
+    </block>
+    <!-- 循环数据 -->
+    <block wx:for="{{calendar.items}}" wx:key="index">
+      <view class="zan-col tr {{calendar.items[index].selected?'selected':''}}">
+        <view class="day">{{calendar.items[index].day}}</view>
+        <view class="money">￥{{calendar.items[index].money}}</view>
+      </view>
+    </block>
+    <!-- 循环空白 -->
+    <block wx:for="{{calendar.footer}}" wx:key="index">
+      <view class="zan-col tr">
+        <view class="day-white">a</view>
+        <view class="money-white">a</view>
+      </view>
+    </block>
+  </view>
+</view>
+</template>
