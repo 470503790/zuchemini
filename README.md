@@ -19,6 +19,8 @@
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221643_fdd76cd2_1974020.jpeg "2.jpg")
 
+![输入图片说明](https://gitee.com/uploads/images/2018/0623/094131_30ffd83a_1974020.jpeg "10.jpg")
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221653_8bb4aa51_1974020.jpeg "3.jpg")
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221700_01b3f146_1974020.jpeg "4.jpg")
@@ -28,6 +30,16 @@
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221715_3a403e14_1974020.jpeg "6.jpg")
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221726_dd39dc4d_1974020.jpeg "9.jpg")
+
+ **核销员管理**
+
+![输入图片说明](https://gitee.com/uploads/images/2018/0623/094039_953e4997_1974020.jpeg "11.jpg")
+
+![输入图片说明](https://gitee.com/uploads/images/2018/0623/094051_86056d90_1974020.jpeg "12.jpg")
+
+![输入图片说明](https://gitee.com/uploads/images/2018/0623/094058_14c58fa7_1974020.jpeg "13.jpg")
+
+![输入图片说明](https://gitee.com/uploads/images/2018/0623/094104_6317853e_1974020.jpeg "14.jpg")
 
  **后端界面** 
 
