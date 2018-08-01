@@ -1,3 +1,4 @@
+
 function request(url, params, success, fail) {
   this.requestLoading(url, params, "", success, fail)
 }
@@ -15,7 +16,8 @@ function requestLoading(url, params, message, success, fail) {
       title: message,
     })
   }
-  
+  //参数处理
+  params.diyId=getApp().globalData.diyID;
   wx.request({
     url: url,
     data: params,
@@ -34,7 +36,8 @@ function requestLoading(url, params, message, success, fail) {
         success(res.data)
       } else {
         console.log("请求出错");
-        fail()
+        
+        
       }
 
     },
@@ -43,7 +46,9 @@ function requestLoading(url, params, message, success, fail) {
       if (message != "") {
         wx.hideLoading()
       }
-      fail()
+      if(fail!=undefined){
+        fail()
+      }
     },
     complete: function (res) {
 

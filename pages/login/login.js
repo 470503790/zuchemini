@@ -79,7 +79,8 @@ Page({
         network.requestLoading(url, {
           code: res.code
         }, "正在登录...", function (res) {
-          var result = json.result;
+          var json=res;
+          var result = res.result;
           if (result.success) {
             wx.setStorageSync('sessionId', result.sessionId);
             console.log('sessionId=>', wx.getStorageSync('sessionId'));
@@ -96,8 +97,8 @@ Page({
                   rawData: userInfoRes.rawData,
                   signature: userInfoRes.signature
                 }, function (res) {
-                  var checkSuccess = json.success;
-                  console.log(json.data);
+                  var checkSuccess = res.success;
+                  console.log(res.data);
                   url = app.globalData.siteRoot + '/Mpa/Weixinopen/DecodeEncryptedData';
                   network.request(url, {
                     'type': "userInfo",
@@ -105,7 +106,7 @@ Page({
                     encryptedData: userInfoRes.encryptedData,
                     iv: userInfoRes.iv
                   }, function (res) {
-                    app.globalData.userInfo = json.data.result.weixinUser;
+                    app.globalData.userInfo = res.result.weixinUser;
                     //跳转
                     if (that.data.url != null) {
                       console.log("原来url:" + that.data.url);

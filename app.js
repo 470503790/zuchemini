@@ -72,8 +72,9 @@ App({
   },
   globalData: {
     userInfo: null,
-    //siteRoot: "https://das.mynatapp.cc",
-    siteRoot: "https://zuche.shensigzs.com",
+    siteRoot: "https://das.mynatapp.cc",
+    //siteRoot: "https://zuche.shensigzs.com",
+    diyID:"39cb2fff34814ef485c95aae2f4f1d85",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
     day: null,
     phoneNumber: null,
     pickUpCar: null,//以后都使用这个

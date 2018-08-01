@@ -70,7 +70,7 @@ Page(extend({}, Tab, Zan.Field,{
   },
   loadStore:function(){
     var that = this;
-    var url = app.globalData.siteRoot + "/api/services/app/Store/GetStoreDropDownList";
+    var url = app.globalData.siteRoot + "/api/services/app/Store/GetStoreDropDownListToMiniAsync";
     network.requestLoading(url,{},"加载中",function(res){
       var tabList = "tab.list";
         var tabSelectId ="tab.selectedId";
