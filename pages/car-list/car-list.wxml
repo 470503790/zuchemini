@@ -32,6 +32,9 @@
           <view class="zan-c-black zan-font-14">租期
             <label class="zan-font-16" style="color:#F4B900">{{day}}</label>天</view>
         </view>
+        <view bindtap="share" data-id="{{car.id}}" class="share">
+          <image style="width:80rpx;height:80rpx;" src="/images/onshare.png"></image>
+        </view>
       </view>
       <view class="zan-cell">
         <view class="zan-col zan-col-16">

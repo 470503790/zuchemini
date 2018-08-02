@@ -43,6 +43,12 @@ Page({
 
 
   },
+  share(e){
+    var id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/share/share?id='+id,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

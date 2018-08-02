@@ -13,68 +13,96 @@ var network = require("./utils/network.js")
 App({
   onLaunch: function () {
     var that = this;
-    wx.login({
-      success: function (res) {
-        if (res.code) {
-          var url = that.globalData.siteRoot + "/Mpa/Weixinopen/OnLogin";
-          //发起网络请求
-          network.request(url, {
-            code: res.code
-          },
-            function (json) {
-              var result = json.result;
-              if (result.success) {
-                wx.setStorageSync('sessionId', result.sessionId);
-                console.log('sessionId=>', wx.getStorageSync('sessionId'));
-                console.log('userId=>', result.userId);
-                //有userId，就可以获取用户信息
-                if (result.userId) {
-                  url = that.globalData.siteRoot + "/api/services/app/weixinUser/GetWeixinUserByIdToMiniAsync";
-                  network.request(url, {
-                    id: result.userId
-                  },
-                    function (json) {
-                      that.globalData.userInfo = json.result;
-                    })
-                }
+    that.getUserInfo(function () {
+      console.log("用户信息:", that.globalData.userInfo);
 
-              }
-            }
-            
-          )
-
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
-      }
     });
+    //系统设置
+    /* that.getSetting(function (res) {
+      console.log("配置：", res)
+      that.globalData.setting = res;
+    }); */
+
   },
   onError: function (err) {
     fundebug.notifyError(err);
   },
-  getUserInfo: function (cb) {
-    var that = this
-    if (this.globalData.userInfo) {
-      typeof cb == 'function' && cb(this.globalData.userInfo)
-    } else {
-      //调用登录接口
+  /**
+ * 获取用户信息
+ * @param success 成功回调函数
+ * @param login 登录回调函数
+ */
+  getUserInfo(success, login) {
+    var that = this;
+    var userInfo = wx.getStorageSync("userInfo");
+    if (userInfo == "") {
       wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == 'function' && cb(that.globalData.userInfo)
-            }
-          })
+        success: function (res) {
+          if (res.code) {
+            var url = that.globalData.siteRoot + "/Mpa/Weixinopen/OnLogin";
+            //发起网络请求
+            network.request(url, {
+              code: res.code
+            },
+              function (json) {
+                var result = json.result;
+                if (result.success) {
+                  wx.setStorageSync('sessionId', result.sessionId);
+                  console.log('sessionId=>', wx.getStorageSync('sessionId'));
+                  console.log('userId=>', result.userId);
+                  //有userId，就可以获取用户信息
+                  if (result.userId) {
+                    url = that.globalData.siteRoot + "/api/services/app/weixinUser/GetWeixinUserByIdToMiniAsync";
+                    network.request(url, {
+                      id: result.userId
+                    },
+                      function (json) {
+                        that.globalData.userInfo = json.result;
+                        wx.setStorageSync('userInfo', json.result);
+                        if (success != undefined) {
+                          success();
+                        }
+
+                      })
+                  } else {
+                    if (login != undefined) {
+                      login();
+                    }
+
+                  }
+
+                }
+              }
+
+            )
+
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
         }
-      })
+      });
+    } else {
+      //有缓存，但数据库可能已经把用户删除了，这里需要再次从数据库获取用户信息，确认真的有用户存在
+      //这个概率非常小，所以这里不作验证，避免给服务器造成压力
+      success();
     }
+
+  },
+  getSetting(success) {
+    var that = this;
+    var url = that.globalData.siteRoot + "/api/services/app/SystemSettings/GetSettingToMiniAsync";
+    network.requestLoading(url, {}, "加载中...", function (res) {
+      if (success != undefined) {
+        success(res.result);
+      }
+    })
   },
   globalData: {
     userInfo: null,
     siteRoot: "https://das.mynatapp.cc",
     //siteRoot: "https://zuche.shensigzs.com",
-    diyID:"39cb2fff34814ef485c95aae2f4f1d85",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
+    diyID: "39cb2fff34814ef485c95aae2f4f1d85",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
+    setting: null,//系统配置
     day: null,
     phoneNumber: null,
     pickUpCar: null,//以后都使用这个

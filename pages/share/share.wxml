@@ -1,0 +1,10 @@
+<view class="container">
+  <painter customStyle='margin:0 auto;' palette="{{template}}" bind:imgOK="onImgOK" />
+  <view class="zan-panel">
+    <view class="zan-row">
+      <view class="zan-cell">
+          <button bindtap="save" class="" style="width:100%;color:white;background-color:#343D4A;">保存图片</button>
+        </view>
+  </view>
+  </view>
+</view>

@@ -2,6 +2,9 @@
   "pages": [
     
     "pages/index/index",
+    "pages/share/share",
+    
+    
     "pages/order/order-detail/order-detail",
     "pages/order/order-list/order-list",
     "pages/me/me",
@@ -16,6 +19,7 @@
     "pages/order/order-manager/order-manager",
     "pages/logs/logs",
     "pages/bg-management/index"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -46,7 +50,7 @@
   "debug": true,
   "plugins": {
     "wxparserPlugin": {
-      "version": "0.1.0",
+      "version": "0.2.1",
       "provider": "wx9d4d4ffa781ff3ac"
     }
   }

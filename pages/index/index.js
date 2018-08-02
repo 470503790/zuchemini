@@ -34,20 +34,25 @@ Page(extend({}, Tab, Zan.Field,{
     day:1,
     //预约默认最少多少天
     defaultDay:2,
-    phoneNumber:13692950061
+    phoneNumber:13692950061,
+    setting:null
   },
   
   onLoad: function () {
+    var that=this;
     wx.showLoading({
       title: "加载中..."
     })
-    this.loadData();
+    
+    that.loadData();
     
   },
   loadData:function(){
-    this.loadDateAndWeek();
     this.loadSetting();
+    this.loadDateAndWeek();
+    
     this.loadStore();
+    
   },
   loadDateAndWeek:function(){
     var that = this;
@@ -87,15 +92,19 @@ Page(extend({}, Tab, Zan.Field,{
   //获取配置项
   loadSetting:function(){
     var that=this;
-    var url = app.globalData.siteRoot + "/api/services/app/SystemSettings/GetPhoneNumberAsync";
-    network.requestLoading(url,{},"加载中",function(res){
+    app.getSetting(function(res){
       that.setData({
-        phoneNumber: res.result
+        setting: res,
+        phoneNumber:res.phoneNumber
+      });
+      wx.setNavigationBarTitle({
+        title:that.data.setting.name
       })
     });
     
     
-  },
+    
+   },
   onShow: function () {
   },
   
@@ -225,7 +234,7 @@ Page(extend({}, Tab, Zan.Field,{
     var that=this;
     //app.aldstat.sendEvent('打电话');
     wx.makePhoneCall({
-      phoneNumber: that.data.phoneNumber
+      phoneNumber: that.data.setting.phoneNumber
     })
   },
   copyRight:function(){
