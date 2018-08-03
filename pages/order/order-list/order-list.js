@@ -35,7 +35,8 @@ Page({
   loadData: function () {
     var that = this;
     //判断是否登陆
-    if (app.globalData.userInfo == null) {
+    var user=wx.getStorageSync('userInfo');
+    if (user=="") {
       var url = "/pages/order/order-list/order-list";
       var jumpType = "navigateTo";
       console.log("url", url);
@@ -44,7 +45,7 @@ Page({
       });
       return;
     }
-    var userId = app.globalData.userInfo.id;
+    var userId = user.id;
     //获取订单列表
     var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationsToMiniAsync";
     var params={

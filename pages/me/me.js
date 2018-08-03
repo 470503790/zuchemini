@@ -21,7 +21,7 @@ Page({
   loadData: function () {
     var that = this;
     var user=wx.getStorageSync('userInfo');
-    if (user == null) {
+    if (user == "") {
       return;
     }
 

@@ -126,7 +126,8 @@ Page({
     var that = this;
     console.log(e);
     //判断是否登陆
-    if (app.globalData.userInfo == null) {
+    var user=wx.getStorageSync('userInfo');
+    if (user=="") {
       //var url = "/pages/car-list/car-list----startDate---"+that.data.options.startDate+">endDate---"+that.data.options.endDate+">day---"+that.data.options.day;
       var url = "/pages/car-list/car-list";
       var jumpType = "redirectTo";
@@ -139,7 +140,7 @@ Page({
       //点击预约前，检查是否能下单
       var url = app.globalData.siteRoot + '/api/services/app/Reservation/IsCanOrder';
       var params = {
-        userId: app.globalData.userInfo.id
+        userId: user.id
       }
       network.requestLoading(url, params, "加载中...", function (res) {
         //弹出提示框

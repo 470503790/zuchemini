@@ -107,6 +107,7 @@ Page({
                     iv: userInfoRes.iv
                   }, function (res) {
                     app.globalData.userInfo = res.result.weixinUser;
+                    wx.setStorageSync('userInfo', res.result.weixinUser);
                     //跳转
                     if (that.data.url != null) {
                       console.log("原来url:" + that.data.url);

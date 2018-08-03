@@ -113,6 +113,7 @@ Page({
       })
       return;
     }
+    var user=wx.getStorageSync('userInfo');
     var url = app.globalData.siteRoot + "/api/services/app/reservation/CreateReservationToMiniAsync";
     console.log("取车对象=>", app.globalData.pickUpCar);
     console.log("还车对象=>", app.globalData.returnCar);
@@ -131,7 +132,7 @@ Page({
       "otherFee": 0,
       "totalAmount": that.data.totalAmount,
       "carId": that.data.carId,
-      "weixinUserId": app.globalData.userInfo.id,
+      "weixinUserId": user.id,
       "formId": event.detail.formId
     };
     network.requestLoading(url, ops, "正在提交...", function (res) {

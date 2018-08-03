@@ -217,7 +217,7 @@ Page({
     }
     //判断是否登陆
     var user = wx.getStorageSync('userInfo');
-    if (user == null) {
+    if (user == "") {
       var url = "/pages/car-detail/car-detail----id---" + that.data.car.id;
       var jumpType = "redirectTo";
       console.log("url", url);
@@ -275,8 +275,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    //var id=options.id;
-    var id = 15;
+    var id=options.id;
+    //var id = 15;
     that.setData({
       id: id
     })
