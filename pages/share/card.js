@@ -1,7 +1,7 @@
 export default class LastMayday {
   palette(views) {
     return ({
-      width: '750rpx',
+      width: '630rpx',
       height: '1000rpx',
       background: '#F4F5F7',
       views: views

@@ -1,0 +1,11 @@
+<!-- 分享按钮 -->
+<template name="share-button">
+    <button open-type="share" class="{{right_button_3}}">
+        <block wx:if="{{shareIcon==null}}">
+            <image src="/images/share.png" />
+        </block>
+        <block wx:else>
+            <image src="{{shareIcon}}" />
+        </block>
+    </button>
+</template>

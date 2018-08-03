@@ -21,15 +21,13 @@ Page({
       filePath: this.imagePath,
     });
   },
-  loadData(id) {
+  loadData(id,startDate,endDate) {
     var that = this;
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarToMiniAsync";
     var params = {
       id: id,
-      //startDate: app.globalData.pickUpCar.Date.FullDate,
-      //endDate: app.globalData.returnCar.Date.FullDate,
-      startDate: "2018-08-03",
-      endDate: "2018-08-05"
+      startDate: startDate,
+      endDate: endDate
     };
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
@@ -63,7 +61,7 @@ Page({
         css: [{
           top: "20rpx",
           fontSize: "30rpx",
-          left: "375rpx",
+          left: "315rpx",
           align: 'center',
           color: "#FABE00"
         }]
@@ -72,7 +70,7 @@ Page({
         type: "rect",
         css: [{
           top: "70rpx",
-          width: "690rpx",
+          width: "570rpx",
           height: "750rpx",
           color: "#FFFFFF",
           borderRadius: "30rpx",
@@ -83,8 +81,8 @@ Page({
         type: 'image',
         url: picture,
         css: [{
-          width: "680rpx",
-          height: "453rpx",
+          width: "560rpx",
+          height: "373rpx",
           top: "100rpx",
           left: "35rpx"
         }]
@@ -93,9 +91,9 @@ Page({
         type: 'text',
         text: that.data.detail.name,
         css: [{
-          top: "560rpx",
+          top: "500rpx",
           fontWeight: 'bold',
-          fontSize: "40rpx",
+          fontSize: "35rpx",
           left: "50rpx"
         }],
       },
@@ -103,8 +101,8 @@ Page({
         type: 'text',
         text: that.data.detail.bodyStructure + "|" + that.data.detail.displacement + " " + that.data.detail.stalls + "|乘坐" + that.data.detail.numberOfPeople + "人",
         css: [{
-          top: "610rpx",
-          fontSize: "30rpx",
+          top: "550rpx",
+          fontSize: "20rpx",
           left: "50rpx"
         }],
       },
@@ -112,7 +110,7 @@ Page({
         type: 'text',
         text: "日租价格",
         css: [{
-          top: "700rpx",
+          top: "590rpx",
           fontSize: "30rpx",
           left: "50rpx"
         }],
@@ -121,17 +119,37 @@ Page({
         type: 'text',
         text: "￥" + that.data.detail.averageAmount + "/日均",
         css: [{
-          top: "680rpx",
+          top: "570rpx",
           fontSize: "50rpx",
           left: "180rpx",
           color: "#F4B900"
         }],
       },
       {
+        type:'text',
+        text:'长按扫描二维码',
+        css:[{
+          top:"700rpx",
+          fontSize:"20rpx",
+          left:"150rpx",
+          color:"#888888"
+        }]
+      },
+      {
+        type:'text',
+        text:'领取现金大礼包',
+        css:[{
+          top:"730rpx",
+          fontSize:"20rpx",
+          left:"150rpx",
+          color:"#888888"
+        }]
+      },
+      {
         type: "image",
         url: qrcodePath,
         css: [{
-          top: "580rpx",
+          top: "620rpx",
           width: "200rpx",
           height: "200rpx",
           right: "50rpx"
@@ -154,7 +172,7 @@ Page({
         css: [{
           top: "850rpx",
           fontSize: "35rpx",
-          left: "260rpx",
+          left: "230rpx",
         }]
       },
       {
@@ -164,7 +182,7 @@ Page({
           top: "900rpx",
           fontSize: "45rpx",
           color: "#FF6B4D",
-          left: "270rpx",
+          left: "240rpx",
         }]
       },
       {
@@ -173,7 +191,7 @@ Page({
         css: [{
           top: "900rpx",
           fontSize: "45rpx",
-          left: "580rpx",
+          left: "550rpx",
         }]
       },
     ];
@@ -198,9 +216,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //var id=options.id;
-    var id = 15;
-    this.loadData(id);
+    var id=options.id;
+    var startDate=options.startDate;
+    var endDate=options.endDate;
+    this.loadData(id,startDate,endDate);
   },
 
   /**
@@ -245,10 +264,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

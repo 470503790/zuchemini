@@ -20,13 +20,14 @@ Page({
   },
   loadData: function () {
     var that = this;
-    if (app.globalData.userInfo == null) {
+    var user=wx.getStorageSync('userInfo');
+    if (user == null) {
       return;
     }
 
     var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationCountToMiniAsync";
     var params={
-      userId: app.globalData.userInfo.id
+      userId: user.id
     };
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
@@ -38,8 +39,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    var user=wx.getStorageSync('userInfo');
     this.setData({
-      userInfo: app.globalData.userInfo
+      userInfo: user
     });
     this.loadData();
   },

@@ -1,0 +1,11 @@
+<!-- 返回首页按钮 -->
+<template name="home-button">
+    <button bindtap="homeButton" class="{{right_button_2}}">
+        <block wx:if="{{homeIcon==null}}">
+            <image src="/images/roomc.png" />
+        </block>
+        <block wx:else>
+            <image src="{{homeIcon}}" />
+        </block>
+    </button>
+</template>

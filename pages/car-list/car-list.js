@@ -46,7 +46,7 @@ Page({
   share(e){
     var id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/share/share?id='+id,
+      url: '/pages/share/share?id='+id+"&startDate="+app.globalData.pickUpCar.Date.FullDate+"&endDate="+app.globalData.returnCar.Date.FullDate,
     })
   },
   /**
@@ -95,12 +95,6 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   showCarInfo: function (e) {
     var that = this;
     console.info("显示车信息");

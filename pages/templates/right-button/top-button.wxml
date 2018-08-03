@@ -1,0 +1,11 @@
+<!-- 返回顶部按钮 -->
+<template name="top-button">
+    <button bindtap="topButton" class="{{right_button_1}}">
+        <block wx:if="{{topIcon==null}}">
+            <image src="/images/zd.png" />
+        </block>
+        <block wx:else>
+            <image src="{{topIcon}}" />
+        </block>
+    </button>
+</template>

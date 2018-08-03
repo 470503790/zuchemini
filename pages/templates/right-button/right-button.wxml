@@ -1,0 +1,20 @@
+<import src="/pages/templates/right-button/home-button.wxml" />
+<import src="/pages/templates/right-button/top-button.wxml" />
+<import src="/pages/templates/right-button/share-button.wxml" />
+<import src="/pages/templates/right-button/share-button-2.wxml" />
+
+<!-- 右侧浮动按钮统一管理 -->
+<template name="right-button">
+    <block wx:if="{{isEnableHomeButton}}">
+        <template is="home-button" data="{{...setting}}"></template>
+    </block>
+    <block wx:if="{{isEnableTopButton}}">
+        <template is="top-button" data="{{...setting}}"></template>
+    </block>
+    <block wx:if="{{isEnableShareButton}}">
+        <template is="share-button" data="{{...setting}}"></template>
+    </block>
+    <block wx:if="{{isEnableShareButton2}}">
+            <template is="share-button-2" data="{{...setting}}"></template>
+    </block>
+</template>

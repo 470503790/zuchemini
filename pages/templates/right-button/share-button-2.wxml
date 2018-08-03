@@ -1,0 +1,70 @@
+<!-- 分享按钮2，这种按钮可以生成海报图 -->
+<template name="share-button-2">
+    <button bindtap="showShareModal" class="{{right_button_3}}">
+        <block wx:if="{{shareIcon==null}}">
+            <image src="/images/share.png" />
+        </block>
+        <block wx:else>
+            <image src="{{shareIcon}}" />
+        </block>
+    </button>
+
+    <!-- 点击分享按钮弹出 -->
+    <view class="share-modal {{share_modal_active}}">
+        <view class="share-modal-body" style="text-align: center;">
+            <view class="flex-row">
+                <view class="flex-grow-1 flex-x-center">
+                    <button class="share-bottom" openType="share">
+                        <image src="/images/icon-share-friend.png"></image>
+                        <view>分享给朋友</view>
+                    </button>
+                </view>
+                <view class="flex-grow-1 flex-x-center">
+                    <view bindtap="getGoodsQrcode" class="share-bottom">
+                        <image src="/images/icon-share-qrcode.png"></image>
+                        <view>生成商品海报</view>
+                    </view>
+                </view>
+            </view>
+            <view bindtap="shareModalClose" class="share-modal-close flex-y-center flex-x-center" style="font-size:30rpx;line-height:102rpx;">关闭</view>
+        </view>
+    </view>
+
+    <!-- 显示画出的图片 -->
+    <view class="zan-panel">
+        <view class="goods-qrcode-modal {{goods_qrcode_active}}">
+            <view class="goods-qrcode-body flex-col">
+                <view class="flex-grow-1" style="position: relative">
+                    <view style="position: absolute;left: 0;top:0;width: 70%;height: 85%;padding: 100rpx 100rpx 60rpx">
+                        <view class="goods-qrcode-box" style="overflow: none;">
+                            <view class="goods-qrcode-loading flex-x-center flex-y-center">
+                                <view class="flex-x-center flex-col" style="">
+                                    <!-- <image src="/images/loading2.svg" style="width: 150rpx;height: 150rpx"></image> -->
+                                    <!-- 画板上画出海报图 -->
+                                    <canvas canvas-id="shareCanvas"  class="{{canvas_none}}" style="width:600px;height:900px"></canvas>
+                                    <view style="color: #888">海报生成中</view>
+                                </view>
+                            </view>
+                            <image bindtap="goodsQrcodeClick" class="goods-qrcode {{goods_qrcode?'active':''}}" style="width:470rpx;height:760rpx;" data-src="{{goods_qrcode}}"
+                                mode="aspectFit" src="{{goods_qrcode}}"></image>
+                        </view>
+                    </view>
+                </view>
+                <view class="flex-grow-0 flex-col flex-x-center" style="padding: 0 60rpx 80rpx">
+                    <view style="margin-bottom: 20rpx;padding: 0 40rpx">
+                        <block wx:if="{{goods_qrcode}}">
+                            <button bindtap="saveGoodsQrcode" style="background: #ff4544;color: #fff;">\n 保存图片\n</button>
+                        </block>
+                        <block wx:else>
+                            <button style="opacity: .4">保存图片</button>
+                        </block>
+                    </view>
+                    <view style="color: #888;font-size: 9pt;text-align: center">保存至相册可以分享到朋友圈</view>
+                </view>
+                <view bindtap="goodsQrcodeClose" class="goods-qrcode-close">
+                    <image src="/images/icon-close2.png" style="width: 50rpx;height: 50rpx;display: block"></image>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
