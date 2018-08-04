@@ -1,4 +1,5 @@
 // pages/bg-management/index.js
+const Page = require('../../utils/ald-stat.js').Page;
 Page({
 
   /**

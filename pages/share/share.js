@@ -1,3 +1,4 @@
+const Page = require('../../utils/ald-stat.js').Page;
 import Card from '/card';
 var app = getApp();
 var network = require("../../utils/network.js")

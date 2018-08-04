@@ -16,7 +16,6 @@
     "pages/help/opinion/opinion",
     "pages/login/login",
     "pages/order/order-manager/order-manager",
-    "pages/logs/logs",
     "pages/bg-management/index"
     
   ],

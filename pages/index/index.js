@@ -1,3 +1,4 @@
+const Page = require('../../utils/ald-stat.js').Page;
 //index.js
 //获取应用实例
 const app = getApp()
@@ -224,7 +225,9 @@ Page(extend({}, Tab, Zan.Field,{
      console.log("取车对象=>",app.globalData.pickUpCar);
      console.log("天数=>", app.globalData.day);
      console.log("还车对象=>",app.globalData.returnCar);
-    //.sendEvent('去选车按钮');
+    
+     app.aldstat.sendEvent('去选车按钮')
+
     wx.navigateTo({
       url:'../car-list/car-list'
     })
@@ -232,18 +235,17 @@ Page(extend({}, Tab, Zan.Field,{
   //打电话
   call:function(){
     var that=this;
-    //app.aldstat.sendEvent('打电话');
     wx.makePhoneCall({
       phoneNumber: that.data.setting.phoneNumber
     })
   },
   copyRight:function(){
-    //app.aldstat.sendEvent('技术支持');
     wx.makePhoneCall({
       phoneNumber: '13692950061'
     })
   },
   onPullDownRefresh: function () {
+    app.aldstat.sendEvent('首页下拉加载')
     wx.showLoading({
       title: "加载中..."
     })

@@ -1,3 +1,4 @@
+const Page = require('../../utils/ald-stat.js').Page;
 var app = getApp();
 var utils = require("../../utils/util.js")
 var network = require("../../utils/network.js")
@@ -205,6 +206,7 @@ Page({
     app.globalData.returnCar.StoreId = e.detail.value;
   },
   gobuy(e) {
+    app.aldstat.sendEvent('预约按钮')
     var that = this;
     console.log(e);
     if (app.globalData.pickUpCar.StoreId == null) {
@@ -251,6 +253,7 @@ Page({
     }
   },
   share(e) {
+    app.aldstat.sendEvent('详情分享按钮')
     var that = this;
     var id = e.currentTarget.dataset.id;
     var sd = that.data.startDate;

@@ -1,4 +1,5 @@
 // pages/login/login.js
+const Page = require('../../utils/ald-stat.js').Page;
 const app = getApp()
 var network = require("../../utils/network.js")
 Page({
@@ -70,6 +71,7 @@ Page({
 
   },
   getUserInfo: function (o) {
+    app.aldstat.sendEvent('登录按钮')
     var that = this;
     
     wx.login({

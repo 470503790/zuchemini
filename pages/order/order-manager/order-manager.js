@@ -1,4 +1,5 @@
 
+const Page = require('../../../utils/ald-stat.js').Page;
 const app = getApp()
 const Zan = require('../../../dist/index');
 var network = require("../../../utils/network.js")

@@ -1,4 +1,5 @@
 // pages/me/me.js
+const Page = require('../../utils/ald-stat.js').Page;
 const app = getApp()
 var network = require("../../utils/network.js")
 Page({

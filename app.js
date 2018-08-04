@@ -1,4 +1,4 @@
-//var aldstat = require("./utils/ald-stat.js");
+const App = require('./utils/ald-stat.js').App;
 var fundebug = require('./utils/fundebug.0.6.1.min.js')
 fundebug.init(
   {
@@ -9,6 +9,7 @@ fundebug.init(
     silent: true
   })
 var network = require("./utils/network.js")
+var startTime = Date.now();//启动时间
 //app.js
 App({
   onLaunch: function () {
@@ -17,12 +18,12 @@ App({
       console.log("用户信息:", that.globalData.userInfo);
 
     });
-    //系统设置
-    /* that.getSetting(function (res) {
-      console.log("配置：", res)
-      that.globalData.setting = res;
-    }); */
 
+  },
+  onShow:function(){
+    this.aldstat.sendEvent('小程序的启动时长',{
+      time : Date.now() - startTime
+    })
   },
   onError: function (err) {
     fundebug.notifyError(err);
@@ -101,7 +102,7 @@ App({
     userInfo: null,
     //siteRoot: "https://das.mynatapp.cc",
     siteRoot: "https://zuche.shensigzs.com",
-    diyID: "39cb2fff34814ef485c95aae2f4f1d85",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
+    diyID: "",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
     setting: null,//系统配置
     day: null,
     phoneNumber: null,

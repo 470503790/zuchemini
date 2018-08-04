@@ -1,4 +1,5 @@
 // pages/reservation/reservation.js
+const Page = require('../../utils/ald-stat.js').Page;
 const app = getApp()
 const config = require('./config');
 var network = require("../../utils/network.js")

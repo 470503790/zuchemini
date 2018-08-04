@@ -1,3 +1,4 @@
+const Page = require('../../utils/ald-stat.js').Page;
 var app = getApp();
 var network = require("../../utils/network.js")
 // pages/cat-list/cat-list.js
@@ -44,6 +45,7 @@ Page({
 
   },
   share(e){
+    app.aldstat.sendEvent('分享按钮')
     var id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: '/pages/share/share?id='+id+"&startDate="+app.globalData.pickUpCar.Date.FullDate+"&endDate="+app.globalData.returnCar.Date.FullDate,
