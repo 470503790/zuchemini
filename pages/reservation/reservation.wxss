@@ -1,1 +1,63 @@
 /* pages/reservation/reservation.wxss */
+.img {
+    width: 25rpx;
+    height: 25rpx;
+  }
+  .box {
+    float: right;
+    color:#B84A25;
+  }
+  
+ /*  .box image {
+    animation: myfirst 2s infinite;
+  } */
+  
+  @keyframes myfirst {
+    0% {
+      transform: translate(0px, 0px);
+    }
+  
+    50% {
+      transform: translate(0px, -10px);
+    }
+  
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }
+
+  .footer-box{
+    width: 100%;
+    height: 100rpx;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    box-shadow:0rpx 15rpx 15rpx 10rpx ;
+    z-index: 999;
+  }
+  .footer-box .contact {
+    position: relative;
+    width: 120rpx;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20rpx;
+    color: #008000;
+    box-sizing: border-box;
+    background-size: 50rpx auto;
+  }
+  
+  
+  
+  .footer-box .now-buy{
+    text-align: center;
+    height: 100%;
+    width: 360rpx;
+    line-height: 100rpx;
+    background-color: #F5BE00;
+    color:#fff;
+    font-size: 34rpx;
+  }

@@ -19,7 +19,7 @@ Page({
 
 
   },
-  loadData: function () {
+  loadData: function (success) {
     var that = this;
     var user=wx.getStorageSync('userInfo');
     if (user == "") {
@@ -33,7 +33,10 @@ Page({
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
         orderCount: res.result.count
-      })
+      });
+      if(success!=undefined){
+        success();
+      }
     });
   },
   /**
@@ -72,7 +75,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.loadData();
+    this.loadData(function(){
+      wx.stopPullDownRefresh();
+    });
   },
 
   /**

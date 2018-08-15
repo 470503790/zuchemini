@@ -2,7 +2,7 @@
 <import src="/dist/tab/index.wxml" />
 <import src="/dist/field/index.wxml" />
 <view class="container">
-  <view class="zan-panel">
+  <view class="zan-panel" style="margin-top:0;">
     <view class="zan-cell">
       <!-- tab -->
       <view style="">

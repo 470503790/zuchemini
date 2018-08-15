@@ -1,21 +1,230 @@
-
 <import src="/dist/field/index.wxml" />
-<view class="container">
-    <view class="zan-panel">
-            <form report-submit='true' bindsubmit="formSubmit" bindreset="formReset">
-                    <view class="zan-panel">
-                      <template
-                        is="zan-field"
-                        data="{{ ...config.form.name }}"></template>
-                      <template
-                        is="zan-field"
-                        data="{{ ...config.form.tel }}"></template>
-                      <view class="zan-btns">
-                        <button
-                          class="zan-btn zan-btn--primary"
-                          formType="submit">提交数据</button>
-                      </view>
-                    </view>
-                  </form>
+<form report-submit='true' bindsubmit="tobuy">
+<view class="container" style="margin-bottom:110rpx;">
+
+  <!-- 主图 -->
+  <view class="zan-panel" style="margin-top:0;">
+    <view class="zan-row">
+      <image src="{{detail.picture}}" style="width:100%;height:500rpx;"></image>
     </view>
+    <view class="zan-row" style="position: absolute;bottom:20rpx;left:50rpx;color:white;">
+      <view class="zan-font-16">{{detail.name}}</view>
+      <view class="zan-font-12">{{detail.bodyStructure}}|{{detail.displacement}} {{detail.stalls}}|乘坐{{detail.numberOfPeople}}人</view>
+    </view>
+  </view>
+  <view class="zan-panel">
+    <!-- 时间选择 -->
+    <view class="zan-cell" style="text-align: center">
+      <view class="zan-col zan-col-8">
+        <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
+        <view class="zan-font-24">{{pickUpObj.Time}}</view>
+        <view class="zan-font-14" style="color:#C0C0C0">{{pickUpObj.Date.Date}} {{pickUpObj.Date.Week}}</view>
+      </view>
+      <view class="zan-col zan-col-8" style="color:#D7B205">
+        <image src="/images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
+        <view style="position:relative;top:-50rpx;">{{day}}天</view>
+      </view>
+      <view class="zan-col zan-col-8">
+        <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
+        <view class="zan-font-24">{{returnObj.Time}}</view>
+        <view class="zan-font-14" style="color:#C0C0C0">{{returnObj.Date.Date}} {{returnObj.Date.Week}}</view>
+      </view>
+    </view>
+    <!-- 取车门店 -->
+    <view class="zan-cell">
+      <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">取车门店</view>
+      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;float:left;" catchtap="openLocation" data-latitude="{{detail.pickUpStore.latitude}}"
+        data-longitude="{{detail.pickUpStore.longitude}}" data-name="{{detail.pickUpStore.name}}" data-address="{{detail.pickUpStore.address}}">{{detail.pickUpStore.address}}
+        <view class="box">
+          <image class="img" src="/images/position.png"></image>地图
+        </view>
+      </view>
+    </view>
+    <!-- 还车门店 -->
+    <view class="zan-cell">
+      <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">还车门店</view>
+      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;float:left;" catchtap="openLocation" data-latitude="{{detail.returnStore.latitude}}"
+        data-longitude="{{detail.returnStore.longitude}}" data-name="{{detail.returnStore.name}}" data-address="{{detail.returnStore.address}}">{{detail.returnStore.address}}
+        <view class="box">
+          <image class="img" src="/images/position.png"></image>地图
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel">
+    <view class="zan-cell">
+      <view class="zan-font-24" style="color:#C0C0C0">填写预约人信息</view>
+    </view>
+
+    <template is="zan-field" data="{{ ...config.form.name }}"></template>
+    <template is="zan-field" data="{{ ...config.form.tel }}"></template>
+    <!-- <view class="zan-btns">
+          <button class="zan-btn zan-btn--primary" formType="submit">提交数据</button>
+        </view> -->
+
+  </view>
+  <!-- 优惠券、支付方式 -->
+  <view class="zan-panel">
+    <view class="zan-row">
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8" style="color:#C0C0C0;">优惠券</view>
+        <view class="zan-col zan-col-16">
+          <navigator class="zan-cell zan-cell--access" url="{{ item.path }}">
+            <view class="zan-cell__bd">暂无任何优惠券</view>
+            <view class="zan-cell__ft"></view>
+          </navigator>
+        </view>
+      </view>
+
+    </view>
+    <view class="zan-row">
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8" style="color:#C0C0C0;">支付方式</view>
+        <view class="zan-col zan-col-16">
+          <block wx:if="{{detail.earnestMoney>0}}">
+            <button bindtap="changePayMode" class="zan-btn zan-btn--small button-hover {{payMode==0?'zan-btn--primary':''}}">定金支付</button>
+            <button bindtap="changePayMode" class="zan-btn zan-btn--small  button-hover  {{payMode==1?'zan-btn--primary':''}}">全额支付</button>
+          </block>
+          <block wx:else>
+            <button class="zan-btn zan-btn--small  zan-btn--primary button-hover">全额支付</button>
+          </block>
+
+        </view>
+      </view>
+
+    </view>
+  </view>
+  <!-- 需求待确认 -->
+  <!-- <view class="zan-panel">
+    <view class="zan-cell">
+      <view class="zan-col zan-col-2">
+        <image src="/images/1.png" style="width:50rpx;height:50rpx;"></image>
+      </view>
+      <view class="zan-col zan-col-22">
+        <view class="zan-font-12">取车凭证：身份证+驾驶证+驾驶员国内信用卡</view>
+        <view class="zan-font-12" style="color:#C0C0C0;">身份证件有效期需1个月以上，驾驶证有效期2个月以上，信用卡有效期需1个月以上。</view>
+      </view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-col zan-col-2">
+        <image src="/images/1.png" style="width:50rpx;height:50rpx;"></image>
+      </view>
+      <view class="zan-col zan-col-22">
+        <view class="zan-font-12">取车凭证：身份证+驾驶证+驾驶员国内信用卡</view>
+        <view class="zan-font-12" style="color:#C0C0C0;">身份证件有效期需1个月以上，驾驶证有效期2个月以上，信用卡有效期需1个月以上。</view>
+      </view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-col zan-col-2">
+        <image src="/images/1.png" style="width:50rpx;height:50rpx;"></image>
+      </view>
+      <view class="zan-col zan-col-22">
+        <view class="zan-font-12">取消规则：身份证+驾驶证+驾驶员国内信用卡</view>
+        <view class="zan-font-12" style="color:#C0C0C0;">身份证件有效期需1个月以上，驾驶证有效期2个月以上，信用卡有效期需1个月以上。</view>
+      </view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-col zan-col-2">
+        <image src="/images/1.png" style="width:50rpx;height:50rpx;"></image>
+      </view>
+      <view class="zan-col zan-col-22">
+        <view class="zan-font-12">取车凭证：身份证+驾驶证+驾驶员国内信用卡</view>
+        <view class="zan-font-12" style="color:#C0C0C0;">身份证件有效期需1个月以上，驾驶证有效期2个月以上，信用卡有效期需1个月以上。</view>
+      </view>
+    </view>
+  </view> -->
+  <view class="zan-panel">
+    <view class="zan-cell">
+      <view class="zan-icon zan-icon-passed" style="color:#179FF0;margin-right:8rpx;"></view>
+      <view>已阅读并同意</view>
+      <navigator url="/pages/help/service/service" hover-class="navigator-hover" style="color:#179FF0;">预订条款、预订须知</navigator>
+    </view>
+  </view>
+</view>
+<!-- 底部栏 -->
+<view class="footer-box">
+  <view class='zan-col zan-col-16' style="line-height: 100rpx;margin-left:30rpx;">
+    <view>
+      <block wx:if="{{payMode==0}}">
+        <label class="zan-font-16">定金</label>
+        <label style="color:#F4B900;font-size: 50rpx;">￥</label>
+        <label style="color:#F4B900;font-size: 50rpx;">{{actualAmount}}</label>
+      </block>
+      <block wx:else>
+        <label class="zan-font-16">全额</label>
+        <label style="color:#F4B900;font-size: 50rpx;">￥</label>
+        <label style="color:#F4B900;font-size: 50rpx;">{{totalAmount}}</label>
+      </block>
+      <label bindtap="togglePopup" style="font-size:22rpx;float:right;margin-right:10rpx;">费用明细</label>
+    </view>
+  </view>
+
+
+  <button class="zan-col zan-col-8 now-buy " style="border-radius:0" formType="submit">提交订单</button>
+
+</view>
+</form>
+<!-- 弹出层 费用明细 -->
+<view class="zan-popup {{ showPopup ? 'zan-popup--show' : ''}}">
+  <view class="zan-popup__mask" bindtap="togglePopup"></view>
+  <view class="zan-popup__container popup-example--center " style="width:100%;">
+    <view class="zan-panel">
+      <view class="doc-title" style="text-align: center;">费用明细</view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8">租车费</view>
+        <view class="zan-col zan-col-16" style="text-align: right;">
+          ￥{{detail.averageAmount}}×{{day}}天
+        </view>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8">保险费用</view>
+        <view class="zan-col zan-col-16" style="text-align: right;">
+          ￥{{detail.insuranceFee}}×{{day}}天
+        </view>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8">基础服务费</view>
+        <view class="zan-col zan-col-16" style="text-align: right;">
+          ￥{{detail.basicServiceFee}}×{{day}}天
+        </view>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8">其它费用</view>
+        <view class="zan-col zan-col-16" style="text-align: right;">
+          ￥{{detail.otherFee}}×{{day}}天
+        </view>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-8 zan-pull-right">优惠</view>
+        <view class="zan-col zan-col-16" style="text-align: right;">
+          <view class="zan-tag zan-tag--danger zan-tag--plain">
+            -￥{{discountFee}}
+          </view>
+        </view>
+      </view>
+      <view class="zan-cell">
+        <view class="zan-col zan-col-18 zan-font-24" style="text-align: right;">全额:</view>
+        <view class="zan-col zan-col-6 zan-font-24">
+          <view style="color:#F4B900;text-align: left;">
+            ￥{{totalAmount}}
+          </view>
+
+        </view>
+      </view>
+      <block wx:if="{{payMode==0}}">
+        <view class="zan-cell">
+          <view class="zan-c-red zan-font-bold">您选择了定金支付，剩余费用请在取车时支付</view>
+        </view>
+      </block>
+
+      <view class="zan-row">
+        <view class="zan-cell" style="display: block;">
+          <view>费用说明</view>
+          <view>1保险费用：指租车公司向您提供的车辆均购买有交强险及商业保险，保障您用车安全的一种服务，按天收费。</view>
+          <view>2基础服务费：门店收取用于车辆清洁、车辆保养、单据制作、人员服务等。</view>
+        </view>
+
+      </view>
+    </view>
+  </view>
 </view>

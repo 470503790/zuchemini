@@ -1,14 +1,15 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/car-detail/car-detail",
     "pages/share/share",
-    
+    "pages/reservation/reservation",
     "pages/order/order-detail/order-detail",
     "pages/order/order-list/order-list",
     "pages/me/me",
     "pages/car-list/car-list",
-    "pages/reservation/reservation",
+    
     "pages/help/novice/novice",
     "pages/help/service/service",
     "pages/help/service/main/main",

@@ -17,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    this.loadData();
     //app.aldstat.sendEvent('订单列表');
   },
 
@@ -31,9 +32,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.loadData();
+    
   },
-  loadData: function () {
+  loadData: function (success) {
     var that = this;
     //判断是否登陆
     var user=wx.getStorageSync('userInfo');
@@ -55,7 +56,10 @@ Page({
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
         orders: res.result
-      })
+      });
+      if(success!=undefined){
+        success();
+      }
     });
   },
   /**
@@ -76,7 +80,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.loadData();
+    this.loadData(function(){
+      wx.stopPullDownRefresh();
+    });
   },
 
   /**
@@ -121,4 +127,11 @@ Page({
       scale: 28
     })
   },
+  //打电话
+  call:function(e){
+    var phone=e.currentTarget.dataset.phone;
+    wx.makePhoneCall({
+      phoneNumber:phone
+    })
+  }
 })

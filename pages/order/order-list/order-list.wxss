@@ -1,17 +1,18 @@
 /* pages/order/order-list.wxss */
 
 .img {
-  width: 50rpx;
-  height: 50rpx;
+  width: 25rpx;
+  height: 25rpx;
 }
 
 .box {
-  float: left;
+  float: right;
+  color:#B84A25;
 }
 
-.box image {
+/* .box image {
   animation: myfirst 2s infinite;
-}
+} */
 
 @keyframes myfirst {
   0% {

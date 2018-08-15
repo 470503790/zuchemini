@@ -1,58 +1,93 @@
 <template name="orderItem">
-        <view class="zan-panel" data-id="{{id}}" data-status="{{status}}" bindtap="orderDetail">
-                <view class="zan-row">
-                    <!-- 订单号、状态 -->
-                  <view class="zan-cell">
-                    <view class="zan-col zan-col-5" style="color:#C0C0C0;">订单号：</view>
-                    <view class="zan-col zan-col-14" style="color:#C0C0C0;">{{orderNo}}</view>
-                    <view class="zan-col zan-col-5" style="text-align: right;color:#F3B79A;">{{status}}</view>
-                  </view>
-                  <!-- 车辆图片、信息 -->
-                  <view class="zan-cell">
-                    <view class="zan-col zan-col-10">
-                      <image src="{{car.picture}}" style="width:100%;height:180rpx;padding-right:10rpx;"></image>
-                    </view>
-                    <view class="zan-col zan-col-offset-2 zan-col-12">
-                      <view class="zan-row" bindtap="showCarInfo">
-                        <view class="zan-cell__bd">
-                          <view>{{car.name}}</view>
-                          <view style="font-size:18rpx;color:#C0C0C0;">{{car.bodyStructure}}|{{car.displacement}}{{car.stalls}}|乘坐{{car.numberOfPeople}}人</view>
-            
-                        </view>
-                      </view>
-                    </view>
-                  </view>
-                  <!-- 时间选择 -->
-                  <view class="zan-cell" style="text-align: center">
-                    <view class="zan-col zan-col-8" >
-                      <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
-                      <view class="zan-font-24">{{pickUpTime}}</view>
-                      <view class="zan-font-14" style="color:#C0C0C0">{{pickUpDate}} {{pickUpWeek}}</view>
-                    </view>
-                    <view class="zan-col zan-col-8" style="color:#D7B205">
-                    <image src="../../../images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
-      <view style="position:relative;top:-50rpx;">{{day}}天</view>
-                    </view>
-                    <view class="zan-col zan-col-8" >
-                      <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
-                      <view class="zan-font-24">{{returnTime}}</view>
-                      <view class="zan-font-14" style="color:#C0C0C0">{{returnDate}} {{returnWeek}}</view>
-                    </view>
-                  </view>
-                  <!-- 取车门店 -->
-                  <view class="zan-cell">
-                      <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">取车门店</view>
-                      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;" catchtap="openLocation" data-latitude="{{pickUpStore.latitude}}" data-longitude="{{pickUpStore.longitude}}" data-name="{{pickUpStore.name}}" data-address="{{pickUpStore.address}}">{{pickUpStore.name}}
-                      <view class="box" ><image class="img" src="/images/position.png"></image></view>
-                      </view>
-                  </view>
-                  <!-- 还车门店 -->
-                  <view class="zan-cell">
-                      <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">还车门店</view>
-                      <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;" catchtap="openLocation"  data-latitude="{{returnStore.latitude}}" data-longitude="{{returnStore.longitude}}" data-name="{{returnStore.name}}" data-address="{{returnStore.address}}">{{returnStore.name}}
-                      <view class="box" ><image class="img" src="/images/position.png"></image></view>
-                      </view>
-                  </view>
+  <view class="zan-panel" data-id="{{id}}" data-status="{{status}}" bindtap="orderDetail">
+    <view class="zan-row">
+      <!-- 订单号、状态 -->
+      <view class="zan-cell">
+        <view class="zan-col zan-col-5" style="color:#C0C0C0;">订单号：</view>
+        <view class="zan-col zan-col-14" style="color:#C0C0C0;">{{orderNo}}</view>
+        <view class="zan-col zan-col-5" style="text-align: right;color:#F3B79A;">{{status}}</view>
+      </view>
+      <!-- 车辆图片、信息 -->
+      <view class="zan-cell">
+        <view class="zan-col zan-col-10">
+          <image src="{{car.picture}}" style="width:100%;height:180rpx;padding-right:10rpx;"></image>
+        </view>
+        <view class="zan-col zan-col-offset-2 zan-col-12">
+          <view class="zan-row" bindtap="showCarInfo">
+            <view class="zan-cell__bd">
+              <view>{{car.name}}</view>
+              <view style="font-size:18rpx;color:#C0C0C0;">{{car.bodyStructure}}|{{car.displacement}}{{car.stalls}}|乘坐{{car.numberOfPeople}}人</view>
+
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 时间选择 -->
+      <view class="zan-cell" style="text-align: center">
+        <view class="zan-col zan-col-8">
+          <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
+          <view class="zan-font-24">{{pickUpTime}}</view>
+          <view class="zan-font-14" style="color:#C0C0C0">{{pickUpDate}} {{pickUpWeek}}</view>
+        </view>
+        <view class="zan-col zan-col-8" style="color:#D7B205">
+          <image src="../../../images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
+          <view style="position:relative;top:-50rpx;">{{day}}天</view>
+        </view>
+        <view class="zan-col zan-col-8">
+          <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
+          <view class="zan-font-24">{{returnTime}}</view>
+          <view class="zan-font-14" style="color:#C0C0C0">{{returnDate}} {{returnWeek}}</view>
+        </view>
+      </view>
+      <view class="zan-panel">
+        <!-- 取车门店 -->
+        <view class="zan-row" style="margin-left:30rpx;font-size: 32rpx;color:#C0C0C0;">取车门店</view>
+        <view class="zan-cell">
+          <view class="zan-col zan-col-5" style="border-right:1px solid #C0C0C0;color:#C0C0C0;font-size: 24rpx;">门店地址</view>
+          <view class="zan-col zan-col-19 zan-font-bold" style="padding-left:20rpx;font-size: 24rpx;" catchtap="openLocation" data-latitude="{{pickUpStore.latitude}}"
+            data-longitude="{{pickUpStore.longitude}}" data-name="{{pickUpStore.name}}" data-address="{{pickUpStore.address}}">{{pickUpStore.address}}
+            <view class="box">
+              <image class="img" src="/images/position.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="zan-cell">
+            <view class="zan-col zan-col-5" style="border-right:1px solid #C0C0C0;color:#C0C0C0;font-size: 24rpx;">营业时间</view>
+            <view class="zan-col zan-col-19 zan-font-bold" style="padding-left:20rpx;font-size: 24rpx;" >{{pickUpStore.businessHours}}</view>
+        </view>
+        <view class="zan-cell">
+            <view class="zan-col zan-col-5" style="border-right:1px solid #C0C0C0;color:#C0C0C0;font-size: 24rpx;">营业电话</view>
+            <view catchtap="call" data-phone="{{pickUpStore.mobile}}" class="zan-col zan-col-19 zan-font-bold" style="padding-left:20rpx;font-size: 24rpx;" >{{pickUpStore.mobile}}
+              <view style="float:right;">
+                <image src="/images/dianhuahong.png" style="width:25rpx;height:25rpx;"></image>
+              </view>
+            </view>
+        </view>
+        <!-- 还车门店 -->
+        <view class="zan-row" style="margin-left:30rpx;font-size: 32rpx;color:#C0C0C0;">还车门店</view>
+        <view class="zan-cell">
+            <view class="zan-col zan-col-5" style="border-right:1px solid #C0C0C0;color:#C0C0C0;font-size: 24rpx;">门店地址</view>
+            <view class="zan-col zan-col-19 zan-font-bold" style="padding-left:20rpx;font-size: 24rpx;" catchtap="openLocation" data-latitude="{{returnStore.latitude}}"
+              data-longitude="{{returnStore.longitude}}" data-name="{{returnStore.name}}" data-address="{{returnStore.address}}">{{returnStore.address}}
+              <view class="box">
+                <image class="img" src="/images/position.png"></image>
+              </view>
+            </view>
+          </view>
+          <view class="zan-cell">
+              <view class="zan-col zan-col-5" style="border-right:1px solid #C0C0C0;color:#C0C0C0;font-size: 24rpx;">营业时间</view>
+              <view class="zan-col zan-col-19 zan-font-bold" style="padding-left:20rpx;font-size: 24rpx;" >{{returnStore.businessHours}}</view>
+          </view>
+          <view class="zan-cell">
+              <view class="zan-col zan-col-5" style="border-right:1px solid #C0C0C0;color:#C0C0C0;font-size: 24rpx;">营业电话</view>
+              <view catchtap="call" data-phone="{{returnStore.mobile}}" class="zan-col zan-col-19 zan-font-bold" style="padding-left:20rpx;font-size: 24rpx;" >{{returnStore.mobile}}
+                <view style="float:right;">
+                  <image src="/images/dianhuahong.png" style="width:25rpx;height:25rpx;"></image>
                 </view>
               </view>
+          </view>
+      </view>
+
+    </view>
+  </view>
 </template>
