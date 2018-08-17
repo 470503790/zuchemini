@@ -148,12 +148,12 @@
       <block wx:if="{{payMode==0}}">
         <label class="zan-font-16">定金</label>
         <label style="color:#F4B900;font-size: 50rpx;">￥</label>
-        <label style="color:#F4B900;font-size: 50rpx;">{{actualAmount}}</label>
+        <label style="color:#F4B900;font-size: 50rpx;">{{payAmount}}</label>
       </block>
       <block wx:else>
         <label class="zan-font-16">全额</label>
         <label style="color:#F4B900;font-size: 50rpx;">￥</label>
-        <label style="color:#F4B900;font-size: 50rpx;">{{totalAmount}}</label>
+        <label style="color:#F4B900;font-size: 50rpx;">{{payAmount}}</label>
       </block>
       <label bindtap="togglePopup" style="font-size:22rpx;float:right;margin-right:10rpx;">费用明细</label>
     </view>
@@ -206,7 +206,7 @@
         <view class="zan-col zan-col-18 zan-font-24" style="text-align: right;">全额:</view>
         <view class="zan-col zan-col-6 zan-font-24">
           <view style="color:#F4B900;text-align: left;">
-            ￥{{totalAmount}}
+            ￥{{actualAmount}}
           </view>
 
         </view>

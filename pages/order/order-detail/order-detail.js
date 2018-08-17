@@ -225,6 +225,7 @@ Page(Object.assign({}, Zan.NoticeBar,Zan.Dialog, {
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    clearInterval(this.data.interval);
     this.loadData(function(){
       wx.stopPullDownRefresh();
     });

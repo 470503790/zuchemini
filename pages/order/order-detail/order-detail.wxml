@@ -35,7 +35,7 @@
       </view>
       <view class="zan-cell">
         <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">订单总额</view>
-        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">预计订单总额￥{{orderDetail.totalAmount}}</view>
+        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">预计订单总额￥{{orderDetail.actualAmount}}</view>
       </view>
     </view>
   </view>
@@ -75,7 +75,7 @@
       <view class="zan-cell">
         <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">费用合计</view>
         <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;">
-          <label class="zan-font-bold" style="color:black;">￥{{orderDetail.totalAmount}}</label>
+          <label class="zan-font-bold" style="color:black;">￥{{orderDetail.actualAmount}}</label>
         </view>
       </view>
       <block wx:if="{{orderDetail.paymentTypes==1}}">
