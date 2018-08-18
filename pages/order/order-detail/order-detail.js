@@ -148,14 +148,15 @@ Page(Object.assign({}, Zan.NoticeBar,Zan.Dialog, {
   payment(e) {
     console.log("支付", e);
     var id = e.currentTarget.dataset.id;
-    var actualAmount = e.currentTarget.dataset.actualamount;
-    //var actualAmount =0.01;
+    //var actualAmount = e.currentTarget.dataset.actualamount;
+    var actualAmount =0.03;
     var orderNo = e.currentTarget.dataset.orderno;
     var formId = e.detail.formId;
     payHelper.wxPayment(orderNo,actualAmount,function(res){
       var url = app.globalData.siteRoot + "/api/services/app/reservation/ChangeStatusPayToMiniAsync";
       var params = {
-        orderNo: orderNo
+        orderNo: orderNo,
+        formId:formId
       }
       network.requestLoading(url, params, "请稍候...", function (res) {
         //跳转到订单详情
@@ -176,10 +177,12 @@ Page(Object.assign({}, Zan.NoticeBar,Zan.Dialog, {
     var formId = e.detail.formId;
     var url = app.globalData.siteRoot + "/api/services/app/wallet/GetWalletByUserIdToMiniAsync";
     var params = {
-      userId: userInfo.id
+      userId: userInfo.id,
+      formId:formId
     }
     network.requestLoading(url, params, "加载中...", function (res) {
-      if (actualAmount > res.result.money) {
+      
+      if (res.result==null || actualAmount > res.result.money) {
         wx.showModal({
           title: "余额不足",
           content: "请选择其它方式支付",

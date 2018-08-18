@@ -21,15 +21,19 @@ Page({
     pickUpObj:null,//取车
     returnObj:null,//还车
     day:0,
+    formId:""
   },
   loadData(id){
     var that=this;
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarAllInfoByIdToMiniAsync";
+    var userInfo=wx.getStorageSync('userInfo');
     var params = {
       id: id,
       startDate: app.globalData.pickUpCar.Date.FullDate,
       endDate: app.globalData.returnCar.Date.FullDate,
-      storeId:app.globalData.pickUpCar.StoreId
+      storeId:app.globalData.pickUpCar.StoreId,
+      userId:userInfo.id,
+      formId:that.data.formId
     };
     network.requestLoading(url,params,"加载中...",function(res){
       that.setData({
@@ -182,12 +186,14 @@ Page({
     var that = this;
     console.log(options);
     var id=options.carId;
+    var formId=options.formId;
     that.loadData(id);
     that.setData({
       carId: id,
       pickUpObj:app.globalData.pickUpCar,
       returnObj:app.globalData.returnCar,
-      day:app.globalData.day
+      day:app.globalData.day,
+      formId:formId
     });
     console.log("还车对象：",app.globalData.returnCar);
   },

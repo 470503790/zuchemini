@@ -1,22 +1,21 @@
-
 <import src="car-item/car-item.wxml" />
 <view class="container">
   <block wx:for="{{cars}}" wx:key="index">
     <template is="carItem" data="{{...item}}" />
   </block>
-  <view class="zan-panel "  style="display:{{cars.length==0?'block':'none'}};">
-      <view class="zan-row">
-          <view class="zan-cell ">
-              <view class="zan-c-gray-darker" style="width:100%;text-align: center;">一辆车都没有！</view>
-            </view>
+  <view class="zan-panel " style="display:{{cars.length==0?'block':'none'}};">
+    <view class="zan-row">
+      <view class="zan-cell ">
+        <view class="zan-c-gray-darker" style="width:100%;text-align: center;">一辆车都没有！</view>
       </view>
-        <view class="zan-row">
-            <view class="zan-cell">
-                <button bindtap="click_goOpinion" class="theme-background-color" style="width:100%;color:white">跟老板告状</button>
-              </view>
-        </view>
-      
     </view>
+    <view class="zan-row">
+      <view class="zan-cell">
+        <button bindtap="click_goOpinion" class="theme-background-color" style="width:100%;color:white">跟老板告状</button>
+      </view>
+    </view>
+
+  </view>
 </view>
 <view class="zan-popup {{ showPopup ? 'zan-popup--show' : ''}}">
   <view class="zan-popup__mask" bindtap="hideCarInfo"></view>
@@ -43,7 +42,11 @@
             <label class="zan-font-22" style="color:#F4B900">{{car.averageAmount}}</label>/日均</view>
         </view>
         <view class="zan-col zan-col-8">
-          <button bindtap="click_go" data-id="{{car.id}}" data-totalAmount="{{car.totalAmount}}" class="theme-background-color" style="width:100%;color:white">预约</button>
+          <form report-submit='true' bindsubmit='click_go' data-id="{{car.id}}">
+            <button form-type="submit" class="theme-background-color" style="width:100%;color:white">预约</button>
+
+          </form>
+
         </view>
       </view>
     </view>

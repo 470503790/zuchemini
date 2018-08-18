@@ -12,6 +12,7 @@ Page({
     cars: [],
     car: {},
     showPopup: false,
+    formId:""
   },
 
   /**
@@ -19,13 +20,16 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    // console.log(options);
+    var formId=options.formId;
     that.setData({
-      day: app.globalData.day
+      day: app.globalData.day,
+      formId:formId
     });
   },
   loadData: function () {
     var that = this;
+    var userInfo=wx.getStorageSync('userInfo');
+    console.log("userinfo:",userInfo);
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarsToMiniAsync";
     var params = {
       startDate: app.globalData.pickUpCar.Date.FullDate,
@@ -34,7 +38,9 @@ Page({
       pickUpStoreId: app.globalData.pickUpCar.StoreId,
       returnStoreId: app.globalData.returnCar.StoreId,
       startTime:app.globalData.pickUpCar.Time,
-      endTime:app.globalData.returnCar.Time
+      endTime:app.globalData.returnCar.Time,
+      formId:that.data.formId,
+      userId:userInfo==""?null:userInfo.id
     };
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
@@ -126,12 +132,13 @@ Page({
   //预约跳转
   click_go: function (e) {
     var that = this;
+    var formId=e.detail.formId;
     console.log(e);
     //判断是否登陆
     var user=wx.getStorageSync('userInfo');
     if (user=="") {
       //var url = "/pages/car-list/car-list----startDate---"+that.data.options.startDate+">endDate---"+that.data.options.endDate+">day---"+that.data.options.day;
-      var url = "/pages/car-list/car-list";
+      var url = "/pages/car-list/car-list----formId---"+formId;
       var jumpType = "redirectTo";
       console.log("url", url);
       wx.navigateTo({
@@ -142,7 +149,8 @@ Page({
       //点击预约前，检查是否能下单
       var url = app.globalData.siteRoot + '/api/services/app/Reservation/IsCanOrder';
       var params = {
-        userId: user.id
+        userId: user.id,
+        formId:formId
       }
       network.requestLoading(url, params, "加载中...", function (res) {
         //弹出提示框
@@ -154,10 +162,11 @@ Page({
           })
         } else {
           var carId = e.currentTarget.dataset.id;
-          var totalAmount = e.currentTarget.dataset.totalamount;
+          //var totalAmount = e.currentTarget.dataset.totalamount;
           console.log("carId=>" + carId);
           wx.navigateTo({
-            url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
+            //url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
+              url:'../reservation/reservation?carId=' + carId+'&formId='+formId
           })
         }
       });

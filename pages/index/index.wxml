@@ -15,7 +15,8 @@
       <view class="zan-col zan-col-8" bindtap="handleDateFieldClick">
         <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
         <view class="zan-font-24">{{ pickerViewConfig1.year[pickerViewConfig1.value[0]].Date }}</view>
-        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig1.year[pickerViewConfig1.value[0]].Week}} {{ pickerViewConfig1.time[pickerViewConfig1.value[1]] }}</view>
+        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig1.year[pickerViewConfig1.value[0]].Week}} {{ pickerViewConfig1.time[pickerViewConfig1.value[1]]
+          }}</view>
       </view>
       <view class="zan-col zan-col-8" style="color:#D7B205">
         <image src="../../images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
@@ -24,7 +25,8 @@
       <view class="zan-col zan-col-8" bindtap="handleDateFieldClick2">
         <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
         <view class="zan-font-24">{{ pickerViewConfig2.year[pickerViewConfig2.value[0]].Date }}</view>
-        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig2.year[pickerViewConfig2.value[0]].Week}} {{ pickerViewConfig2.time[pickerViewConfig2.value[1]] }}</view>
+        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig2.year[pickerViewConfig2.value[0]].Week}} {{ pickerViewConfig2.time[pickerViewConfig2.value[1]]
+          }}</view>
       </view>
     </view>
     <!-- 取车时间选择 -->
@@ -69,9 +71,13 @@
   </view>
   <view class="zan-panel">
     <view class="zan-cell">
-      <button bindtap="click_go" class="theme-background-color" style="width:100%;color:white">立即去选车</button>
+      <form report-submit='true' bindsubmit='click_go' style="width:100%;">
+        <button form-type="submit" class="theme-background-color" style="width:100%;color:white">立即去选车</button>
+      </form>
+
     </view>
   </view>
-  <button style="margin:20rpx auto;width:150rpx;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover" open-type="share">邀请有礼</button>
- <include src="/commons/footer/footer.wxml" />
+  <button style="margin:20rpx auto;width:150rpx;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover"
+    open-type="share">邀请有礼</button>
+  <include src="/commons/footer/footer.wxml" />
 </view>
