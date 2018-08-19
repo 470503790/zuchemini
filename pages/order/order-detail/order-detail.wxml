@@ -7,7 +7,11 @@
       <template is="zan-noticebar" data="{{ ...movable, componentId: 'movable'  }}"></template>
     </view>
   </block>
-
+  <block wx:if="{{orderDetail.status=='待退款'}}">
+      <view class="zan-panel" style="margin-top:0;">
+        <template is="zan-noticebar" data="{{ ...movable1, componentId: 'movable1'  }}"></template>
+      </view>
+    </block>
   <view class="zan-panel">
     <view class="zan-row">
       <view class="zan-cell" style="color:#26C622;font-size:18px;">
@@ -23,8 +27,8 @@
             </form>
           </view>
         </block>
-        <block wx:if="{{orderDetail.status=='待取车'}}">
-          <form report-submit='true' bindsubmit='tuikuan' data-id="{{orderDetail.id}}">
+        <block wx:if="{{orderDetail.status=='待确认' || orderDetail.status=='待取车'}}">
+          <form report-submit='true' bindsubmit='tuikuan' data-id="{{orderDetail.id}}" data-orderNo="{{orderDetail.orderNo}}">
             <button form-type="submit" class="zan-btn zan-btn--small zan-btn--danger ">退款</button>
           </form>
         </block>
@@ -37,6 +41,14 @@
         <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">订单总额</view>
         <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">预计订单总额￥{{orderDetail.actualAmount}}</view>
       </view>
+    </view>
+  </view>
+  <view class="zan-panel">
+    <view class="zan-cell" style="font-size: 16px;color:#C0C0C0;">
+      <view>退款规则</view>
+    </view>
+    <view class="zan-cell">
+      <view>订单支付成功后，距离取车时间2小时以外（含）可免费取消订单；距离取车时间2小时以内取消，将扣除首日租金作为违约金。</view>
     </view>
   </view>
   <template is="orderItem" data="{{...orderDetail}}" />

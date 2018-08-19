@@ -11,7 +11,7 @@ function wxPayment(orderNo,money,success,fail) {
 
     //跳转支付
     //获取预支付信息
-    var url = app.globalData.siteRoot + "/mpa/weixinopen/GetPrepayid";
+    var url = app.globalData.siteRoot + "/api/services/app/WeixinPay/Payment";
     var userInfo = wx.getStorageSync('userInfo');
     var params = {
       userId: userInfo.id,
