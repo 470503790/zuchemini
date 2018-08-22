@@ -17,8 +17,11 @@
     "pages/help/opinion/opinion",
     "pages/login/login",
     "pages/order/order-manager/order-manager",
-    "pages/bg-management/index"
-    
+    "pages/bg-management/index",
+    "pages/wallet/wallet",
+    "pages/wallet/amount-out/amount-out",
+    "pages/wallet/liushui/liushui",
+    "pages/wallet/liushui-detail/liushui-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

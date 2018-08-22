@@ -2,21 +2,23 @@
 <import src="/dist/dialog/index.wxml" />
 <import src="/dist/actionsheet/index.wxml" />
 <import src="../order-list/order-item/order-item.wxml" />
+<import src="/dist/field/index.wxml" />
 <view class="container">
     <view style="">
         <template is="zan-tab" data="{{ ...tab1, componentId: 'tab1' }}"></template>
     </view>
     <!-- 搜索 -->
     <form bindsubmit="formSubmit" bindreset="formReset">
-            <view class="zan-panel">
-                <view class="zan-cell zan-field">
-                    <input type="text" name="filterText" value="{{filterText}}" placeholder="输入订单号/姓名/手机" class="zan-field__input zan-cell__bd" />
-                    <view class="zan-cell__ft">
-                        <button  formType="submit" class="zan-icon zan-icon-search"></button>
-                    </view>
+        <view class="zan-panel">
+            <view class="zan-cell zan-field">
+                <input type="text" name="filterText" value="{{filterText}}" placeholder="输入订单号/姓名/手机" class="zan-field__input zan-cell__bd"
+                />
+                <view class="zan-cell__ft">
+                    <button formType="submit" class="zan-icon zan-icon-search"></button>
                 </view>
             </view>
-        </form>
+        </view>
+    </form>
     <block wx:if="{{orders.length>=1}}">
         <!-- 列表 -->
         <view wx:for="{{orders}}" wx:key="index">
@@ -33,3 +35,21 @@
 </view>
 <template is="zan-dialog" data="{{ zanDialog }}"></template>
 <template is="zan-actionsheet" data="{{ ...baseActionsheet }}"></template>
+<view class="zan-popup {{ showPopup ? 'zan-popup--show' : ''}}">
+    <view class="zan-popup__mask" bindtap="togglePopup"></view>
+    <view class="zan-popup__container popup-example--center" style="width:90%;">
+        <view class="zan-panel">
+            <view class="zan-cell">给用户退款</view>
+                <template is="zan-field" data="{{ ...refundPrice }}"></template>
+                <view class="zan-panel-title field__title--radius zan-font-20">注意</view>
+            <view class="zan-cell" style="display: block;color:#999;">
+                
+                <view>如果需扣除违约金，请自行计算后输入。</view>
+                <view>请谨慎操作此步骤，一旦退款成功不可撤消。</view>
+            </view>
+            <view class="zan-cell">
+                <button class="zan-btn zan-btn--danger button-hover">确认退款</button>
+            </view>
+        </view>
+    </view>
+</view>

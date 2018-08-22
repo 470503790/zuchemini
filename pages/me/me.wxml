@@ -21,7 +21,7 @@
       <view class="zan-cell" style="text-align: center;">
         <view class="zan-col zan-col-8" bindtap="accountBalance">
           <view>
-            <label class="theme-color" style="font-size:40rpx;">0</label>元</view>
+            <label class="theme-color" style="font-size:40rpx;">{{balance}}</label>元</view>
           <view>帐户余额</view>
         </view>
         <view class="zan-col zan-col-8" bindtap="coupon">

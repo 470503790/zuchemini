@@ -1,0 +1,109 @@
+<import src="/dist/field/index.wxml" />
+<view class="container" style="margin-bottom: 0;">
+    <form report-submit='true' bindsubmit="formSubmit">
+        <view class="zan-panel">
+            <view class="zan-cell" style="font-size:40rpx;">
+                <view>帐户剩余金额：{{entity==null?0:entity.money}}.00元</view>
+
+            </view>
+            <template is="zan-field" data="{{ ...amountOutPrice }}"></template>
+            <view class="zan-cell" style="background-color: #F9F9F9;margin-top:10rpx;">
+                <view>提现金额不能小于{{setting.minimumAmount}}元</view>
+            </view>
+            <view class="zan-cell" style="display: block;">
+                <view class="pay-title">提现方式</view>
+                <!-- 微信  -->
+                <block wx:if="{{enableWeixin==1}}">
+                    <view bindtap="select" data-index="0" class="flex-grow-0" style="display: inline-block;">
+                        <view class="pay flex-row {{selected==0?'active':''}}" style="{{selected!=0?'border:1rpx #666 solid;':''}}">
+                            <view class="flex-grow-0">
+                                <image class="pay-img" src="/images/icon-share-wechat.png"></image>
+                            </view>
+                            <view class="flex-grow-0">微信</view>
+                            <block wx:if="{{selected==0}}">
+                                <image class="selected" src="/images/icon-share-selected.png"></image>
+                            </block>
+
+                        </view>
+
+                    </view>
+                </block>
+                <!-- 支付宝 -->
+                <block wx:if="{{enableAliPay==1}}">
+                    <view bindtap="select" data-index="1" class="flex-grow-0" style="display: inline-block;margin-left:32rpx;">
+                        <view class="pay flex-row {{selected==1?'active':''}}" style="{{selected!=1?'border:1rpx #666 solid;':''}}">
+                            <view class="flex-grow-0">
+                                <image class="pay-img" src="/images/icon-share-ant.png"></image>
+                            </view>
+                            <view class="flex-grow-0">支付宝</view>
+                            <block wx:if="{{selected==1}}">
+                                <image class="selected" src="/images/icon-share-selected.png"></image>
+                            </block>
+
+                        </view>
+
+                    </view>
+                </block>
+                <!-- 银行卡 -->
+                <block wx:if="{{enableBank==1}}">
+                    <view bindtap="select" data-index="2" class="flex-grow-0" style="display: inline-block;margin-left:32rpx;">
+                        <view class="pay flex-row {{selected==2?'active':''}}" style="{{selected!=2?'border:1rpx #666 solid;':''}}">
+                            <view class="flex-grow-0">
+                                <image class="pay-img" src="/images/icon-share-bank.png"></image>
+                            </view>
+                            <view class="flex-grow-0">银行卡</view>
+                            <block wx:if="{{selected==2}}">
+                                <image class="selected" src="/images/icon-share-selected.png"></image>
+                            </block>
+
+                        </view>
+
+                    </view>
+                </block>
+
+            </view>
+            <!-- 微信 -->
+            <block wx:if="{{enableWeixin==1}}">
+                    <block wx:if="{{selected==0}}">
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...weixin.fullname}}"></template>
+                            </view>
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...weixin.username}}"></template>
+                            </view>
+                        </block>
+            </block>
+            <!-- 支付宝 -->
+            <block wx:if="{{enableAliPay==1}}">
+                    <block wx:if="{{selected==1}}">
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...aliPay.fullname}}"></template>
+                            </view>
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...aliPay.username}}"></template>
+                            </view>
+                        </block>
+            </block>
+            <!-- 银行卡 -->
+            <block wx:if="{{enableBank==1}}">
+                    <block wx:if="{{selected==2}}">
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...bank.fullname}}"></template>
+                            </view>
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...bank.name}}"></template>
+                            </view>
+                            <view class="zan-cell">
+                                <template is="zan-field" data="{{ ...bank.cardNo}}"></template>
+                            </view>
+                        </block>
+            </block>
+            
+            <view class="zan-cell">
+                <view class="zan-btns" style="width:100%;">
+                    <button class="zan-btn zan-btn--danger button-hover" form-type="submit">提交申请</button>
+                </view>
+            </view>
+        </view>
+    </form>
+</view>

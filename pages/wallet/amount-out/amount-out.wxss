@@ -1,0 +1,48 @@
+/* pages/wallet/amount-out/amount-out.wxss */
+.pay-title {
+    color:#353535;
+    margin-bottom:30rpx;
+    font-size:40rpx;
+    width:100%;
+}
+
+.pay-img {
+    width:40rpx;
+    height:40rpx;
+    margin-right:16rpx;
+}
+.selected {
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:32rpx;
+    height:32rpx;
+}
+.flex-grow-0 {
+    min-width:0;
+    -webkit-box-flex:0;
+    -ms-flex-positive:0;
+    flex-grow:0;
+    -ms-flex-negative:0;
+    flex-shrink:0;
+}
+.active {
+  border:2rpx #ff4544 solid;
+    
+    }
+.pay {
+    
+    padding:16rpx 32rpx;
+    position:relative;
+
+}
+flex-row {
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-orient:horizontal;
+    -ms-flex-direction:row;
+    flex-direction:row;
+
+}
+            

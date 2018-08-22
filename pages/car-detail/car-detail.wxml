@@ -97,7 +97,7 @@
         </view>
 
 
-        <view class="zan-col zan-col-8 now-buy " bindtap="tobuy" >立即预约</view>
+        <view class="zan-col zan-col-8 now-buy " bindtap="tobuy">立即预约</view>
     </view>
 </view>
 <!-- 门店选择框 -->
@@ -116,7 +116,10 @@
                 </radio-group>
             </scroll-view>
             <view class="zan-cell">
-                <button bindtap="gobuy"  data-id="{{car.id}}" data-totalamount="{{car.totalAmount}}" class="zan-btn zan-btn--small zan-btn--primary button-hover">确定</button>
+                <form report-submit='true' bindsubmit='gobuy' data-id="{{car.id}}">
+                    <button form-type="submit" class="zan-btn zan-btn--small zan-btn--primary button-hover" >确定</button>
+                </form>
+
             </view>
         </view>
     </view>

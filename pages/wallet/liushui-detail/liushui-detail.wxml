@@ -1,0 +1,27 @@
+<view class="container" style="margin-bottom: 0;background-color:white;">
+    <view class="zan-panel">
+        <view class="zan-cell">
+            <view class="zan-col zan-col-12 zan-c-gray-dark">{{detail.behavior==0?"入账金额":"出账金额"}}</view>
+            <view class="zan-col zan-col-12 text-right" style="font-size: 80rpx;{{detail.behavior==0?'color:#33CC66;':''}}">{{detail.amount}}.00</view>
+        </view>
+        <view class="zan-cell">
+            <view class="zan-col zan-col-12 zan-c-gray-dark">类　　型</view>
+            <view class="zan-col zan-col-12 text-right">{{detail.behavior==0?"收入":"支出"}}</view>
+        </view>
+        <view class="zan-cell">
+            <view class="zan-col zan-col-12 zan-c-gray-dark">时　　间</view>
+            <view class="zan-col zan-col-12 text-right">{{detail.creationTimeStr}}</view>
+        </view>
+        <block wx:if="{{detail.orderNo!=null}}">
+            <view class="zan-cell">
+                <view class="zan-col zan-col-12 zan-c-gray-dark">订 单 号</view>
+                <view class="zan-col zan-col-12 text-right">{{detail.orderNo}}</view>
+            </view>
+        </block>
+
+        <view class="zan-cell">
+            <view class="zan-col zan-col-12 zan-c-gray-dark">备　　注</view>
+            <view class="zan-col zan-col-12 text-right">{{detail.remark}}</view>
+        </view>
+    </view>
+</view>

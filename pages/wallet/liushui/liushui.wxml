@@ -1,0 +1,8 @@
+<import src="liushui-item/liushui-item" />
+<view class="container">
+    <view class="zan-panel">
+        <block wx:for="{{liushuis}}" wx:key="index">
+            <template is="liushui-item" data="{{...item}}"></template>
+        </block>
+    </view>
+</view>

@@ -3,7 +3,7 @@ const Page = require('../../../utils/ald-stat.js').Page;
 const app = getApp()
 const Zan = require('../../../dist/index');
 var network = require("../../../utils/network.js")
-Page(Object.assign({}, Zan, Zan.Dialog, {
+Page(Object.assign({}, Zan, Zan.Dialog,Zan.Field, {
 
   /**
    * 页面的初始数据
@@ -13,20 +13,37 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
       list: [{
         id: '0',
         title: '全部'
-      }, {
+      }, 
+      {
+        id:'6',
+        title:'待支付'
+      },
+      {
         id: '1',
         title: '待确认'
-      }, {
-        id: '3',
-        title: '已确认'
-      }, {
+      }, 
+      {
+        id:'7',
+        title:'待取车'
+      },
+      {
         id: '4',
         title: '已取车'
-      }, {
+      }, 
+      {
+        id:'8',
+        title:'待退款'
+      },
+      {
+        id:'9',
+        title:'已退款'
+      },
+      {
         id: '5',
         title: '已完成'
       }],
-      selectedId: '1'
+      selectedId: '1',
+      scroll: true,
     },
     orders: null,//订单列表
     //底部弹出框
@@ -50,7 +67,14 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
         subname: '',
         className: 'action-class',
         loading: false
-      }, {
+      }, 
+      {
+        name: '确认退款',
+        subname: '',
+        className: 'action-class',
+        loading: false
+      },
+      {
         name: '订单已完成',
         subname: '',
         className: 'action-class',
@@ -59,7 +83,16 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
     },
     orderId: 0,//订单id
     isClickOrderStatus: false,//是否点击订单状态
-    filterText: ""//搜索字
+    filterText: "",//搜索字
+    showPopup: false,
+    refundPrice: {
+      right: true,
+      error: true,
+      mode: 'wrapped',
+      title: '请输入退款金额:',
+      inputType: 'number',
+      placeholder: '谨慎输入'
+    },
   },
   loadData: function (skipCount, status, filterText) {
     var that = this;
@@ -178,7 +211,14 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
     } else if (index == 2) {
       status = 4;
     } else if (index == 3) {
-      status = 5;
+      status = 9;
+      this.setData({
+        showPopup: !this.data.showPopup,
+        [`baseActionsheet.show`]: false
+      });
+      return;
+    }else if(index==4){
+      status=5;
     }
     that.setData({
       [ba]: true,
@@ -195,6 +235,11 @@ Page(Object.assign({}, Zan, Zan.Dialog, {
       });
     });
     
+  },
+  togglePopup() {
+    this.setData({
+      showPopup: !this.data.showPopup
+    });
   },
   /**
    * 生命周期函数--监听页面加载

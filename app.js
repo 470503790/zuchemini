@@ -20,9 +20,9 @@ App({
     });
 
   },
-  onShow:function(){
-    this.aldstat.sendEvent('小程序的启动时长',{
-      time : Date.now() - startTime
+  onShow: function () {
+    this.aldstat.sendEvent('小程序的启动时长', {
+      time: Date.now() - startTime
     })
   },
   onError: function (err) {
@@ -53,18 +53,7 @@ App({
                   console.log('userId=>', result.userId);
                   //有userId，就可以获取用户信息
                   if (result.userId) {
-                    url = that.globalData.siteRoot + "/api/services/app/weixinUser/GetWeixinUserByIdToMiniAsync";
-                    network.request(url, {
-                      id: result.userId
-                    },
-                      function (json) {
-                        that.globalData.userInfo = json.result;
-                        wx.setStorageSync('userInfo', json.result);
-                        if (success != undefined) {
-                          success();
-                        }
-
-                      })
+                    that.getUserInfoById(result.userId);
                   } else {
                     if (login != undefined) {
                       login();
@@ -89,6 +78,21 @@ App({
     }
 
   },
+  getUserInfoById(userId, success) {
+    var that = this;
+    var url = that.globalData.siteRoot + "/api/services/app/weixinUser/GetWeixinUserByIdToMiniAsync";
+    var params = {
+      id: userId
+    };
+    network.request(url, params, function (json) {
+      that.globalData.userInfo = json.result;
+      wx.setStorageSync('userInfo', json.result);
+      if (success != undefined) {
+        success();
+      }
+
+    })
+  },
   getSetting(success) {
     var that = this;
     var url = that.globalData.siteRoot + "/api/services/app/SystemSettings/GetSettingToMiniAsync";
@@ -100,8 +104,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    siteRoot: "https://das.mynatapp.cc",
-    //siteRoot: "https://zuche.shensigzs.com",
+    //siteRoot: "https://das.mynatapp.cc",
+    siteRoot: "https://zuche.shensigzs.com",
     diyID: "39cb2fff34814ef485c95aae2f4f1d85",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
     setting: null,//系统配置
     day: null,

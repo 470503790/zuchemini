@@ -209,6 +209,7 @@ Page({
     app.aldstat.sendEvent('预约按钮')
     var that = this;
     console.log(e);
+    var formId=e.detail.formId;
     if (app.globalData.pickUpCar.StoreId == null) {
       wx.showToast({
         title: "请选择门店",
@@ -231,7 +232,8 @@ Page({
       //点击预约前，检查是否能下单
       var url = app.globalData.siteRoot + '/api/services/app/Reservation/IsCanOrder';
       var params = {
-        userId: user.id
+        userId: user.id,
+        formId:formId
       }
       network.requestLoading(url, params, "加载中...", function (res) {
         //弹出提示框
@@ -246,7 +248,7 @@ Page({
           var totalAmount = e.currentTarget.dataset.totalamount;
           console.log("carId=>" + carId);
           wx.navigateTo({
-            url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
+            url: '../reservation/reservation?carId=' + carId +'&formId='+formId,
           })
         }
       });

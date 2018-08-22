@@ -1,0 +1,11 @@
+<template name="liushui-item">
+    <view class="zan-cell" bindtap="detail" data-id="{{id}}">
+        <view class="zan-col zan-col-16">
+            <view class="zan-font-22 zan-font-bold">{{remark}}</view>
+            <view style="color:#D0D0D0;">{{creationTimeStr}}</view>
+        </view>
+        <view class="zan-col zan-col-8">
+            <view class="zan-font-22" style="text-align: right;{{behavior==0?'color:#33CC66;':''}}">{{behavior==0?"+":"-"}} {{amount}}</view>
+        </view>
+    </view>
+</template>

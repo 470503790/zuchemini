@@ -8,8 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: null,
-    orderCount: 0
+    userInfo:null,
+    orderCount: 0,//订单数
+    balance:0,//余额
   },
 
   /**
@@ -22,31 +23,28 @@ Page({
   loadData: function (success) {
     var that = this;
     var user=wx.getStorageSync('userInfo');
-    if (user == "") {
-      return;
-    }
 
-    var url = app.globalData.siteRoot + "/api/services/app/reservation/GetReservationCountToMiniAsync";
-    var params={
-      userId: user.id
-    };
-    network.requestLoading(url, params, "加载中...", function (res) {
+    app.getUserInfoById(user.id,function () {
+      
+      var user=wx.getStorageSync('userInfo');
+      console.log("获取用户信息成功",user);
       that.setData({
-        orderCount: res.result.count
+        userInfo:user,
+        orderCount:user.orderCount,
+        balance:user.balance
       });
       if(success!=undefined){
         success();
       }
     });
   },
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var user=wx.getStorageSync('userInfo');
-    this.setData({
-      userInfo: user
-    });
+    var that=this;
     this.loadData();
   },
 
@@ -95,11 +93,8 @@ Page({
   },
   //帐户余额
   accountBalance: function () {
-    //app.aldstat.sendEvent('查看余额');
-    wx.showToast({
-      title: '暂无余额',
-      icon: 'success',
-      duration: 2000
+    wx.navigateTo({
+      url: '/pages/wallet/wallet',
     })
   },
   //优惠券

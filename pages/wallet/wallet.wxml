@@ -1,0 +1,17 @@
+<view class="container" style="margin-bottom: 0;background-color:white;">
+    <view>
+        <view class="zan-row" style="margin-top:50rpx;">
+          <view class="zan-icon zan-icon-value-card theme-color" style="font-size: 150rpx;width:100%;text-align: center;"></view>
+        </view>
+  
+        <view class="icon-classname" style="text-align: center;font-size: 30rpx;">钱包余额</view>
+        <view class="" style="text-align: center;font-size: 60rpx;">￥{{entity==null?0:entity.money}}.00</view>
+      </view>
+      <view>
+        <button bindtap="takeOut" style="position:absolute;border-radius: 30px;bottom:280rpx;width:400rpx;left:175rpx;background-color:black;color:white;">我要提现</button>
+        <!-- <button bindtap="recharge" class="theme-background-color" style="position:absolute;border-radius: 30px;bottom:140rpx;width:400rpx;left:175rpx;color:white;">我要充值</button> -->
+      </view>
+      <view>
+        <view bindtap="showWater" style="text-align: center;font-size:25rpx;color:#C8C8C8;position:absolute;bottom:60rpx;left:327rpx;">查看流水</view>
+      </view>
+</view>

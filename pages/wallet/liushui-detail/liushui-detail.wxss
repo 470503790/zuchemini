@@ -1,0 +1,4 @@
+/* pages/wallet/liushui-detail/liushui-detail.wxss */
+.text-right{
+    text-align: right;
+}
