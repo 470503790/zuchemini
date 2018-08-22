@@ -4,7 +4,28 @@
 用于租车公司预约的小程序
 
 #### 软件架构
-软件架构说明
+
+### 后端
+
+- 开发工具：Visual Studio 2015
+- 开发语言：C#
+- 框架：ABP Zero
+- 数据库：MySQL
+- NET框架：.net461
+- IIS版本：IIS 10
+
+### 小程序端
+
+- 开发工具：微信开发者工具
+- UI框架：ZanUI
+- 插件：wxparser（富文本显示）
+- 其它：阿拉丁统计、fundebug
+
+### 第三方服务
+
+- 腾讯云存储
+- 阿里云短信
+
 
 #### 更新日志
 
@@ -100,7 +121,7 @@
 
 #### 使用说明
 
- _注：各位同学，后端源码有偿提供，请尊重我的劳动成果，谢谢！淘宝购买地址：https://item.taobao.com/item.htm?spm=a1z10.5-c.w4002-2434671115.35.212d62bfgWRKao&id=571520511177(数量请拍10个，总额300元，请在留言备注你的邮箱，我会把后端发送给你，包后续所有更新)_ 
+ https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/Home?sort_id=596525 
 
 #### 参与贡献
 
