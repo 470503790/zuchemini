@@ -131,7 +131,7 @@
 
 #### 使用说明
 
- https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/Home?sort_id=596525 
+ [https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/pages](https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/pages) 
 
 #### 参与贡献
 
