@@ -1,9 +1,10 @@
 // pages/reservation/reservation.js
+var Zan = require('../../dist/index');
 const Page = require('../../utils/ald-stat.js').Page;
 const app = getApp()
 const config = require('./config');
 var network = require("../../utils/network.js")
-Page({
+Page(Object.assign({}, Zan.NoticeBar, {
 
   /**
    * 页面的初始数据
@@ -21,7 +22,10 @@ Page({
     pickUpObj:null,//取车
     returnObj:null,//还车
     day:0,
-    formId:""
+    //通告栏文本
+    movable: {
+      text: ''
+    },
   },
   loadData(id){
     var that=this;
@@ -32,8 +36,7 @@ Page({
       startDate: app.globalData.pickUpCar.Date.FullDate,
       endDate: app.globalData.returnCar.Date.FullDate,
       storeId:app.globalData.pickUpCar.StoreId,
-      userId:userInfo.id,
-      formId:that.data.formId
+      userId:userInfo.id
     };
     network.requestLoading(url,params,"加载中...",function(res){
       that.setData({
@@ -41,6 +44,12 @@ Page({
         payMode:res.result.earnestMoney>0?0:1,
         payAmount:res.result.earnestMoney>0?res.result.earnestMoney:res.result.totalAmount
       });
+      that.setData({
+        movable:{
+          text:"预订中秋节或国庆节的车辆，时间至少3天或3天以上，少于3天一律取消订单并扣除5%手续费！临近节日租金将有所升幅，早订早省钱"
+        }
+      });
+      that.initZanNoticeBarScroll('movable');
       that.getMoney();
     });
   },
@@ -91,6 +100,8 @@ Page({
     console.log('[zan:field:submit]', event.detail.value);
     var fullName = event.detail.value.name;
     var mobile = event.detail.value.tel;
+    var formId=event.detail.formId;
+    app.commitFormId(formId);
     //验证
     if (fullName == "") {
       wx.showToast({
@@ -125,6 +136,28 @@ Page({
       })
       return;
     }
+    //显示出公告，再次提醒
+    if(that.data.movable.text!=''){
+      wx.showModal({
+        title: '公告',
+        content: that.data.movable.text,
+        success: function(res) {
+          if (res.confirm) {
+            that.submitOrder(fullName,mobile);
+          } else if (res.cancel) {
+            return;
+          }
+        }
+      });
+    }else{
+      that.submitOrder(fullName,mobile);
+    }
+    
+    
+  },
+  //提交订单
+  submitOrder(fullName,mobile){
+    var that=this;
     var user=wx.getStorageSync('userInfo');
     var url = app.globalData.siteRoot + "/api/services/app/reservation/CreateReservationToMiniAsync";
     console.log("取车对象=>", app.globalData.pickUpCar);
@@ -145,7 +178,6 @@ Page({
       "discountFee":that.data.discountFee,//优惠费用
       "carId": that.data.carId,
       "weixinUserId": user.id,
-      "formId": event.detail.formId,
       "paymentTypes":that.data.payMode==0?1:0
     };
     network.requestLoading(url, ops, "正在提交...", function (res) {
@@ -186,14 +218,12 @@ Page({
     var that = this;
     console.log(options);
     var id=options.carId;
-    var formId=options.formId;
     that.loadData(id);
     that.setData({
       carId: id,
       pickUpObj:app.globalData.pickUpCar,
       returnObj:app.globalData.returnCar,
       day:app.globalData.day,
-      formId:formId
     });
     console.log("还车对象：",app.globalData.returnCar);
   },
@@ -209,7 +239,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -263,4 +293,4 @@ Page({
 
     console.log('[zan:field:blur]', componentId, detail);
   },
-})
+}))

@@ -128,6 +128,7 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
     var id = e.currentTarget.dataset.id;
     var orderNo = e.currentTarget.dataset.orderno;
     var formId = e.detail.formId;
+    app.commitFormId(formId);
     that.showZanDialog({
       title: '订单支付',
       content: '请选择一种支付方式',
@@ -161,22 +162,16 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
   payment(e) {
     console.log("支付", e);
     var id = e.currentTarget.dataset.id;
-    var actualAmount = e.currentTarget.dataset.actualamount;
-    //var actualAmount = 0.03;
+    //var actualAmount = e.currentTarget.dataset.actualamount;
+    var actualAmount = 0.01;
     var orderNo = e.currentTarget.dataset.orderno;
     var formId = e.detail.formId;
+    app.commitFormId(formId);
     payHelper.wxPayment(orderNo, actualAmount, function (res) {
-      var url = app.globalData.siteRoot + "/api/services/app/reservation/ChangeStatusPayToMiniAsync";
-      var params = {
-        orderNo: orderNo,
-        formId: formId
-      }
-      network.requestLoading(url, params, "请稍候...", function (res) {
-        //跳转到订单详情
-        wx.redirectTo({
-          url: "/pages/order/order-detail/order-detail?id=" + id
-        });
-      })
+      //跳转到订单详情
+      wx.redirectTo({
+        url: "/pages/order/order-detail/order-detail?id=" + id
+      });
     }, function (res) {
 
     });
@@ -188,10 +183,10 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
     var orderNo = e.currentTarget.dataset.orderno;
     var userInfo = wx.getStorageSync('userInfo');
     var formId = e.detail.formId;
+    app.commitFormId(formId);
     var url = app.globalData.siteRoot + "/api/services/app/wallet/GetWalletByUserIdToMiniAsync";
     var params = {
-      userId: userInfo.id,
-      formId: formId
+      userId: userInfo.id
     }
     network.requestLoading(url, params, "加载中...", function (res) {
 
@@ -206,8 +201,7 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
         url = app.globalData.siteRoot + "/api/services/app/wallet/PayToMiniAsync";
         params = {
           userId: userInfo.id,
-          orderNo: orderNo,
-          formId: formId
+          orderNo: orderNo
         };
         network.requestLoading(url, params, "支付中...", function (res) {
           //跳转到订单详情
@@ -232,10 +226,10 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
           var id = e.currentTarget.dataset.id;
           var orderNo = e.currentTarget.dataset.orderno;
           var formId = e.detail.formId;
+          app.commitFormId(formId);
           var url = app.globalData.siteRoot + "/api/services/app/Reservation/ChangeStatusByRefundToMiniAsync";
           var params = {
-            orderNo: orderNo,
-            formId: formId
+            orderNo: orderNo
           };
           network.requestLoading(url, params, "提交中...", function (res) {
             
@@ -297,6 +291,8 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
   cancelOrder: function (e) {
     var that = this;
     var id = e.currentTarget.dataset.id;
+    var formId=e.detail.formId;
+    app.commitFormId(formId);
     wx.showModal({
       title: "预约",
       content: "确认取消预约吗？",
@@ -304,8 +300,7 @@ Page(Object.assign({}, Zan.NoticeBar, Zan.Dialog, {
         if (res.confirm) {
           var url = app.globalData.siteRoot + "/api/services/app/reservation/CancelReservationToMini";
           var params = {
-            "id": id,
-            "formId": e.detail.formId
+            "id": id
           };
           network.requestLoading(url, params, "正在取消...", function (res) {
             if (res.success) {

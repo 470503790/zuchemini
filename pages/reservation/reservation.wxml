@@ -1,7 +1,17 @@
 <import src="/dist/field/index.wxml" />
+<import src="/dist/noticebar/index.wxml" />
 <form report-submit='true' bindsubmit="tobuy">
 <view class="container" style="margin-bottom:110rpx;">
-
+  <!-- 通告栏 -->
+  <block wx:if="{{movable.text!=''}}">
+      <view class="zan-panel" style="margin-top:0;">
+          <template
+            is="zan-noticebar"
+            data="{{ ...movable, componentId: 'movable'  }}"
+          ></template>
+        </view>
+  </block>
+  
   <!-- 主图 -->
   <view class="zan-panel" style="margin-top:0;">
     <view class="zan-row">

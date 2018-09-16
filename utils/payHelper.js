@@ -4,6 +4,7 @@ var network = require("../utils/network.js")
  * 微信支付
  * @param orderNo 订单号
  * @param money 金额
+ * @param formId formId
  * @param success 成功的回调函数
  * @param fail 失败的回调
  */
@@ -29,7 +30,6 @@ function wxPayment(orderNo,money,success,fail) {
         'paySign': pay.paySign,
         'success': function (res) {
           console.log("支付成功", res);
-          wx.showToast({ title: '支付成功' })
           if(success!=undefined){
             success(res);
           }
@@ -37,11 +37,11 @@ function wxPayment(orderNo,money,success,fail) {
 
         },
         'fail': function (res) {
-          console.log("支付失败", res);
+          /* console.log("支付失败", res);
           wx.showToast({ title: '支付失败' })
           if(fail!=undefined){
             fail(res);
-          }
+          } */
           
         }
       })

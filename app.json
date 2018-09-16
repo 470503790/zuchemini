@@ -1,7 +1,8 @@
 {
   "pages": [
-    
     "pages/index/index",
+    "libs/citySelector/pick-car-address/pick-car-address",
+    
     "pages/car-detail/car-detail",
     "pages/share/share",
     "pages/reservation/reservation",
@@ -9,7 +10,6 @@
     "pages/order/order-list/order-list",
     "pages/me/me",
     "pages/car-list/car-list",
-    
     "pages/help/novice/novice",
     "pages/help/service/service",
     "pages/help/service/main/main",
@@ -21,7 +21,9 @@
     "pages/wallet/wallet",
     "pages/wallet/amount-out/amount-out",
     "pages/wallet/liushui/liushui",
-    "pages/wallet/liushui-detail/liushui-detail"
+    "pages/wallet/liushui-detail/liushui-detail",
+    "libs/citySelector/switchcity/switchcity"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

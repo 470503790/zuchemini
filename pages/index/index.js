@@ -7,6 +7,7 @@ const { Tab, extend } = require('../../dist/index');
 const Zan = require('../../dist/index');
 var ext = require('indexExt.js')
 var network = require("../../utils/network.js")
+
 Page(extend({}, Tab, Zan.Field, {
   data: {
     tab: {//选项卡
@@ -36,7 +37,9 @@ Page(extend({}, Tab, Zan.Field, {
     //预约默认最少多少天
     defaultDay: 2,
     phoneNumber: 13692950061,
-    setting: null
+    setting: null,
+    currentCity: "",//最多4字
+    currentAddress: ""//最多10字
   },
 
   onLoad: function () {
@@ -46,7 +49,7 @@ Page(extend({}, Tab, Zan.Field, {
     })
 
     that.loadData();
-
+    
   },
   loadData: function () {
     this.loadSetting();
@@ -107,6 +110,21 @@ Page(extend({}, Tab, Zan.Field, {
 
   },
   onShow: function () {
+    var that=this;
+    var currentCity = wx.getStorageSync('currentCity');
+    var currentAddress = wx.getStorageSync('currentAddress');
+    var address=currentAddress!=""?currentAddress.address:"";
+    //截取字符串
+    if(currentCity.length>4){
+      currentCity=currentCity.substring(0,4)+"...";
+    }
+    if(currentAddress!="" && currentAddress.address.length>10){
+      address=currentAddress.address.substring(0,10)+"...";
+    }
+    that.setData({
+      currentCity: currentCity,
+      currentAddress: address
+    })
   },
 
   //tab事件
@@ -200,6 +218,7 @@ Page(extend({}, Tab, Zan.Field, {
   click_go: function (e) {
     var that = this;
     var formId = e.detail.formId;
+    app.commitFormId(formId);
     //取车对象
     var pickerDateObj = that.data.pickerViewConfig1.year[that.data.pickerViewConfig1.value[0]];
     var pickerTimeObj = that.data.pickerViewConfig1.time[that.data.pickerViewConfig1.value[1]];
@@ -230,7 +249,7 @@ Page(extend({}, Tab, Zan.Field, {
     app.aldstat.sendEvent('去选车按钮')
 
     wx.navigateTo({
-      url: '../car-list/car-list?formId=' + formId
+      url: '../car-list/car-list'
     })
   },
   //打电话
@@ -254,4 +273,13 @@ Page(extend({}, Tab, Zan.Field, {
     wx.hideLoading();
     wx.stopPullDownRefresh()
   },
+  selectCity() {
+    wx.navigateTo({
+      url: '/libs/citySelector/switchcity/switchcity?back_url=/pages/index/index',
+    });
+  },
+  onUnload: function (e) {
+    onfire.un('selectAddress');
+    onfire.un(eventObj);
+  }
 }))

@@ -102,11 +102,25 @@ App({
       }
     })
   },
+  //提交formId
+  commitFormId(formId){
+    var that=this;
+    var url=that.globalData.siteRoot + "/api/services/app/FormIdContainer/CommitFormIdToMiniAsync";
+    var userInfo=wx.getStorageSync('userInfo');
+    if(userInfo=="")return;
+    var params={
+      formId:formId,
+      weixinUserId:userInfo.id
+    }
+    network.request(url,params,function(res){
+      console.log("commitFormId",res);
+    });
+  },
   globalData: {
     userInfo: null,
     //siteRoot: "https://das.mynatapp.cc",
     siteRoot: "https://zuche.shensigzs.com",
-    diyID: "39cb2fff34814ef485c95aae2f4f1d85",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
+    diyID: "",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
     setting: null,//系统配置
     day: null,
     phoneNumber: null,

@@ -69,6 +69,8 @@ Page({
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var that = this;
+    var formId=e.detail.formId;
+    app.commitFormId(formId);
     //验证
     var content = e.detail.value.content;
     if (content == "") {
@@ -89,8 +91,7 @@ Page({
       var url = app.globalData.siteRoot + "/api/services/app/opinion/CreateOpinionToMiniAsync";
       var params = {
         content: content,
-        weixinUserId: app.globalData.userInfo.id,
-        formId: e.detail.formId
+        weixinUserId: app.globalData.userInfo.id
       };
       network.requestLoading(url, params, "正在提交...", function (res) {
         wx.showModal({

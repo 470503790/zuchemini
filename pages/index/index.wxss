@@ -19,3 +19,13 @@
   line-height: 50px;
   text-align: center;
 }
+.triangle_border_down{
+  width:0;
+  height:0;
+  border-width:10rpx 10rpx 0;
+  border-style:solid;
+  border-color:#C0C0C0 transparent transparent;/*灰 透明 透明 */
+  position:relative;
+  top:20rpx;
+  float:left;
+}

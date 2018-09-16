@@ -12,7 +12,6 @@ Page({
     cars: [],
     car: {},
     showPopup: false,
-    formId:""
   },
 
   /**
@@ -20,10 +19,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var formId=options.formId;
     that.setData({
       day: app.globalData.day,
-      formId:formId
     });
   },
   loadData: function () {
@@ -39,7 +36,6 @@ Page({
       returnStoreId: app.globalData.returnCar.StoreId,
       startTime:app.globalData.pickUpCar.Time,
       endTime:app.globalData.returnCar.Time,
-      formId:that.data.formId,
       userId:userInfo==""?null:userInfo.id
     };
     network.requestLoading(url, params, "加载中...", function (res) {
@@ -133,12 +129,13 @@ Page({
   click_go: function (e) {
     var that = this;
     var formId=e.detail.formId;
+    app.commitFormId(formId);
     console.log(e);
     //判断是否登陆
     var user=wx.getStorageSync('userInfo');
     if (user=="") {
       //var url = "/pages/car-list/car-list----startDate---"+that.data.options.startDate+">endDate---"+that.data.options.endDate+">day---"+that.data.options.day;
-      var url = "/pages/car-list/car-list----formId---"+formId;
+      var url = "/pages/car-list/car-list";
       var jumpType = "redirectTo";
       console.log("url", url);
       wx.navigateTo({
@@ -149,8 +146,7 @@ Page({
       //点击预约前，检查是否能下单
       var url = app.globalData.siteRoot + '/api/services/app/Reservation/IsCanOrder';
       var params = {
-        userId: user.id,
-        formId:formId
+        userId: user.id
       }
       network.requestLoading(url, params, "加载中...", function (res) {
         //弹出提示框
@@ -162,11 +158,9 @@ Page({
           })
         } else {
           var carId = e.currentTarget.dataset.id;
-          //var totalAmount = e.currentTarget.dataset.totalamount;
           console.log("carId=>" + carId);
           wx.navigateTo({
-            //url: '../reservation/reservation?carId=' + carId + '&totalAmount=' + totalAmount,
-              url:'../reservation/reservation?carId=' + carId+'&formId='+formId
+              url:'../reservation/reservation?carId=' + carId
           })
         }
       });

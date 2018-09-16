@@ -1,0 +1,10 @@
+.item{
+    margin:10rpx 20rpx 20rpx 0;
+    float:left;
+    border:2rpx solid #ACACAC;
+    padding:5rpx 10rpx;
+
+}
+.select{
+    border-color: #c60a0d !important;
+}
