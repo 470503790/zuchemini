@@ -31,6 +31,16 @@
 
   _20XXXXX 即将加入营销工具：分享得赏金、优惠券_
 
+ _2018-8-22_ 
+
+1. 加入微信支付、余额支付；
+2. 付款方式：定金、全额；
+3. 汽车信息费用填写更详情；
+4. 订单填写页优化、订单页优化；
+5. 加入钱包、查看流水；
+6. 后台同步支持
+7. 其它更多细节优化
+
  _2018-8-3 后端修改为多用户管理，在后台注册用户便可使用租车系统所有功能_
 
  _2018-8-3 小程序端加入生成汽车分享海报_ 
@@ -121,7 +131,7 @@
 
 #### 使用说明
 
- https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/Home?sort_id=596525 
+ [https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/pages](https://gitee.com/shanwei_city_da_shu_network/zuchemini/wikis/pages) 
 
 #### 参与贡献
 
