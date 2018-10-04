@@ -8,4 +8,10 @@
       </form>
     </view>
   </view>
+
+  <view class="zan-panel"  style="background:#F9F9F9">
+    <view class="zan-cell">
+      <button open-type="feedback" class="zan-btn zan-btn--danger button-hover" style="width:100%;color:white;border-radius:10rpx;"> 提供更多信息 </button>
+    </view>
+  </view>
 </view>

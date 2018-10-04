@@ -3,7 +3,7 @@
     float:left;
     border:2rpx solid #ACACAC;
     padding:5rpx 10rpx;
-
+    font-size: 28rpx;
 }
 .select{
     border-color: #c60a0d !important;

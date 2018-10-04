@@ -1,0 +1,86 @@
+<import src="/dist/loadmore/index.wxml" />
+<view class="container">
+    <view class="ress-bd sub">
+        <scroll-view scroll-y="true" class="ress-side tc" scroll-into-view="{{title_sw_id}}">
+            <!-- 分类 -->
+            <block wx:for="{{navs}}" wx:key="index">
+                <view class="cate_all ress-side-item {{categoryId==item.id?'ress-side-active':''}} gridXb" style="">
+                    <view style="text-align:left;" class=" zan-font-12" data-id="{{item.id}}" bindtap="select_nav" data-key="{{index}}">{{item.name}}
+                    </view>
+                    <view class="" style="font-size:18rpx;color:#9E9E9E;">￥{{item.startPrice}}起</view>
+                </view>
+            </block>
+        </scroll-view>
+
+        <scroll-view scroll-y="true" class="ress-con" scroll-into-view="{{sw_id}}" scroll-with-animation bindscroll='setRect'>
+            <!-- 列表 -->
+            <view class="zan-panel" wx:for="{{details}}" wx:for-item="gitem" wx:for-index="index" wx:key="index" style="margin-top:0;margin-bottom:20rpx;">
+                <view class="zan-cell">
+                    <view class="zan-col zan-col-10">
+                        <image src="{{gitem.picture}}" mode="aspectFill" style="width:100%;height:146rpx;"></image>
+                    </view>
+                    <view class="zan-col zan-col-14 zan-col-offset-1">
+                        <view class="zan-font-16">{{gitem.name}}
+                            <block wx:if="{{gitem.isHot}}">
+                                <view class="zan-tag zan-tag--danger">热</view>
+                            </block>
+
+                        </view>
+                        <view class="zan-font-12">{{gitem.stalls}}|{{gitem.numberOfPeople}}座|{{gitem.displacement}}|{{gitem.bodyStructure}}</view>
+                    </view>
+                </view>
+                <block wx:for="{{gitem.stores}}" wx:key="index">
+                <view bindtap="gobuy" data-carId="{{gitem.id}}" data-storeId="{{item.id}}" class="zan-cell" style="display: block;">
+                    <view class="zan-row">
+                        <view>{{item.name}}</view>
+                    </view>
+                    <view class="zan-col zan-col-12">
+
+                        <view class="zan-font-10" style="color:#7A7A7A">距{{item.pickUpLocation.name}}约{{item.distanceStr}}</view>
+                        <block wx:for="{{item.pickUpLocation.extensionItems}}" wx:key="index">
+                            <view class="zan-tag zan-tag--primary zan-tag--plain" style="margin-right:10rpx;">{{item}}</view>
+                        </block>
+                        <!-- <view class="zan-tag zan-tag--warn zan-tag--plain" style="margin-right:10rpx;">一嗨新客最高减100</view> -->
+                    </view>
+                    <view class="zan-col zan-col-12 zan-font-10" style="text-align: right;color:#D8D8D8;">
+                        <!-- <view>￥500减15</view> -->
+                        <view style="color:#FF3300;">
+                            <label>$</label>
+                            <label class="zan-font-14">{{gitem.averageAmount}}</label>
+                            <label>/天</label>
+                        </view>
+                        <view>总价￥{{gitem.averageAmount*2}}</view>
+                        <view>含手续费,基本保障服务</view>
+                    </view>
+                    <view class="zan-row"></view>
+                </view>
+            </block>
+            </view>
+            <template is="zan-loadmore" data="{{ nodata: true,nodata_str:'到底了~' }}" />
+
+        </scroll-view>
+    </view>
+    <!-- 底部栏 -->
+    <view>
+        <view class="zan-row" style="background: black;padding:10rpx 0;">
+            <view bindtap="sort" data-type="1" class="zan-col zan-col-8">
+                <view class="icon-wrap" style="text-align: center;padding:10rpx 0;">
+                    <view class="zan-icon zan-icon-exchange-record" style="color:{{sortType==1?'#0099FF':'white'}};font-size:32rpx;"></view>
+                    <view class="icon-classname" style="font-size:16rpx;color:{{sortType==1?'#0099FF':'white'}};margin-top:8rpx;">综合排序</view>
+                </view>
+            </view>
+            <view bindtap="sort" data-type="2" class="zan-col zan-col-8">
+                <view class="icon-wrap" style="text-align: center;padding:10rpx 0;">
+                    <view class="zan-icon zan-icon-gold-coin" style="color:{{sortType==2?'#0099FF':'white'}};font-size:32rpx;"></view>
+                    <view class="icon-classname" style="font-size:16rpx;color:{{sortType==2?'#0099FF':'white'}};margin-top:8rpx;">价格低→高</view>
+                </view>
+            </view>
+            <view bindtap="sort" data-type="3" class="zan-col zan-col-8">
+                <view class="icon-wrap" style="text-align: center;padding:10rpx 0;">
+                    <view class="zan-icon zan-icon-location" style="color:{{sortType==3?'#0099FF':'white'}};font-size:32rpx;"></view>
+                    <view class="icon-classname" style="font-size:16rpx;color:{{sortType==3?'#0099FF':'white'}};margin-top:8rpx;">距离近→远</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

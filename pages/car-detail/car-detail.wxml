@@ -1,5 +1,9 @@
 <import src="/pages/car-list/car-calendar/car-calendar.wxml" />
 <import src="/pages/templates/right-button/home-button.wxml" />
+<!-- 公众号关注组件 -->
+<view style="width:100%;display:flex;top:0;background:gray;z-index:999;">
+    <official-account style="width:100%"></official-account>
+  </view>
 <view class="container">
     <view class="zan-panel">
         <view class="zan-cell">

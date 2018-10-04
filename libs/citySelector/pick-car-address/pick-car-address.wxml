@@ -1,34 +1,49 @@
+<import src="/dist/loadmore/index.wxml" />
 <view class="container">
-  <block wx:if="{{historys!=null && historys!=''}}">
-    <view class="zan-panel">
-      <view class="zan-cell">
-        <view style="color:#ACACAC;">当前/历史</view>
-      </view>
-      <block wx:for="{{historys}}" wx:key="index">
-        <view class="zan-cell">
-          <view class="zan-cell__bd">
-            <image src="/images/team/carpooling.png" style="width:38rpx;height:38rpx;float:left;"></image>
-            <view bindtap="select" data-id="{{item.id}}" data-address="{{item.name}}" style="float:left;">{{item.name}}</view>
-            <view bindtap="delete" data-id="{{item.id}}" class="zan-icon zan-icon-close" style="float:right;"></view>
+  <block wx:if="{{is_load}}">
+      <template is="zan-loadmore" data="{{ loading: true }}" />
+  </block>
+  <block wx:else>
+    <block wx:if="{{details.length>0}}">
+      <block wx:if="{{historys!=null && historys!=''}}">
+        <view class="zan-panel">
+          <view class="zan-cell">
+            <view style="color:#ACACAC;">当前/历史</view>
           </view>
+          <block wx:for="{{historys}}" wx:key="index">
+            <view class="zan-cell">
+              <view class="zan-cell__bd">
+                <view class="zan-icon zan-icon-clock" style="float:left;"></view>
+                <view bindtap="select" data-id="{{item.id}}" data-address="{{item.name}}" style="float:left;margin-left:16rpx;">{{item.name}}</view>
+                <view bindtap="delete" data-id="{{item.id}}" class="zan-icon zan-icon-close" style="float:right;"></view>
+              </view>
+            </view>
+          </block>
+
         </view>
       </block>
 
-    </view>
-  </block>
-
-  <block wx:for="{{details}}" wx:key="index">
-    <view class="zan-panel" style="padding-bottom:20rpx;">
-      <view class="zan-cell">
-        <image src="{{item.pictureUrl}}" style="width:40rpx;height:40rpx;float:left;margin-right:10rpx;"></image>
-        <view style="color:#ACACAC;">{{item.hubName}}</view>
+      <block wx:for="{{details}}" wx:key="index">
+        <view class="zan-panel" style="padding-bottom:20rpx;">
+          <view class="zan-cell">
+            <image src="{{item.pictureUrl}}" style="width:40rpx;height:40rpx;float:left;margin-right:10rpx;"></image>
+            <view style="color:#ACACAC;">{{item.hubName}}</view>
+          </view>
+          <view style="padding:24rpx 30rpx;">
+            <block wx:for="{{item.addresses}}" wx:key="aindex" wx:for-item="addressItem">
+              <view bindtap="select" class="item {{currentAddress==addressItem.name?'select':''}}" data-id="{{addressItem.id}}" data-address="{{addressItem.name}}">{{addressItem.name}}</view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="zan-panel">
+        <view class="zan-cell">
+            <template is="zan-loadmore" data="{{ nodata: true,nodata_str:nodata_str }}" />
+        </view>
       </view>
-      <view style="padding:24rpx 30rpx;">
-        <block wx:for="{{item.addresses}}" wx:key="aindex" wx:for-item="addressItem">
-          <view bindtap="select" class="item {{currentAddress==addressItem.name?'select':''}}" data-id="{{addressItem.id}}" data-address="{{addressItem.name}}">{{addressItem.name}}</view>
-        </block>
-      </view>
-    </view>
-  </block>
 
+    </block>
+  </block>
 </view>

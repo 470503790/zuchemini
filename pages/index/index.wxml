@@ -3,31 +3,34 @@
 <import src="/dist/field/index.wxml" />
 <view class="container">
   <view class="zan-panel" style="margin-top:0;">
-    <!-- 另一种取车界面 -->
-    <!-- <view class="zan-row" style="margin:24rpx 30rpx 0 30rpx;font-size:28rpx;color:#C0C0C0;">
-      <view class="zan-col zan-col-8">取车城市</view>
-      <view class="zan-col zan-col-16">取车地点</view>
-    </view>
-    <view class="zan-cell" style="padding-top:4rpx;">
-      <view bindtap="selectCity" class="zan-col zan-col-8" style="font-size: 40rpx;">
-        <view style="float:left;">{{currentCity}}</view>
-        <view class="triangle_border_down"></view>
+    <block wx:if="{{setting.storeModel==2}}">
+      <!-- 另一种取车界面 -->
+      <view class="zan-row" style="margin:24rpx 30rpx 0 30rpx;font-size:28rpx;color:#C0C0C0;">
+        <view class="zan-col zan-col-8">取车城市</view>
+        <view class="zan-col zan-col-16">取车地点</view>
       </view>
-      <view  bindtap="selectAddress" class="zan-col zan-col-16" style="font-size: 40rpx;">{{currentAddress}}</view>
-    </view> -->
-    <!-- tab -->
-    <view class="zan-cell">
-      <view style="">
-        <template is="zan-tab" data="{{ ...tab, componentId: 'tab' }}"></template>
+      <view class="zan-cell" style="padding-top:4rpx;">
+        <view bindtap="selectCity" class="zan-col zan-col-8" style="font-size: 40rpx;">
+          <view style="float:left;">{{currentCity.name}}</view>
+          <view class="triangle_border_down"></view>
+        </view>
+        <view bindtap="selectAddress" class="zan-col zan-col-16" style="font-size: 40rpx;height:56rpx;padding-left:20rpx;">{{currentAddress.name}}</view>
       </view>
-    </view>
+    </block>
+    <block wx:else>
+      <!-- tab -->
+      <view class="zan-cell">
+        <view style="">
+          <template is="zan-tab" data="{{ ...tab, componentId: 'tab' }}"></template>
+        </view>
+      </view>
+    </block>
     <!-- 时间选择 -->
     <view class="zan-cell" style="text-align: center">
       <view class="zan-col zan-col-8" bindtap="handleDateFieldClick">
         <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
         <view class="zan-font-24">{{ pickerViewConfig1.year[pickerViewConfig1.value[0]].Date }}</view>
-        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig1.year[pickerViewConfig1.value[0]].Week}} {{ pickerViewConfig1.time[pickerViewConfig1.value[1]]
-          }}
+        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig1.year[pickerViewConfig1.value[0]].Week}} {{ pickerViewConfig1.time[pickerViewConfig1.value[1]] }}
         </view>
       </view>
       <view class="zan-col zan-col-8" style="color:#D7B205">
@@ -37,8 +40,7 @@
       <view class="zan-col zan-col-8" bindtap="handleDateFieldClick2">
         <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
         <view class="zan-font-24">{{ pickerViewConfig2.year[pickerViewConfig2.value[0]].Date }}</view>
-        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig2.year[pickerViewConfig2.value[0]].Week}} {{ pickerViewConfig2.time[pickerViewConfig2.value[1]]
-          }}
+        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig2.year[pickerViewConfig2.value[0]].Week}} {{ pickerViewConfig2.time[pickerViewConfig2.value[1]] }}
         </view>
       </view>
     </view>
@@ -90,7 +92,11 @@
 
     </view>
   </view>
-  <button style="margin:20rpx auto;width:150rpx;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover"
-    open-type="share">邀请有礼</button>
+  <button style="margin:20rpx auto;width:150rpx;" class="zan-btn zan-btn--mini zan-btn--danger zan-btn--plain button-hover" open-type="share">邀请有礼</button>
+
   <include src="/commons/footer/footer.wxml" />
+</view>
+<!-- 公众号关注组件 -->
+<view style="width:100%;display:flex;bottom:0;background:gray;z-index:999;">
+  <official-account style="width:100%"></official-account>
 </view>

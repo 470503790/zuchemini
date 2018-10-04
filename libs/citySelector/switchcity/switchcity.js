@@ -1,8 +1,9 @@
 const city = require('../city.js');
 const cityObjs = require('../city.js');
 const config = require('../config.default.js');
+var network = require("../../../utils/network.js")
 
-const appInstance = getApp();
+const app = getApp();
 Page({
   data: {
     searchLetter: [],
@@ -12,8 +13,7 @@ Page({
     isShowLetter: false,
     scrollTop: 0,//置顶高度
     scrollTopId: '',//置顶id
-    currentCity: "上海市",
-    currentCityCode: '',
+    currentCity: null,//对象
     hotcityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }, { cityCode: 440100, city: '广州市' }, { cityCode: 440300, city: '深圳市' }, { cityCode: 330100, city: '杭州市' }, { cityCode: 320100, city: '南京市' }, { cityCode: 420100, city: '武汉市' },  { cityCode: 120000, city: '天津市' }, { cityCode: 610100, city: '西安市' }, ],
     commonCityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }],
     countyList: [{ cityCode: 110000, county: 'A区' }, { cityCode: 310000, county: 'B区' }, { cityCode: 440100, county: 'C区' }, { cityCode: 440300, county: 'D区' }, { cityCode: 330100, county: 'E县' }, { cityCode: 320100, county: 'F县' }, { cityCode: 420100, county: 'G县' }],
@@ -22,8 +22,24 @@ Page({
     county: '',
     condition: false,
   },
+  loadData(success){
+    var that=this;
+    var url=app.globalData.siteRoot+"/api/services/app/hotCity/GetHotCitysToMiniAsync";
+    var params={
+
+    };
+    network.requestLoading(url,params,"加载中...",function(res){
+      that.setData({
+        hotcityList:res.result
+      });
+      if(success!=undefined){
+        success();
+      }
+    });
+  },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
+    var that=this;
     const back_url = options.back_url;
     const searchLetter = city.searchLetter;
     const cityList = city.cityList();
@@ -32,8 +48,7 @@ Page({
     const winHeight = sysInfo.windowHeight;
     const itemH = winHeight / searchLetter.length;
     let tempArr = [];
-    //取出缓存城市
-    var currentCity=wx.getStorageSync("currentCity");
+    
     searchLetter.map(
       (item,index) => {
         // console.log(item);
@@ -45,15 +60,22 @@ Page({
         tempArr.push(temp)
       }
     );
-    // console.log(tempArr);
-    this.setData({
+    that.setData({
       winHeight: winHeight,
       itemH: itemH,
       searchLetter: tempArr,
       cityList: cityList,
       back_url: back_url,
-      currentCity:currentCity
     });
+    that.loadData(function(){
+      //取出缓存城市
+      var currentCity=wx.getStorageSync("currentCity");
+      that.setData({
+        currentCity:currentCity
+      })
+    });
+    // console.log(tempArr);
+    
 
 
 
@@ -103,18 +125,16 @@ Page({
   bindCity: function (e) {
     this.setData({
       condition:true,
-      currentCity: e.currentTarget.dataset.city,
-      currentCityCode: e.currentTarget.dataset.code,
+      currentCity:{
+        name:e.currentTarget.dataset.city,
+        code:e.currentTarget.dataset.code
+      },
       scrollTop: 0,
       completeList: [],
     })
 
     //缓存选择的城市
     wx.setStorageSync('currentCity', this.data.currentCity);
-    wx.setStorageSync('currentCityCode', this.data.currentCityCode);
-    appInstance.globalData.defaultCity = this.data.currentCity
-    appInstance.globalData.defaultCounty = ''
-    console.log(appInstance.globalData.defaultCity);
     //跳转到取车地点
     wx.navigateTo({
       url: '/libs/citySelector/pick-car-address/pick-car-address',

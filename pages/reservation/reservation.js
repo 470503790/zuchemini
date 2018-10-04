@@ -39,6 +39,24 @@ Page(Object.assign({}, Zan.NoticeBar, {
       userId:userInfo.id
     };
     network.requestLoading(url,params,"加载中...",function(res){
+      if(res.result==null || res.result.id==0){
+        wx.showModal({
+          title:"提示",
+          content:"此车辆不存在或已下架，去看看其它车辆吧！",
+          showCancel:false,
+          success:function(res){
+            if(res.confirm){
+              wx.switchTab({
+                url: '/pages/index/index',
+                success: function(res){
+                  // success
+                }
+              })
+            }
+          }
+        })
+        return;
+      }
       that.setData({
         detail:res.result,
         payMode:res.result.earnestMoney>0?0:1,

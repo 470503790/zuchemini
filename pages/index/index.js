@@ -39,7 +39,7 @@ Page(extend({}, Tab, Zan.Field, {
     phoneNumber: 13692950061,
     setting: null,
     currentCity: "",//最多4字
-    currentAddress: ""//最多10字
+    currentAddress: "",//最多10字
   },
 
   onLoad: function () {
@@ -49,13 +49,18 @@ Page(extend({}, Tab, Zan.Field, {
     })
 
     that.loadData();
-    
+
   },
   loadData: function () {
-    this.loadSetting();
-    this.loadDateAndWeek();
-
-    this.loadStore();
+    var that=this;
+    that.loadSetting(function(){
+      that.loadDateAndWeek();
+      if(that.data.setting.storeModel==1){
+        that.loadStore();
+      }
+      
+    });
+    
 
   },
   loadDateAndWeek: function () {
@@ -94,37 +99,132 @@ Page(extend({}, Tab, Zan.Field, {
 
   },
   //获取配置项
-  loadSetting: function () {
+  loadSetting: function (next) {
     var that = this;
     app.getSetting(function (res) {
       that.setData({
         setting: res,
-        phoneNumber: res.phoneNumber
+        phoneNumber: res.phoneNumber,
       });
       wx.setNavigationBarTitle({
         title: that.data.setting.name
-      })
+      });
+      if(res.storeModel==2){
+        that.getCurrentCity();
+        that.getCurrentAddress();
+      }
+      if(next!=undefined){
+        //继续执行后续动作
+        next();
+      }
     });
+  },
+  //获取取车城市
+  getCurrentCity() {
+    var that = this;
+    //缓存获取取车城市
+    var currentCity = wx.getStorageSync('currentCity');
+    if (currentCity == "") {
+      //缓存不存在，从服务器加载配置项获取
+      if (that.data.setting.hotCity == null) {
+        //如果服务器未配置取车城市，抛出错误提示去配置
+        wx.showModal({
+          title: "提示",
+          content: "请到后台配置热门城市！",
+          showCancel: false
+        });
+        return;
+      } else {
+        //取出服务器配置项
+        currentCity = that.data.setting.hotCity;
+        //截取字符串
+        if (currentCity.name.length > 4) {
+          currentCity.name = currentCity.name.substring(0, 4) + "...";
+        }
+        that.setData({
+          currentCity: currentCity,
+        })
+      }
+    } else {
+      //截取字符串
+      if (currentCity.name.length > 4) {
+        currentCity.name = currentCity.name.substring(0, 4) + "...";
+      }
+      //缓存已存在取车城市
+      that.setData({
+        currentCity: currentCity,
+      })
+    }
+    //设置缓存
+    wx.setStorageSync('currentCity', currentCity);
+  },
+  //获取取车地点
+  getCurrentAddress() {
+    var that = this;
+    var currentCity = wx.getStorageSync('currentCity');
+    //缓存获取取车地点
+    var currentAddress = wx.getStorageSync('currentAddress');
 
-
-
+    if (currentAddress == "") {
+      //缓存不存在取车地点，从服务器配置获取
+      if (that.data.setting.pickUpLocation == null) {
+        //如果服务器未配置取车城市，抛出错误提示去配置
+        /* wx.showModal({
+          title: "提示",
+          content: "请到后台配置取车地点！",
+          showCancel: false
+        }); */
+        return;
+      } else {
+        //取出服务器配置项,***取车地点为对象***
+        currentAddress = that.data.setting.pickUpLocation;
+        if (currentAddress.name.length > 10) {
+          currentAddress.name = currentAddress.name.substring(0, 10) + "...";
+        }
+        that.setData({
+          currentAddress: currentAddress,
+        })
+      }
+    } else {
+      if(currentAddress.cityCode==currentCity.code){
+        if (currentAddress.name.length > 10) {
+          currentAddress.name = currentAddress.name.substring(0, 10) + "...";
+        }
+        that.setData({
+          currentAddress: currentAddress,
+        })
+        currentAddress.cityCode=currentCity.code;
+      }else{
+        that.setData({
+          currentAddress:null
+        })
+      }
+      
+    }
+    
+    //设置缓存
+    wx.setStorageSync('currentAddress', currentAddress);
+  },
+  //选择取车地点
+  selectAddress() {
+    wx.navigateTo({
+      url: '/libs/citySelector/pick-car-address/pick-car-address',
+    })
+  },
+  //选择取车城市
+  selectCity() {
+    wx.navigateTo({
+      url: '/libs/citySelector/switchcity/switchcity?back_url=/pages/index/index',
+    });
   },
   onShow: function () {
-    var that=this;
-    var currentCity = wx.getStorageSync('currentCity');
-    var currentAddress = wx.getStorageSync('currentAddress');
-    var address=currentAddress!=""?currentAddress.address:"";
-    //截取字符串
-    if(currentCity.length>4){
-      currentCity=currentCity.substring(0,4)+"...";
+    var that = this;
+    //判断是否首次进来
+    if(that.data.setting!=null && that.data.setting.storeModel==2){
+      that.getCurrentCity();
+      that.getCurrentAddress();
     }
-    if(currentAddress!="" && currentAddress.address.length>10){
-      address=currentAddress.address.substring(0,10)+"...";
-    }
-    that.setData({
-      currentCity: currentCity,
-      currentAddress: address
-    })
+    
   },
 
   //tab事件
@@ -247,9 +347,12 @@ Page(extend({}, Tab, Zan.Field, {
     console.log("还车对象=>", app.globalData.returnCar);
 
     app.aldstat.sendEvent('去选车按钮')
-
+    var page="../car-list/car-list";
+    if(that.data.setting.storeModel==2){
+      page="../car-list-model2/car-list-model2";
+    }
     wx.navigateTo({
-      url: '../car-list/car-list'
+      url: page
     })
   },
   //打电话
@@ -273,13 +376,9 @@ Page(extend({}, Tab, Zan.Field, {
     wx.hideLoading();
     wx.stopPullDownRefresh()
   },
-  selectCity() {
-    wx.navigateTo({
-      url: '/libs/citySelector/switchcity/switchcity?back_url=/pages/index/index',
-    });
-  },
+
   onUnload: function (e) {
-    onfire.un('selectAddress');
-    onfire.un(eventObj);
+    /* onfire.un('selectAddress');
+    onfire.un(eventObj); */
   }
 }))

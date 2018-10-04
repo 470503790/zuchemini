@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "libs/citySelector/pick-car-address/pick-car-address",
+    "pages/car-list-model2/car-list-model2",
     
+    "libs/citySelector/pick-car-address/pick-car-address",
     "pages/car-detail/car-detail",
     "pages/share/share",
     "pages/reservation/reservation",

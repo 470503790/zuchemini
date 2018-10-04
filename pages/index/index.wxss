@@ -26,6 +26,7 @@
   border-style:solid;
   border-color:#C0C0C0 transparent transparent;/*灰 透明 透明 */
   position:relative;
-  top:20rpx;
+  top:25rpx;
+  left:10rpx;
   float:left;
 }

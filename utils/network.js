@@ -18,6 +18,16 @@ function requestLoading(url, params, message, success, fail) {
   }
   //参数处理
   params.diyId=getApp().globalData.diyID;
+  console.log("diyId:",params.diyId);
+  if(params.diyId==""){
+    wx.hideLoading();
+    wx.showModal({
+      title:"错误",
+      content:"请配置 diyId,位置：app.js",
+      showCancel:false,
+    });
+    return;
+  }
   wx.request({
     url: url,
     data: params,
