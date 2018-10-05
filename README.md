@@ -62,7 +62,9 @@
 
  **小程序端界面** 
 
-![输入图片说明](https://gitee.com/uploads/images/2018/0609/221631_9912ff1d_1974020.jpeg "1.jpg")
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/210738_dad2b5e4_1974020.jpeg "1.jpg")
+
+##### 模式1 显示列表
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221643_fdd76cd2_1974020.jpeg "2.jpg")
 
@@ -70,11 +72,35 @@
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221653_8bb4aa51_1974020.jpeg "3.jpg")
 
+##### 模式2 显示列表
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/212032_e7c029a7_1974020.jpeg "3-1.jpg")
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221700_01b3f146_1974020.jpeg "4.jpg")
 
-![输入图片说明](https://gitee.com/uploads/images/2018/0609/221708_78a19e55_1974020.jpeg "5.jpg")
+##### 订单填写页与订单列表页
 
-![输入图片说明](https://gitee.com/uploads/images/2018/0609/221715_3a403e14_1974020.jpeg "6.jpg")
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/213441_7a94cf6a_1974020.jpeg "21.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/213447_4987a5ec_1974020.jpeg "22.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/213454_e8af4753_1974020.jpeg "23.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/213500_2d645854_1974020.jpeg "24.jpg")
+
+
+##### 更详细的服务通知信息
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/212907_351e1f3c_1974020.jpeg "16.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/212915_e7e4566c_1974020.jpeg "17.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/212922_5685eaaf_1974020.jpeg "18.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/212929_06f40490_1974020.jpeg "19.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1005/212935_f60a11ff_1974020.jpeg "20.jpg")
+
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0609/221726_dd39dc4d_1974020.jpeg "9.jpg")
 
