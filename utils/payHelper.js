@@ -37,7 +37,8 @@ function wxPayment(orderNo,money,success,fail) {
 
         },
         'fail': function (res) {
-          /* console.log("支付失败", res);
+          console.log("支付失败", res);
+          /* 
           wx.showToast({ title: '支付失败' })
           if(fail!=undefined){
             fail(res);

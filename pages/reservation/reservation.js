@@ -64,7 +64,7 @@ Page(Object.assign({}, Zan.NoticeBar, {
       });
       that.setData({
         movable:{
-          text:"预订中秋节或国庆节的车辆，时间至少3天或3天以上，少于3天一律取消订单并扣除5%手续费！临近节日租金将有所升幅，早订早省钱"
+          text:""
         }
       });
       that.initZanNoticeBarScroll('movable');
@@ -177,6 +177,7 @@ Page(Object.assign({}, Zan.NoticeBar, {
   submitOrder(fullName,mobile){
     var that=this;
     var user=wx.getStorageSync('userInfo');
+    var allianceId=wx.getStorageSync("allianceId");
     var url = app.globalData.siteRoot + "/api/services/app/reservation/CreateReservationToMiniAsync";
     console.log("取车对象=>", app.globalData.pickUpCar);
     console.log("还车对象=>", app.globalData.returnCar);
@@ -196,7 +197,8 @@ Page(Object.assign({}, Zan.NoticeBar, {
       "discountFee":that.data.discountFee,//优惠费用
       "carId": that.data.carId,
       "weixinUserId": user.id,
-      "paymentTypes":that.data.payMode==0?1:0
+      "paymentTypes":that.data.payMode==0?1:0,
+      "allianceId":allianceId
     };
     network.requestLoading(url, ops, "正在提交...", function (res) {
       var id=res.result.id;

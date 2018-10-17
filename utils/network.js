@@ -46,7 +46,9 @@ function requestLoading(url, params, message, success, fail) {
         success(res.data)
       } else {
         console.log("请求出错");
-        
+        wx.showToast({
+          title:"请求出错"
+        })
         
       }
 

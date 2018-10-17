@@ -178,6 +178,7 @@ Page(extend({}, Tab, Zan.Field, {
       } else {
         //取出服务器配置项,***取车地点为对象***
         currentAddress = that.data.setting.pickUpLocation;
+        currentAddress.cityCode=currentCity.code;
         if (currentAddress.name.length > 10) {
           currentAddress.name = currentAddress.name.substring(0, 10) + "...";
         }

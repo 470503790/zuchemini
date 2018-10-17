@@ -143,6 +143,12 @@ Page({
           } else {
             console.log('储存session失败！', json);
           }
+        },function(){
+          wx.showModal({
+            title:"提示",
+            content:"请确认小程序配置是否正确",
+            showCancel:false
+          })
         });
 
 

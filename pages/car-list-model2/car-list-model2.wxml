@@ -21,7 +21,7 @@
                     </view>
                     <view class="zan-col zan-col-14 zan-col-offset-1">
                         <view class="zan-font-16">{{gitem.name}}
-                            <block wx:if="{{gitem.isHot}}">
+                            <block wx:if="{{categoryId==0}}">
                                 <view class="zan-tag zan-tag--danger">热</view>
                             </block>
 
@@ -30,7 +30,7 @@
                     </view>
                 </view>
                 <block wx:for="{{gitem.stores}}" wx:key="index">
-                <view bindtap="gobuy" data-carId="{{gitem.id}}" data-storeId="{{item.id}}" class="zan-cell" style="display: block;">
+                <view bindtap="gobuy" data-carId="{{gitem.id}}"  data-storeId="{{item.id}}" class="zan-cell" style="display: block;">
                     <view class="zan-row">
                         <view>{{item.name}}</view>
                     </view>

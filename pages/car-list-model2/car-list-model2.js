@@ -32,6 +32,7 @@ Page({
   loadDetails(){
     var that=this;
     var currentAddress=wx.getStorageSync('currentAddress');
+    var currentCity=wx.getStorageSync('currentCity');
     var url = app.globalData.siteRoot + "/api/services/app/car/GetCarByCategoryIdToMiniAsync";
     var params = {
       categoryId:that.data.categoryId,
@@ -39,13 +40,16 @@ Page({
       startDate:app.globalData.pickUpCar.Date.FullDate,
       endDate:app.globalData.returnCar.Date.FullDate,
       day:app.globalData.day,
-      pickUpLocationId:currentAddress.id
+      pickUpLocationId:currentAddress.id,
+      cityCode:currentCity.code
     };
     network.requestLoading(url, params, "加载中...", function (res) {
       that.setData({
         navs:res.result.categories,
         details: res.result.cars
-      })
+      });
+      //缓存联盟id
+      wx.setStorageSync('allianceId', res.result.allianceId);
     });
   },
   sort(e){
@@ -87,7 +91,9 @@ Page({
         } else {
           var carId = e.currentTarget.dataset.carid;
           var storeid = e.currentTarget.dataset.storeid;
+
           app.globalData.pickUpCar.StoreId=storeid;
+          app.globalData.returnCar.StoreId=storeid;
           console.log("carId=>" + carId);
           wx.navigateTo({
               url:'../reservation/reservation?carId=' + carId
