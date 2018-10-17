@@ -4,3 +4,5 @@
 
 *.zip
 /images/team
+/.vs/slnx.sqlite
+/.vs/租车小程序/v15/.suo
