@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "汽车详情",
-  "enablePullDownRefresh": true
+  "usingComponents": {
+    "select-time": "/components/select-time/select-time"
+  }
 }

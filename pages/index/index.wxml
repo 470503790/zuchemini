@@ -17,7 +17,7 @@
         <view bindtap="selectAddress" class="zan-col zan-col-16" style="font-size: 40rpx;height:56rpx;padding-left:20rpx;">{{currentAddress.name}}</view>
       </view>
     </block>
-    <block wx:else>
+    <block wx:elif="{{setting.storeModel==1}}">
       <!-- tab -->
       <view class="zan-cell">
         <view style="">
@@ -25,64 +25,13 @@
         </view>
       </view>
     </block>
-    <!-- 时间选择 -->
-    <view class="zan-cell" style="text-align: center">
-      <view class="zan-col zan-col-8" bindtap="handleDateFieldClick">
-        <view class="zan-font-14" style="color:#C0C0C0">取车时间</view>
-        <view class="zan-font-24">{{ pickerViewConfig1.year[pickerViewConfig1.value[0]].Date }}</view>
-        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig1.year[pickerViewConfig1.value[0]].Week}} {{ pickerViewConfig1.time[pickerViewConfig1.value[1]] }}
-        </view>
-      </view>
-      <view class="zan-col zan-col-8" style="color:#D7B205">
-        <image src="../../images/arrow.jpg" style="width:100%;height:92rpx;position:relative;top:22rpx;"></image>
-        <view style="position:relative;top:-50rpx;">{{day}}天</view>
-      </view>
-      <view class="zan-col zan-col-8" bindtap="handleDateFieldClick2">
-        <view class="zan-font-14" style="color:#C0C0C0">还车时间</view>
-        <view class="zan-font-24">{{ pickerViewConfig2.year[pickerViewConfig2.value[0]].Date }}</view>
-        <view class="zan-font-14" style="color:#606060">{{pickerViewConfig2.year[pickerViewConfig2.value[0]].Week}} {{ pickerViewConfig2.time[pickerViewConfig2.value[1]] }}
-        </view>
-      </view>
-    </view>
-    <!-- 取车时间选择 -->
-    <view class="zan-popup zan-popup--bottom {{ pickerViewConfig1.show ? 'zan-popup--show' : ''}}">
-      <view class="zan-popup__mask" bindtap="hideDatePopup"></view>
-      <view class="zan-popup__container popup-field-example--bottom">
-        <view class="zan-cell">
-          <view class="zan-col zan-col-8" style="color:#D8D8D8;" bindtap="cancel1">取消</view>
-          <view class="zan-col zan-col-8" style="text-align: center;">取车时间</view>
-          <view class="zan-col zan-col-8" style="text-align: right;color:#FF9966;" bindtap="ok1">确定</view>
-        </view>
+    <!-- 时间选择 组件-->
+    <select-time day="{{day}}" pickUpConfig="{{pickUpConfig}}" returnConfig="{{returnConfig}}" 
+    bindpickUpClick="pickUpClick" bindreturnClick="returnClick"
+    catchpickUpChange="pickUpChange" catchreturnChange="returnChange"
+    bindpickUpOk="pickUpOk" bindreturnOk="returnOk"
+    bindpickUpCancel="pickUpCancel" bindreturnCancel="returnCancel"></select-time>
 
-        <picker-view value="{{ pickerViewConfig1.value }}" indicator-style="height: 50px;" class="picker-view-example" bindchange="handlePopupDateChange">
-          <picker-view-column>
-            <view class="picker-view-column-example" wx:for="{{ pickerViewConfig1.year }}" wx:key="{{index}}">{{item.DateStr}}</view>
-          </picker-view-column>
-          <picker-view-column>
-            <view class="picker-view-column-example" wx:for="{{ pickerViewConfig1.time }}" wx:key="{{index}}">{{item}}</view>
-          </picker-view-column>
-        </picker-view>
-      </view>
-    </view>
-    <!-- 还车时间选择 -->
-    <view class="zan-popup zan-popup--bottom {{ pickerViewConfig2.show ? 'zan-popup--show' : ''}}">
-      <view class="zan-popup__mask" bindtap="hideDatePopup2"></view>
-      <view class="zan-popup__container popup-field-example--bottom">
-        <view class="zan-cell">
-          <view class="zan-col zan-col-8" style="color:#D8D8D8;" bindtap="cancel2">取消</view>
-          <view class="zan-col zan-col-8" style="text-align: center;">还车时间</view>
-          <view class="zan-col zan-col-8" style="text-align: right;color:#FF9966;" bindtap="ok2">确定</view>
-        </view>
-        <picker-view value="{{ pickerViewConfig2.value }}" indicator-style="height: 50px" class="picker-view-example" bindchange="handlePopupDateChange2">
-          <picker-view-column>
-            <view class="picker-view-column-example" wx:for="{{ pickerViewConfig2.year }}" wx:key="{{index}}">{{item.DateStr}}</view>
-          </picker-view-column>
-          <picker-view-column>
-            <view class="picker-view-column-example" wx:for="{{ pickerViewConfig2.time }}" wx:key="{{index}}">{{item}}</view>
-          </picker-view-column>
-        </picker-view>
-      </view>
-    </view>
   </view>
   <view class="zan-panel">
     <view class="zan-cell">

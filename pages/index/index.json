@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "大树租车",
-  "enablePullDownRefresh": true
+  "usingComponents": {
+    "select-time": "/components/select-time/select-time"
+  }
 }

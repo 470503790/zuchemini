@@ -2,7 +2,7 @@ const Page = require('../../utils/ald-stat.js').Page;
 var app = getApp();
 var utils = require("../../utils/util.js")
 var network = require("../../utils/network.js")
-var ext = require('../../pages/index/indexExt.js')
+var ext = require('../../utils/data-generate.js')
 // pages/car-detail/car-detail.js
 Page({
 
@@ -13,14 +13,14 @@ Page({
     id: 0,
     car: null,
     // 取车
-    pickerViewConfig1: {
+    pickUpConfig: {
       show: false,
       value: [0, 0],
       year: [],
       time: []
     },
     //还车
-    pickerViewConfig2: {
+    returnConfig: {
       show: false,
       value: [0, 0],
       year: [],
@@ -56,11 +56,11 @@ Page({
     var times = ext.getTimes();
 
     this.setData({
-      "pickerViewConfig1.year": dates,
-      "pickerViewConfig1.time": times,
-      "pickerViewConfig2.year": dates,
-      "pickerViewConfig2.time": times,
-      'pickerViewConfig2.value': [this.data.defaultDay, 0],
+      "pickUpConfig.year": dates,
+      "pickUpConfig.time": times,
+      "returnConfig.year": dates,
+      "returnConfig.time": times,
+      'returnConfig.value': [this.data.defaultDay, 0],
       day: this.data.defaultDay
     });
     //取车时间 缓存
@@ -68,52 +68,52 @@ Page({
     that.go();
   },
   //左边时间选择
-  handleDateFieldClick: function (e) {
+  pickUpClick: function (e) {
 
     this.setData({
-      'pickerViewConfig1.show': true
+      'pickUpConfig.show': true
     });
     //app.aldstat.sendEvent('取车时间点击');
   },
   //把值存到缓存
-  handlePopupDateChange(e) {
+  pickUpChange(e) {
     console.log(e);
-    var date = this.data.pickerViewConfig1.year[e.detail.value[0]].FullDate
+    var date = this.data.pickUpConfig.year[e.detail.value[0]].FullDate
     console.log(date);
     //取车时间 缓存
     wx.setStorageSync("getDate", date)
     //还车时间列表重新生成
     var dates = ext.getDateAndWeek(date);
     this.setData({
-      'pickerViewConfig1.value': e.detail.value,
-      'pickerViewConfig2.year': dates,
-      'pickerViewConfig2.value': [this.data.defaultDay - 1, 0],
+      'pickUpConfig.value': e.detail.value,
+      'returnConfig.year': dates,
+      'returnConfig.value': [this.data.defaultDay - 1, 0],
       day: this.data.defaultDay
     });
   },
-  hideDatePopup() {
+  pickUpHideDate() {
     this.setData({
-      'pickerViewConfig1.show': false
+      'pickUpConfig.show': false
     });
   },
   //取车时间取消
-  cancel1: function () {
-    this.hideDatePopup();
+  pickUpCancel: function () {
+    this.pickUpHideDate();
   },
   //取车时间确定
-  ok1: function () {
-    this.hideDatePopup();
-    this.handleDateFieldClick2();
+  pickUpOk: function () {
+    this.pickUpHideDate();
+    this.returnClick();
   },
   //右边时间选择
-  handleDateFieldClick2: function (e) {
+  returnClick: function (e) {
     this.setData({
-      'pickerViewConfig2.show': true
+      'returnConfig.show': true
     });
   },
-  handlePopupDateChange2(e) {
+  returnChange(e) {
     console.log(e.detail);
-    var date2 = this.data.pickerViewConfig2.year[e.detail.value[0]].FullDate
+    var date2 = this.data.returnConfig.year[e.detail.value[0]].FullDate
     console.log(date2);
     //取车时间
     var date1 = wx.getStorageSync("getDate");
@@ -121,33 +121,33 @@ Page({
     day = parseInt(day / (1000 * 60 * 60 * 24));
     console.log("day:" + day);
     this.setData({
-      'pickerViewConfig2.value': e.detail.value,
+      'returnConfig.value': e.detail.value,
       "day": day
     });
   },
-  hideDatePopup2() {
+  returnHideDate() {
     this.setData({
-      'pickerViewConfig2.show': false
+      'returnConfig.show': false
     });
   },
   //还车时间取消
-  cancel2: function () {
-    this.hideDatePopup2();
+  returnCancel: function () {
+    this.returnHideDate();
   },
   //还车时间确定
-  ok2: function () {
-    this.hideDatePopup2();
+  returnOk: function () {
+    this.returnHideDate();
     this.go();
   },
   go() {
     var that = this;
     //取车对象
-    var pickerDateObj = that.data.pickerViewConfig1.year[that.data.pickerViewConfig1.value[0]];
-    var pickerTimeObj = that.data.pickerViewConfig1.time[that.data.pickerViewConfig1.value[1]];
+    var pickerDateObj = that.data.pickUpConfig.year[that.data.pickUpConfig.value[0]];
+    var pickerTimeObj = that.data.pickUpConfig.time[that.data.pickUpConfig.value[1]];
 
     //还车对象
-    var returDateObj = that.data.pickerViewConfig2.year[that.data.pickerViewConfig2.value[0]];
-    var returTimeObj = that.data.pickerViewConfig2.time[that.data.pickerViewConfig2.value[1]];
+    var returDateObj = that.data.returnConfig.year[that.data.returnConfig.value[0]];
+    var returTimeObj = that.data.returnConfig.time[that.data.returnConfig.value[1]];
 
     app.globalData.day = that.data.day;
     //以后用这个存取值

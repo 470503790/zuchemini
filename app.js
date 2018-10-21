@@ -9,6 +9,7 @@ fundebug.init(
     silent: true
   })
 var network = require("./utils/network.js")
+var dataGenerate=require("./utils/data-generate.js")
 var startTime = Date.now();//启动时间
 //app.js
 App({
@@ -24,6 +25,7 @@ App({
     this.aldstat.sendEvent('小程序的启动时长', {
       time: Date.now() - startTime
     })
+    
   },
   onError: function (err) {
     fundebug.notifyError(err);
@@ -118,9 +120,9 @@ App({
   },
   globalData: {
     userInfo: null,
-    siteRoot: "https://das.mynatapp.cc",
-    //siteRoot: "https://zuche.shensigzs.com",
-    diyID: "582425050df045409a546712c6517fd4",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
+    //siteRoot: "https://das.mynatapp.cc",
+    siteRoot: "https://zuche.shensigzs.com",
+    diyID: "",//专属ID，请到后台--小程序管理--小程序源码管理 页面获取
     setting: null,//系统配置
     day: null,
     phoneNumber: null,
