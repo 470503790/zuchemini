@@ -1,0 +1,13 @@
+<view class='timeline'>
+  <view class='timeline-time'></view>
+  <view class="timeline-box">
+    <block wx:for="{{addresses}}" wx:key="index">
+      <view class='timeline-item {{item.address!=""?"cur":""}}' bindtap="setAddress" data-modal="defualtmodal" data-title="{{item.title}}">
+        <view class='timeline-main'>
+          <text class='mr-sm'>{{item.time}}</text> {{item.address!=""?item.address:item.desc}}
+        </view>
+      </view>
+    </block>
+
+  </view>
+</view>

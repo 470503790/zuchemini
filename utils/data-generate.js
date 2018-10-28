@@ -73,35 +73,35 @@ function getFormatDate(arg) {
 
 //生成时间：9:30-22:00
 function getTimes() {
-    var hours=9;
-    var minutes="30";
-    var times=[];
-    for(var i=0;i<22;i++){
-        var time=combination(hours,minutes);
+    var hours = 0;
+    var minutes = "30";
+    var times = [];
+    for (var i = 0; i < 48; i++) {
+        var time = combination(hours, minutes);
         times.push(time);
-        if(i==0 || minutes=="30"){
-            hours=addHours(hours);
+        if (i == 0 || minutes == "30") {
+            hours = addHours(hours);
         }
-        minutes=addMinutes(minutes);
-        
-        
+        minutes = addMinutes(minutes);
+
+
     }
     return times;
 }
 //组合成9:00
-function combination(hours,minutes){
-    
-    return hours+":"+minutes;
+function combination(hours, minutes) {
+
+    return hours + ":" + minutes;
 }
 //小时加1
-function addHours(index){
+function addHours(index) {
     return ++index;
 }
 //分钟处理
-function addMinutes(index){
-    if(index=="00"){
+function addMinutes(index) {
+    if (index == "00") {
         return "30";
-    }else{
+    } else {
         return "00";
     }
 }

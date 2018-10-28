@@ -8,17 +8,16 @@
     </view>
   </block>
   <block wx:if="{{orderDetail.status=='待退款'}}">
-      <view class="zan-panel" style="margin-top:0;">
-        <template is="zan-noticebar" data="{{ ...movable1, componentId: 'movable1'  }}"></template>
-      </view>
-    </block>
+    <view class="zan-panel" style="margin-top:0;">
+      <template is="zan-noticebar" data="{{ ...movable1, componentId: 'movable1'  }}"></template>
+    </view>
+  </block>
   <view class="zan-panel">
     <view class="zan-row">
       <view class="zan-cell" style="color:#26C622;font-size:18px;">
         <view class="zan-cell__bd">订单状态：{{orderDetail.status}}</view>
         <block wx:if="{{orderDetail.status=='待支付'}}">
-          <form report-submit='true' bindsubmit='toggleVerticalDialog' data-id="{{orderDetail.id}}" data-actualAmount="{{orderDetail.paymentTypes==1?orderDetail.earnestMoney:orderDetail.actualAmount}}"
-            data-orderNo="{{orderDetail.orderNo}}">
+          <form report-submit='true' bindsubmit='toggleVerticalDialog' data-id="{{orderDetail.id}}" data-actualAmount="{{orderDetail.paymentTypes==1?orderDetail.earnestMoney:orderDetail.actualAmount}}" data-orderNo="{{orderDetail.orderNo}}">
             <button form-type="submit" class="zan-btn zan-btn--small zan-btn--danger ">去支付</button>
           </form>
           <view class="zan-cell__ft " style="margin-left:20rpx;">
@@ -34,12 +33,12 @@
         </block>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">取车证件</view>
-        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{orderDetail.credentials}}</view>
-      </view>
-      <view class="zan-cell">
-        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">订单总额</view>
-        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">预计订单总额￥{{orderDetail.actualAmount}}</view>
+        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          订单总额
+        </view>
+        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">
+          预计订单总额￥{{orderDetail.actualAmount}}
+        </view>
       </view>
     </view>
   </view>
@@ -52,69 +51,114 @@
     </view>
   </view>
   <template is="orderItem" data="{{...orderDetail}}" />
+
   <view class="zan-panel">
     <view class="zan-row">
       <view class="zan-cell">
-        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">车辆租赁费</view>
-        <view class="zan-col zan-col-8 " style="padding-left:20rpx;color:#C0C0C0;">合计=
+        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          基础价（含8小时60公里）
+        </view>
+        <view class="zan-col zan-col-8 " style="padding-left:20rpx;color:#C0C0C0;">
+          合计=
           <label class="zan-font-bold" style="color:black;">￥{{orderDetail.rentalFees}}</label>
         </view>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">基础服务费</view>
+        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          超出每10公里{{orderDetail.beyond10KmFee}}元
+        </view>
         <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;color:#C0C0C0;">
-          <label class="zan-font-bold" style="color:black;">￥{{orderDetail.basicServiceFee}}×{{orderDetail.day}}天</label>
+          <label class="zan-font-bold" style="color:black;">￥{{totalBeyond10KmFee}}</label>
         </view>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">保险费用</view>
+        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          超出每小时{{orderDetail.beyondHourFee}}元
+        </view>
         <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;color:#C0C0C0;">
-          <label class="zan-font-bold" style="color:black;">￥{{orderDetail.insuranceFee}}×{{orderDetail.day}}天</label>
+          <label class="zan-font-bold" style="color:black;">￥{{totalBeyondHourFee}}</label>
         </view>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">其他费用</view>
+        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          其他费用
+        </view>
         <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;color:#C0C0C0;">
-          <label class="zan-font-bold" style="color:black;">￥{{orderDetail.otherFee}}×{{orderDetail.day}}天</label>
+          <label class="zan-font-bold" style="color:black;">￥{{orderDetail.otherFee}}</label>
         </view>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">优惠费用</view>
+        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          优惠费用
+        </view>
         <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;">
-          <label class="zan-tag zan-tag--danger zan-tag--plain">-￥{{orderDetail.discountFee}}</label>
+          <label class="zan-tag zan-tag--danger zan-tag--plain">
+            -￥{{orderDetail.discountFee}}
+          </label>
         </view>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">费用合计</view>
+        <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          费用合计
+        </view>
         <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;">
           <label class="zan-font-bold" style="color:black;">￥{{orderDetail.actualAmount}}</label>
         </view>
       </view>
       <block wx:if="{{orderDetail.paymentTypes==1}}">
+        <view class="zan-cell">
+          <view class="zan-col zan-col-16" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+            定金
+          </view>
+          <view class="zan-col zan-col-8 zan-font-bold" style="padding-left:20rpx;">
+            <block wx:if="{{orderDetail.status=='待取车'}}">
+              <label class="zan-font-bold" style="color:red;">-￥{{orderDetail.earnestMoney}}</label>
+            </block>
+            <block wx:else="">
+              <label class="zan-font-bold" style="color:black;">待支付</label>
+            </block>
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{orderDetail.paymentTypes==1}}">
         <block wx:if="{{orderDetail.status=='待取车'}}">
           <view class="zan-cell">
-            <view class="zan-c-red zan-font-bold">您已支付定金￥{{orderDetail.earnestMoney}}，剩余金额 ￥{{orderDetail.totalAmount-orderDetail.earnestMoney}} 请在取车时支付</view>
+            <view class="zan-c-red zan-font-bold">
+              您已支付定金￥{{orderDetail.earnestMoney}}，剩余金额 ￥{{orderDetail.totalAmount-orderDetail.earnestMoney}} 请在取车时支付
+            </view>
           </view>
         </block>
-        <block wx:else>
+        <block wx:else="">
           <view class="zan-cell">
-            <view class="zan-c-red zan-font-bold">您选择定金支付，剩余金额 ￥{{orderDetail.totalAmount-orderDetail.earnestMoney}} 请在取车时支付</view>
+            <view class="zan-c-red zan-font-bold">
+              您选择定金支付，剩余金额 ￥{{orderDetail.totalAmount-orderDetail.earnestMoney}} 请在取车时支付
+            </view>
           </view>
         </block>
-
       </block>
-
+    </view>
+  </view>
+  <view class="zan-panel">
+    <view class="zan-cell">
+      <set-address style="width:100%;" bindsetAddress="setAddress" addresses="{{addresses}}"></set-address>
     </view>
   </view>
   <view class="zan-panel">
     <view class="zan-row">
       <view class="zan-cell">
-        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">姓名</view>
-        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{orderDetail.fullName}}</view>
+        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          姓名
+        </view>
+        <view class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">
+          {{orderDetail.fullName}}
+        </view>
       </view>
       <view class="zan-cell">
-        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">手机</view>
-        <view bindtap="call" data-phone="{{orderDetail.mobilePhone}}" class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">{{orderDetail.mobilePhone}}
+        <view class="zan-col zan-col-6" style="border-right:1px solid #C0C0C0;color:#C0C0C0;">
+          手机
+        </view>
+        <view bindtap="call" data-phone="{{orderDetail.mobilePhone}}" class="zan-col zan-col-18 zan-font-bold" style="padding-left:20rpx;">
+          {{orderDetail.mobilePhone}}
           <view style="float:right;">
             <image style="width:38rpx;height:38rpx;" src="/images/dianhuahong.png"></image>
           </view>
@@ -122,6 +166,10 @@
       </view>
     </view>
   </view>
-  <button style="margin-top:40rpx;margin-bottom:100rpx;background:white;" bindtap="goIndex">返回首页</button>
+  <view class="doc-main">
+    <button style="margin-top:40rpx;margin-bottom:100rpx;" class="primary btn mt-sm block lg" bindtap="goIndex">
+      返回首页
+    </button>
+  </view>
 </view>
 <template is="zan-dialog" data="{{ zanDialog }}"></template>

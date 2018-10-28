@@ -1,4 +1,5 @@
 <import src="car-item/car-item.wxml" />
+<import src="/dist/capsule/index.wxml" />
 <view class="container">
   <block wx:for="{{cars}}" wx:key="index">
     <template is="carItem" data="{{...item}}" />
@@ -11,10 +12,11 @@
     </view>
     <view class="zan-row">
       <view class="zan-cell">
-        <button bindtap="click_goOpinion" class="theme-background-color" style="width:100%;color:white">跟老板告状</button>
+        <button bindtap="click_goOpinion" class="theme-background-color" style="width:100%;color:white">
+          跟老板告状
+        </button>
       </view>
     </view>
-
   </view>
 </view>
 <view class="zan-popup {{ showPopup ? 'zan-popup--show' : ''}}">
@@ -27,26 +29,42 @@
       <view class="zan-cell">
         <view class="zan-cell__bd">
           <view class="zan-font-16 zan-font-bold">{{car.name}}</view>
-          <view class="zan-c-black zan-font-14">{{car.bodyStructure}}|{{car.displacement}}{{car.stalls}}|乘坐{{car.numberOfPeople}}人</view>
-          <view class="zan-c-black zan-font-14">租期
-            <label class="zan-font-16" style="color:#F4B900">{{day}}</label>天</view>
+          <view class="zan-c-black zan-font-14">
+            接亲日期
+            <view style="margin-left:16rpx;" class="zan-tag zan-tag--danger zan-tag--plain">
+              {{useCarDate}}
+            </view>
+          </view>
+          <view class="zan-c-black zan-font-14">
+            用车需求
+            <template is="capsule" data="{{ leftText: '√', rightText: useCarStr, type: 'danger' }}" />
+          </view>
         </view>
-        <view bindtap="share" data-id="{{car.id}}" class="share">
+        <!-- <view bindtap="share" data-id="{{car.id}}" class="share">
           <image style="width:80rpx;height:80rpx;" src="/images/onshare.png"></image>
-        </view>
+        </view> -->
       </view>
       <view class="zan-cell">
         <view class="zan-col zan-col-16">
-          <view>日租价格
+          <view>
+            接亲价格
             <label class="zan-font-22" style="color:#F4B900">￥</label>
-            <label class="zan-font-22" style="color:#F4B900">{{car.averageAmount}}</label>/日均</view>
+            <label class="zan-font-22" style="color:#F4B900">{{car.totalAmount}}</label>
+          </view>
+          <block wx:if="{{car.earnestMoney>0}}">
+            <view>
+              预付定金
+              <label class="zan-font-16" style="color:red">￥</label>
+              <label class="zan-font-16" style="color:red">{{car.earnestMoney}}</label>
+            </view>
+          </block>
         </view>
         <view class="zan-col zan-col-8">
           <form report-submit='true' bindsubmit='click_go' data-id="{{car.id}}">
-            <button form-type="submit" class="theme-background-color" style="width:100%;color:white">预约</button>
-
+            <button form-type="submit" class="theme-background-color" style="width:100%;color:white">
+              预约
+            </button>
           </form>
-
         </view>
       </view>
     </view>

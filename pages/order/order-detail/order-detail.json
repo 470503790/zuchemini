@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "订单详情",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "set-address": "/components/set-address/set-address"
+  }
 }

@@ -1,34 +1,34 @@
 <import src="../car-calendar/car-calendar.wxml" />
 <template name="carItem">
-    <view class="zan-panel">
-        <view class="zan-cell">
-            <view class="zan-col zan-col-10" bindtap="showCarInfo"  data-id="{{id}}">
-                <image src="{{picture}}" style="width:95%;height:188rpx;padding-right:10rpx;"></image>
+  <view class="zan-panel">
+    <view class="zan-cell">
+      <view class="zan-col zan-col-10" bindtap="showCarInfo"  data-id="{{id}}">
+        <image src="{{picture}}" style="width:95%;height:188rpx;padding-right:10rpx;"></image>
+      </view>
+      <view class="zan-col zan-col-14">
+        <view class="zan-row" style="padding-bottom:10px;border-bottom:1rpx solid #c8c8c8;" bindtap="showCarInfo" data-id="{{id}}">
+          <view class="zan-cell__bd">
+            <view>
+              {{name}}
+              <view class="zan-tag zan-tag--danger zan-tag--plain">热</view>
             </view>
-            <view class="zan-col zan-col-14">
-                <view class="zan-row" style="padding-bottom:10px;border-bottom:1rpx solid #c8c8c8;" bindtap="showCarInfo" data-id="{{id}}">
-                    <view class="zan-cell__bd">
-                        <view>{{name}}
-                                <view class="zan-tag zan-tag--danger zan-tag--plain">热</view>
-                        </view>
-                        <view style="font-size:18rpx;">{{bodyStructure}}|{{displacement}}{{stalls}}|乘坐{{numberOfPeople}}人</view>
-                        <view class="zan-arrow"></view>
-                    </view>
-                </view>
-                <view class="zan-row" style="padding-top:10rpx;">
-                    <view class="zan-col zan-col-18">
-                        <label class="theme-color">￥{{averageAmount}}</label>
-                        <label  style="font-size:18rpx;">/日均</label>
-                    </view>
-                    <view bindtap='calendar' data-id="{{id}}" style="font-size:18rpx;padding-top:10rpx;" class="zan-col zan-col-6">
+            <view style="font-size:18rpx;">{{bodyStructure}}|{{displacement}}{{stalls}}|乘坐{{numberOfPeople}}人</view>
+            <view class="zan-arrow"></view>
+          </view>
+        </view>
+        <view class="zan-row" style="padding-top:10rpx;">
+          <view class="zan-col zan-col-18">
+            <label class="theme-color">￥{{totalAmount}}</label>
+          </view>
+          <!-- <view bindtap='calendar' data-id="{{id}}" style="font-size:18rpx;padding-top:10rpx;" class="zan-col zan-col-6">
                         每日租金 ↓
-                    </view>
-                </view>
-                
-            </view>
+                    </view> -->
         </view>
-        <view style="display:{{isShowCalendar==true?'block':'none'}}">
-        <template is="carCalendar" data="{{calendar}}" />
-        </view>
+
+      </view>
     </view>
+    <view style="display:{{isShowCalendar==true?'block':'none'}}">
+      <template is="carCalendar" data="{{calendar}}" />
+    </view>
+  </view>
 </template>

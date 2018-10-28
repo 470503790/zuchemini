@@ -1,4 +1,6 @@
 @import "dist/index.wxss";
+@import "icon.wxss";
+@import "colorui.wxss";
 .container {
   background: #F9F9F9;
   min-height: 100vh;

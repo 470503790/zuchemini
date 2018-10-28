@@ -26,11 +26,12 @@
       </view>
     </block>
     <!-- 时间选择 组件-->
-    <select-time day="{{day}}" pickUpConfig="{{pickUpConfig}}" returnConfig="{{returnConfig}}" 
-    bindpickUpClick="pickUpClick" bindreturnClick="returnClick"
-    catchpickUpChange="pickUpChange" catchreturnChange="returnChange"
-    bindpickUpOk="pickUpOk" bindreturnOk="returnOk"
-    bindpickUpCancel="pickUpCancel" bindreturnCancel="returnCancel"></select-time>
+    <select-time day="{{day}}" pickUpConfig="{{pickUpConfig}}" useCarConfig="{{useCarConfig}}"
+    bindpickUpClick="pickUpClick" binduseCarClick="useCarClick"
+    catchpickUpChange="pickUpChange" catchuseCarChange="useCarChange"
+    bindpickUpOk="pickUpOk" binduseCarOk="useCarOk"
+    bindpickUpCancel="pickUpCancel" binduseCarCancel="useCarCancel"
+    ></select-time>
 
   </view>
   <view class="zan-panel">

@@ -16,7 +16,7 @@
   animation: myfirst 2s infinite;
 } */
 
-@keyframes myfirst {
+/* @keyframes myfirst {
   0% {
     transform: translate(0px, 0px);
   }
@@ -28,4 +28,12 @@
   100% {
     transform: translate(0px, 0px);
   }
-}
+} */
+
+.doc-main {
+  background:#fff;
+  padding:20rpx;
+  line-height:52rpx;
+  
+  }
+  
